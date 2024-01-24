@@ -17,7 +17,6 @@ public class AbsDrive extends Command {
   private final Swerve swerve;
   private final DoubleSupplier vX, vY;
   private final DoubleSupplier heading;
-  private boolean initRotation = false;
 
   public AbsDrive(Swerve swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier heading)
   {
@@ -61,6 +60,6 @@ public class AbsDrive extends Command {
     SmartDashboard.putString("Translation", translation.toString());
 
     // Make the robot move
-    swerve.drive(translation, desiredSpeeds.omegaRadiansPerSecond, true);
+    swerve.drive(translation, -heading.getAsDouble()*5, true);
   }
 }
