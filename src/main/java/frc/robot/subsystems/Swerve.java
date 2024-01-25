@@ -13,6 +13,10 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import java.io.File;
+
+// import com.pathplanner.lib.auto.AutoBuilder;
+// import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
+
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.math.SwerveMath;
@@ -67,6 +71,13 @@ public class Swerve extends SubsystemBase
       throw new RuntimeException(e);
     }
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+
+    // AutoBuilder.configureHolonomic(this::getPose,
+    //                                this::resetOdometry,
+    //                                this::getRobotVelocity, 
+    //                                false, 
+    //                                new HolonomicPathFollowerConfig(
+    //                                 , null, angleConversionFactor, driveConversionFactor, null), null, null);
   }
 
   /**
