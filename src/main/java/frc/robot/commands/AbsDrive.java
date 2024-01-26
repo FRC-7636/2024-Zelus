@@ -17,7 +17,6 @@ public class AbsDrive extends Command {
   private final Swerve swerve;
   private final DoubleSupplier vX, vY;
   private final DoubleSupplier heading;
-  private static boolean initRotation = false;
 
   public AbsDrive(Swerve swerve, DoubleSupplier vX, DoubleSupplier vY, DoubleSupplier heading)
   {
@@ -33,24 +32,25 @@ public class AbsDrive extends Command {
   public void execute()
   {
     new Rotation2d();
-    Rotation2d heading2d = Rotation2d.fromRotations(-heading.getAsDouble()*0.499);
+    Rotation2d heading2d = Rotation2d.fromRadians(-heading.getAsDouble()*Math.PI);
+    SmartDashboard.putNumber("Desired Heading", heading2d.getDegrees());
     // Get the desired chassis speeds based on a 2 joystick module.
     ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(-vX.getAsDouble(), -vY.getAsDouble(), heading2d);  // 將heading設為目前搖桿位置
 
     // Prevent Movement After Auto
     
-    if(initRotation)
-    {
-      if(heading.getAsDouble() == 0)
-      {
-        // Get the curretHeading
-        Rotation2d firstLoopHeading = swerve.getHeading();
-        // Set the Current Heading to the desired Heading
-        desiredSpeeds = swerve.getTargetSpeeds(0, 0, firstLoopHeading.getSin(), firstLoopHeading.getCos());
-      }
-      //Dont Init Rotation Again
-      initRotation = false;
-    }
+    // if(initRotation)
+    // {
+    //   if(heading.getAsDouble() == 0)
+    //   {
+    //     // Get the curretHeading
+    //     Rotation2d firstLoopHeading = swerve.getHeading();
+    //     // Set the Current Heading to the desired Heading
+    //     desiredSpeeds = swerve.getTargetSpeeds(0, 0, firstLoopHeading.getSin(), firstLoopHeading.getCos());
+    //   }
+    //   //Dont Init Rotation Again
+    //   initRotation = false;
+    // }
 
     // Limit velocity to prevent tippy
     Translation2d translation = SwerveController.getTranslation2d(desiredSpeeds);
