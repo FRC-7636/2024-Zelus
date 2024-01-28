@@ -7,19 +7,17 @@ package frc.robot;
 import java.io.File;
 
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.subsystems.Swerve;
 import frc.robot.commands.AbsDrive;
 import frc.robot.commands.FieldRelativeDrive;
+import frc.robot.commands.NewFieldDrive;
 
 public class RobotContainer {
   private Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
@@ -27,6 +25,10 @@ public class RobotContainer {
   
   AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
   FieldRelativeDrive fieldRelativeDrive = new FieldRelativeDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
+  NewFieldDrive NFD = new NewFieldDrive(driveBase, 
+                                        () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01), 
+                                        () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.01), 
+                                        () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
 
   Command driveFieldOrientedDirectAngle = driveBase.driveCommand(
         () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01),
@@ -39,26 +41,25 @@ public class RobotContainer {
         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.01),
         () -> chassisCtrl.getRawAxis(4));
 
-    
 
   public RobotContainer() {
     configureBindings();
         
-    driveBase.setDefaultCommand(absoluteDrive);
-    driveBase.setDefaultCommand(new RunCommand(() -> driveBase.drive(
-      new Translation2d(chassisCtrl.getLeftY(), chassisCtrl.getLeftX()), chassisCtrl.getRightX(), true)
-      , driveBase));
+    driveBase.setDefaultCommand(NFD);
   }
 
   private void configureBindings() {
-    new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(driveBase::zeroGyro, driveBase));
-    new JoystickButton(chassisCtrl, 8).whileTrue(new InstantCommand(driveBase::lock, driveBase));
+    new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(driveBase::zeroGyro, driveBase)
+    .andThen(new InstantCommand(() -> SmartDashboard.putNumber("Delta Heading", 0))));
+    new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(
+      () -> SmartDashboard.putNumber("Delta Heading", SmartDashboard.getNumber("Delta Heading", 0)-driveBase.getHeading().getDegrees())
+    ));
   }
 
   
   public void sendGamePadValueToDashboard() {
-    SmartDashboard.putNumber("X", MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.01));
-    SmartDashboard.putNumber("Y", MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01));
-    SmartDashboard.putNumber("Turning", chassisCtrl.getRightX());
+    // SmartDashboard.putNumber("X", MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.01));
+    // SmartDashboard.putNumber("Y", MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01));
+    // SmartDashboard.putNumber("Turning", chassisCtrl.getRightX());
   }
 }
