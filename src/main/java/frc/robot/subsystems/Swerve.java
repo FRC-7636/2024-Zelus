@@ -14,7 +14,8 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.PIDF;
+import frc.robot.Constants.drivePIDF;
+import frc.robot.Constants.turnPIDF;
 
 import java.io.File;
 import java.util.function.DoubleSupplier;
@@ -24,12 +25,14 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.util.PIDConstants;
 
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
+import swervelib.SwerveModule;
 import swervelib.math.SwerveMath;
 import swervelib.parser.SwerveControllerConfiguration;
 import swervelib.parser.SwerveDriveConfiguration;
@@ -82,6 +85,7 @@ public class Swerve extends SubsystemBase{
     }
 
     swerveDrive.setHeadingCorrection(false); // Heading correction should only be used while controlling the robot via angle.
+    setMotorBrake(true);
 
     setupPathPlanner();
   }
@@ -108,11 +112,9 @@ public class Swerve extends SubsystemBase{
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         new PIDConstants(PIDF.driveKP, PIDF.driveKI, PIDF.driveKD),
+                                         new PIDConstants(drivePIDF.driveKP, drivePIDF.driveKI, drivePIDF.driveKD, drivePIDF.driveIzone),
                                          // Translation PID constants
-                                         new PIDConstants(swerveDrive.swerveController.config.headingPIDF.p,
-                                                          swerveDrive.swerveController.config.headingPIDF.i,
-                                                          swerveDrive.swerveController.config.headingPIDF.d),
+                                         new PIDConstants(turnPIDF.turnKP, turnPIDF.turnKI, turnPIDF.turnKD, turnPIDF.turnIzone),
                                          // Rotation PID constants
                                          4.5,
                                          // Max module speed, in m/s
@@ -307,15 +309,19 @@ public class Swerve extends SubsystemBase{
   }
 
   /**
-   * Sets the drive motors to brake/coast mode.
+   * Sets the motors to brake/coast mode.
    *
    * @param brake True to set motors to brake mode, false for coast.
    */
   public void setMotorBrake(boolean brake)
-  {
+  { 
     swerveDrive.setMotorIdleMode(brake);
+  // set TurnMotor brake
+    SwerveModule[] modules = swerveDrive.getModules();
+    for (SwerveModule module:modules){
+      module.getAngleMotor().setMotorBrake(brake);
+    }
   }
-
   /**
    * Gets the current yaw angle of the robot, as reported by the imu.  CCW positive, not wrapped.
    *

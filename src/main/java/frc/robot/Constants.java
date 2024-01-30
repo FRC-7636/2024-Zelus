@@ -12,9 +12,17 @@ public class Constants {
         public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
     }
 
-    public class PIDF{
-        public static final double driveKP = 5.0;
-        public static final double driveKI = 0;
-        public static final double driveKD = 0;                
+    public class drivePIDF{
+        public static final double driveKP = 0.009;
+        public static final double driveKI = 0.005;
+        public static final double driveKD = 0;
+        public static final double driveIzone = 0;                
+    }
+
+    public class turnPIDF{
+        public static final double turnKP = 0.01;
+        public static final double turnKI = 0;
+        public static final double turnKD = 0;
+        public static final double turnIzone = 0;
     }
 }
