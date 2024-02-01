@@ -13,16 +13,16 @@ public class Constants {
     }
 
     public class drivePIDF{
-        public static final double driveKP = 0.009;
-        public static final double driveKI = 0.005;
+        public static final double driveKP = 0.07;
+        public static final double driveKI = 0;
         public static final double driveKD = 0;
         public static final double driveIzone = 0;                
     }
 
     public class turnPIDF{
-        public static final double turnKP = 0.01;
-        public static final double turnKI = 0;
-        public static final double turnKD = 0;
+        public static final double turnKP = 1;
+        public static final double turnKI = 0.003;
+        public static final double turnKD = 0.005;
         public static final double turnIzone = 0;
     }
 }

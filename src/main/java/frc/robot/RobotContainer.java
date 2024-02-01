@@ -62,7 +62,7 @@ public class RobotContainer {
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return driveBase.getAutonomousCommand("Turn", false);
+    return driveBase.getAutonomousCommand("Turn", true);
   }
   
   public void sendGamePadValueToDashboard() {

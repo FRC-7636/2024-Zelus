@@ -116,7 +116,7 @@ public class Swerve extends SubsystemBase{
                                          // Translation PID constants
                                          new PIDConstants(turnPIDF.turnKP, turnPIDF.turnKI, turnPIDF.turnKD, turnPIDF.turnIzone),
                                          // Rotation PID constants
-                                         4.5,
+                                         3.81,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to furthest module.
@@ -316,7 +316,7 @@ public class Swerve extends SubsystemBase{
   public void setMotorBrake(boolean brake)
   { 
     swerveDrive.setMotorIdleMode(brake);
-  // set TurnMotor brake
+    // set TurnMotor brake
     SwerveModule[] modules = swerveDrive.getModules();
     for (SwerveModule module:modules){
       module.getAngleMotor().setMotorBrake(brake);
