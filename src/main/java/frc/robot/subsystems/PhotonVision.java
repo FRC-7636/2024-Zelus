@@ -63,12 +63,14 @@ public class PhotonVision extends SubsystemBase {
     try {
       layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
       Optional<Alliance> alliance = DriverStation.getAlliance();
-      if(alliance == Alliance.Blue){
-        layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
-      }
-      else if(alliance == Alliance.Red){
-        layout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
-      }
+      if (alliance.isPresent()) {
+            if(alliance.get() == Alliance.Blue){
+                layout.setOrigin(OriginPosition.kBlueAllianceWallRightSide);
+            }
+            else if(alliance.get() == Alliance.Red){
+                layout.setOrigin(OriginPosition.kRedAllianceWallRightSide);
+            }
+        }
 
     } catch(IOException e) {
       DriverStation.reportError("Failed to load AprilTagFieldLayout", e.getStackTrace());
