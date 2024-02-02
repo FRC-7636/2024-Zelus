@@ -14,6 +14,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.drivePIDF;
 import frc.robot.Constants.turnPIDF;
 
@@ -112,7 +113,7 @@ public class Swerve extends SubsystemBase
                                          // Translation PID constants
                                          new PIDConstants(turnPIDF.turnKP, turnPIDF.turnKI, turnPIDF.turnKD, turnPIDF.turnIzone),
                                          // Rotation PID constants
-                                         3.81,
+                                         Constants.Chassis.AUTO_MAX_SPEED,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to furthest module.
@@ -187,8 +188,8 @@ public class Swerve extends SubsystemBase
   {
     // swerveDrive.setHeadingCorrection(true); // Normally you would want heading correction for this kind of control.
     return run(() -> {
-      double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth controll out
-      double yInput = Math.pow(translationY.getAsDouble(), 3); // Smooth controll out
+      double xInput = Math.pow(translationX.getAsDouble(), 3); // Smooth control out
+      double yInput = Math.pow(translationY.getAsDouble(), 3); // Smooth control out
       // Make the robot move
       driveFieldOriented(swerveDrive.swerveController.getTargetSpeeds(xInput, yInput,
                                                                       headingX.getAsDouble(),
