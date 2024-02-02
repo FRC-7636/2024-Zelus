@@ -20,8 +20,8 @@ import frc.robot.commands.FieldRelativeDrive;
 import frc.robot.commands.NewFieldDrive;
 
 public class RobotContainer {
-  private Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
-  private XboxController chassisCtrl = new XboxController(0);
+  private final Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
+  private final XboxController chassisCtrl = new XboxController(0);
   
   AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
   FieldRelativeDrive fieldRelativeDrive = new FieldRelativeDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
