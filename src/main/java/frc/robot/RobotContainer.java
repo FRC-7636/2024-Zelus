@@ -18,8 +18,8 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.commands.NewFieldDrive;
 
 public class RobotContainer {
-  private Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
-  private XboxController chassisCtrl = new XboxController(0);
+  private final Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
+  private final XboxController chassisCtrl = new XboxController(0);
   
   NewFieldDrive NFD = new NewFieldDrive(driveBase, 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01), 
