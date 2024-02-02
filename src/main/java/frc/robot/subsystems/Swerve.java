@@ -102,9 +102,9 @@ public class Swerve extends SubsystemBase
    * the wheel velocities.  Also has field- and robot-relative modes, which affect how the translation vector is used.
    *
    * @param translation   {@link Translation2d} that is the commanded linear velocity of the robot, in meters per
-   *                      second. In robot-relative mode, positive x is torwards the bow (front) and positive y is
-   *                      torwards port (left).  In field-relative mode, positive x is away from the alliance wall
-   *                      (field North) and positive y is torwards the left wall when looking through the driver station
+   *                      second. In robot-relative mode, positive x is towards the bow (front) and positive y is
+   *                      towards port (left).  In field-relative mode, positive x is away from the alliance wall
+   *                      (field North) and positive y is towards the left wall when looking through the driver station
    *                      glass (field West).
    * @param rotation      Robot angular rate, in radians per second. CCW positive.  Unaffected by field/robot
    *                      relativity.
