@@ -20,16 +20,17 @@ import frc.robot.commands.NewFieldDrive;
 public class RobotContainer {
   private final Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
   private final XboxController chassisCtrl = new XboxController(0);
-  
+  private final PhotonVision photonVision = new PhotonVision();
+
   NewFieldDrive NFD = new NewFieldDrive(driveBase, 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.01), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
 
 
-  public RobotContainer() {
-    // driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose());
-    configureBindings();
+  public RobotContainer() {  
+    driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose(driveBase));
+    configureBindings();   
     
     driveBase.setDefaultCommand(NFD);
   }

@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.VisionConstants.CAMERA_TO_ROBOT;
+import frc.robot.subsystems.Swerve;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
@@ -69,7 +70,7 @@ public class PhotonVision extends SubsystemBase {
     return target;
   }
 
-  public Pose2d getLatestEstimatedRobotPose() {
+  public Pose2d getLatestEstimatedRobotPose(Swerve swerve) {
     PhotonTrackedTarget target = getBestTarget();
 
     if (target != null) {
@@ -84,14 +85,11 @@ public class PhotonVision extends SubsystemBase {
           return robotPose.toPose2d();
       }
     }
-    return new Pose2d();
+    return swerve.getPose();
   }
 
   @Override
   public void periodic() {
-    // m_field2d.setRobotPose(getLatestEstimatedRobotPose());
-    // SmartDashboard.putData("PVLocate", m_field2d);
-
     
     // // Update pose estimator with the best visible target
     // var pipelineResult = photonCamera.getLatestResult();
