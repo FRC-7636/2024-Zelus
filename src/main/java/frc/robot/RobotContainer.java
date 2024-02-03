@@ -29,7 +29,7 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose(driveBase));
+    driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose());
     configureBindings();
     
     driveBase.setDefaultCommand(NFD);
