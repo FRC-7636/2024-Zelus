@@ -28,9 +28,9 @@ public class RobotContainer {
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
 
 
-  public RobotContainer() {  
+  public RobotContainer() {
     driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose(driveBase));
-    configureBindings();   
+    configureBindings();
     
     driveBase.setDefaultCommand(NFD);
   }
