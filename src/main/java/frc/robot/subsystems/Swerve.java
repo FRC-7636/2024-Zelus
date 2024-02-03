@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -224,6 +225,11 @@ public class Swerve extends SubsystemBase
   @Override
   public void periodic()
   {
+    SwerveModule[] modules = swerveDrive.getModules();
+    for (SwerveModule module: modules) {
+      String moduleName = module.getConfiguration().name;
+      SmartDashboard.putNumber("["+moduleName+"] Drive Speed", Math.abs(module.getDriveMotor().getVelocity()));
+    }
   }
 
   @Override
