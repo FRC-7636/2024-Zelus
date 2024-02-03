@@ -15,12 +15,15 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.Swerve;
+import frc.robot.commands.MiddleStart;
 import frc.robot.commands.NewFieldDrive;
 
 public class RobotContainer {
   private final Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
   private final XboxController chassisCtrl = new XboxController(0);
   private final PhotonVision photonVision = new PhotonVision();
+
+  private final MiddleStart middleStart = new MiddleStart(photonVision, driveBase);
 
   NewFieldDrive NFD = new NewFieldDrive(driveBase, 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.01), 
@@ -29,7 +32,6 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose());
     configureBindings();
     
     driveBase.setDefaultCommand(NFD);
@@ -46,8 +48,7 @@ public class RobotContainer {
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose());
-    return driveBase.getAutonomousCommand("2", false);
+    return middleStart;
   }
 
   
