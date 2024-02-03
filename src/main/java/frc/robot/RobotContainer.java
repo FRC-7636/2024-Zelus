@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.Swerve;
 import frc.robot.commands.NewFieldDrive;
 
@@ -28,7 +28,7 @@ public class RobotContainer {
 
 
   public RobotContainer() {
-    driveBase.resetOdometry(null);
+    // driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose());
     configureBindings();
     
     driveBase.setDefaultCommand(NFD);
@@ -45,7 +45,7 @@ public class RobotContainer {
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
-    return driveBase.getAutonomousCommand("Turn", true);
+    return driveBase.getAutonomousCommand("2", false);
   }
 
   

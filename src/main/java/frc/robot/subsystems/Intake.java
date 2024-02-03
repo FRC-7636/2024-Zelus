@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
@@ -41,7 +42,22 @@ public class Intake extends SubsystemBase{
     }
 
     public void intakeShoot(){
-
+        pipeIntake.set(-0.5);
     }
-    
+
+    public void floorAngle(){
+        intakPidController.setReference(IntakeConstants.kfloorAngle, ControlType.kSmartMotion);
+    }
+
+    public void AMPangle(){
+        intakPidController.setReference(IntakeConstants.kAMPangle, ControlType.kSmartMotion);
+    }
+
+    public void trapAngle(){
+        intakPidController.setReference(IntakeConstants.ktrapAngle, ControlType.kSmartMotion);
+    }
+
+    public void backToZero(){
+        intakPidController.setReference(IntakeConstants.koriginAngle, ControlType.kSmartMotion);
+    }
 }

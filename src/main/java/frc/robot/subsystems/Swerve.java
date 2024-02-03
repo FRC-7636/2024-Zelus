@@ -306,6 +306,15 @@ public class Swerve extends SubsystemBase
     swerveDrive.zeroGyro();
   }
 
+  public Rotation2d getYaw(){
+    return swerveDrive.getYaw();
+  }
+
+  public Rotation2d getPitch()
+  {
+    return swerveDrive.getPitch();
+  }
+
   /**
    * Sets the drive motors to brake/coast mode.
    *
@@ -421,8 +430,4 @@ public class Swerve extends SubsystemBase
    *
    * @return The heading as a {@link Rotation2d} angle
    */
-  public Rotation2d getPitch()
-  {
-    return swerveDrive.getPitch();
-  }
 }
