@@ -70,7 +70,7 @@ public class PhotonVision extends SubsystemBase {
     return target;
   }
 
-  public Pose2d getLatestEstimatedRobotPose(Swerve swerve) {
+  public Pose2d getLatestEstimatedRobotPose() {
     PhotonTrackedTarget target = getBestTarget();
 
     if (target != null) {
@@ -85,7 +85,7 @@ public class PhotonVision extends SubsystemBase {
           return robotPose.toPose2d();
       }
     }
-    return swerve.getPose();
+    return new Pose2d();
   }
 
   @Override
