@@ -16,22 +16,21 @@ import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import frc.robot.Constants.VisionConstants;
+
 public class PhotonVision extends SubsystemBase {
 
   private PhotonCamera photonCamera;
   private AprilTagFieldLayout m_layout;
   public Field2d m_field2d = new Field2d();
 
-  private double m_latestLatency;
-  private static final String camera_name = "limelight";
-  private static final Pose3d robot_to_camera = new Pose3d(0, 0, 0, new Rotation3d() );
   /**
    * Standard deviations of the vision measurements. Increase these numbers to trust global measurements from vision
    * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and radians.
    */
 
   public PhotonVision() {
-    photonCamera = new PhotonCamera(camera_name);
+    photonCamera = new PhotonCamera(VisionConstants.CAMERA_NAME);
     try{
       m_layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
     } 
