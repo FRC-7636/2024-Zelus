@@ -117,7 +117,7 @@ public class Swerve extends SubsystemBase
                                          Constants.Chassis.AUTO_MAX_SPEED,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
-                                         // Drive base radius in meters. Distance from robot center to furthest module.
+                                         // Drive base radius in meters. Distance from robot center to the furthest module.
                                          new ReplanningConfig()
                                          // Default path replanning config. See the API for the options here
         ),
