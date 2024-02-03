@@ -46,6 +46,7 @@ public class RobotContainer {
   public Command getAutonomousCommand()
   {
     // An example command will be run in autonomous
+    driveBase.resetOdometry(photonVision.getLatestEstimatedRobotPose());
     return driveBase.getAutonomousCommand("2", false);
   }
 
