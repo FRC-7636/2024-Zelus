@@ -14,7 +14,7 @@ public class Constants {
 
     public class drivePIDF{
         public static final double driveKP = 0.07;
-        public static final double driveKI = 0;
+        public static final double driveKI = 0.007;
         public static final double driveKD = 0;
         public static final double driveIzone = 0;                
     }
