@@ -12,7 +12,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.drivePIDF;
 import frc.robot.Constants.turnPIDF;
@@ -225,8 +228,8 @@ public class Swerve extends SubsystemBase{
   }
 
   @Override
-  public void periodic()
-  {
+  public void periodic() {
+    // SmartDashboard.putData("stop", new InstantCommand(()->swerveDrive.lockPose()));
   }
 
   @Override
@@ -414,6 +417,10 @@ public class Swerve extends SubsystemBase{
   public void lock()
   {
     swerveDrive.lockPose();
+  }
+
+  public Command SwerveLock(Swerve swerve){
+    return new InstantCommand(()->swerve.lock());
   }
 
   /**

@@ -35,6 +35,8 @@ public class RobotContainer {
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
 
+  
+
   public RobotContainer() {
     configureBindings();
         
@@ -47,6 +49,7 @@ public class RobotContainer {
     new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(
       () -> SmartDashboard.putNumber("Delta Heading", SmartDashboard.getNumber("Delta Heading", 0)-driveBase.getHeading().getDegrees())
     ));
+    SmartDashboard.putData("control", driveBase.SwerveLock(driveBase));
   }
 
   public Command getAutonomousCommand() {
