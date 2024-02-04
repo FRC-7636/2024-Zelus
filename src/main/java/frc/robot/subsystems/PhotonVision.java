@@ -6,7 +6,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,22 +17,22 @@ import org.photonvision.PhotonUtils;
 import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
+import frc.robot.Constants.VisionConstants;
+
 public class PhotonVision extends SubsystemBase {
 
   private PhotonCamera photonCamera;
   private AprilTagFieldLayout m_layout;
   public Field2d m_field2d = new Field2d();
 
-  private static final String camera_name = "limelight";
   // private static final Transform3d camera_to_robot = new Transform3d(-17, 36.5, -70, new Rotation3d(0, 0.125*Math.PI, 0));
-  private static final Transform3d camera_to_robot = new Transform3d(0.46, 36.5/100, -70/100, new Rotation3d(0, 0.125*Math.PI, 0));
   /**
    * Standard deviations of the vision measurements. Increase these numbers to trust global measurements from vision
    * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and radians.
    */
 
   public PhotonVision() {
-    photonCamera = new PhotonCamera(camera_name);
+    photonCamera = new PhotonCamera(VisionConstants.NAME);
     try{
       m_layout = AprilTagFieldLayout.loadFromResource(AprilTagFields.k2024Crescendo.m_resourceFile);
     } 
@@ -66,7 +65,7 @@ public class PhotonVision extends SubsystemBase {
 
 
       if (tagPose.isPresent()) {
-          Pose3d robotPose = PhotonUtils.estimateFieldToRobotAprilTag(cameraToTarget, tagPose.get(), camera_to_robot);
+          Pose3d robotPose = PhotonUtils.estimateFieldToRobotAprilTag(cameraToTarget, tagPose.get(), VisionConstants.CAMERA_TO_ROBOT);
           return robotPose.toPose2d();
       }
     }

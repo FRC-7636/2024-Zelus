@@ -1,5 +1,7 @@
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.util.Units;
 
@@ -24,5 +26,11 @@ public class Constants {
         public static final double turnKI = 0.003;
         public static final double turnKD = 0.005;
         public static final double turnIzone = 0;
+    }
+
+    public static class VisionConstants {
+        public static final String NAME = "limelight";
+        public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0.46, 0.365, -0.7,  // Unit: Meters
+                new Rotation3d(0, 0.125*Math.PI, 0));  // Unit: Radians
     }
 }
