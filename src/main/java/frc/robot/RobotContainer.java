@@ -56,6 +56,7 @@ public class RobotContainer {
     for (File file: Objects.requireNonNull(pathFileList)) {
       if (file.isFile()) {
         trajectoryList.add(file.getName());
+        System.out.println(file.getName());
       }
     }
     trajectoryChooser.setDefaultOption("Run all", middleStart);
