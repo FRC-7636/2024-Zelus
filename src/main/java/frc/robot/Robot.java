@@ -28,14 +28,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Voltage", RobotController.getBatteryVoltage());
   }
 
-  @Override
-  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}
 
-  @Override
-  public void disabledExit() {}
 
   @Override
   public void autonomousInit() {
@@ -51,8 +47,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
-  @Override
-  public void autonomousExit() {}
 
   @Override
   public void teleopInit() {
@@ -65,8 +59,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {}
 
-  @Override
-  public void teleopExit() {}
 
   @Override
   public void testInit() {
@@ -75,7 +67,4 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {}
-
-  @Override
-  public void testExit() {}
 }
