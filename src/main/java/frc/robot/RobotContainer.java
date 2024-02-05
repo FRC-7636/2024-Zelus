@@ -21,7 +21,9 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.PhotonVision;
 import frc.robot.commands.AbsDrive;
+import frc.robot.commands.AutoChooser;
 import frc.robot.commands.FieldRelativeDrive;
+import frc.robot.commands.LeftStart;
 import frc.robot.commands.MiddleStart;
 import frc.robot.commands.NewFieldDrive;
 import frc.robot.commands.SingleTrajectory;
@@ -34,7 +36,10 @@ public class RobotContainer {
 
   // Auto Commands
   private final MiddleStart middleStart = new MiddleStart(photonVision, driveBase);
+  private final LeftStart leftStart = new LeftStart(photonVision, driveBase);
   private final SendableChooser<Command> trajectoryChooser = new SendableChooser<>();
+
+  AutoChooser autoChooser = new AutoChooser(middleStart, leftStart);
 
   // TeleOp Commands
   AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
@@ -44,25 +49,26 @@ public class RobotContainer {
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
 
-  private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
+  // private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
 
     public RobotContainer() {
     // Configure controller buttons
     configureBindings();
+    
 
     // Initiate SendableChooser
-    List<String> trajectoryList = new ArrayList<>();
-    for (File file: Objects.requireNonNull(pathFileList)) {
-      if (file.isFile()) {
-        trajectoryList.add(file.getName());
-      }
-    }
-    trajectoryChooser.setDefaultOption("Run all", middleStart);
-    for (String name: trajectoryList) {
-      trajectoryChooser.addOption(name, new SingleTrajectory(photonVision, driveBase, name));
-    }
-    SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
+    // List<String> trajectoryList = new ArrayList<>();
+    // for (File file: Objects.requireNonNull(pathFileList)) {
+    //   if (file.isFile()) {
+    //     trajectoryList.add(file.getPath());
+    //   }
+    // }
+    // trajectoryChooser.setDefaultOption("Run all", middleStart);
+    // for (String name: trajectoryList) {
+    //   trajectoryChooser.addOption(name, new SingleTrajectory(photonVision, driveBase, name));
+    // }
+    // SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
 
     driveBase.setDefaultCommand(NFD);
   }
@@ -73,11 +79,13 @@ public class RobotContainer {
     new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(
       () -> SmartDashboard.putNumber("Delta Heading", SmartDashboard.getNumber("Delta Heading", 0)-driveBase.getHeading().getDegrees())
     ));
+
     SmartDashboard.putData("control", driveBase.SwerveLock(driveBase));
   }
 
   public Command getAutonomousCommand() {
-    return trajectoryChooser.getSelected();
+    // return trajectoryChooser.getSelected();
+    return autoChooser;
   }
   
   public void sendGamePadValueToDashboard() {

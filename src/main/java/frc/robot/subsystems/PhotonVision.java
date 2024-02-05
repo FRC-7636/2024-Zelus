@@ -77,5 +77,4 @@ public class PhotonVision extends SubsystemBase {
     m_field2d.setRobotPose(getLatestEstimatedRobotPose());
     SmartDashboard.putData("m_Field2d", m_field2d);
   }
-
 }
