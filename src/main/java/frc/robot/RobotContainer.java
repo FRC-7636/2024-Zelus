@@ -85,7 +85,4 @@ public class RobotContainer {
 
     SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
   }
-  
-  public void sendGamePadValueToDashboard() {
-  }
 }
