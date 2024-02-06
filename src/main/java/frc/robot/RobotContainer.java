@@ -69,9 +69,9 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    // return trajectoryChooser.getSelected();
-    return autoChooser.getSelected();
-    // return middleStart;
+     return trajectoryChooser.getSelected();
+     // return autoChooser.getSelected();
+     // return middleStart;
   }
 
   public void initiateTrajectoryChooser() {
