@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.XboxController;
@@ -57,19 +58,6 @@ public class RobotContainer {
     configureBindings();
     
 
-    // Initiate SendableChooser
-    // List<String> trajectoryList = new ArrayList<>();
-    // for (File file: Objects.requireNonNull(pathFileList)) {
-    //   if (file.isFile()) {
-    //     trajectoryList.add(file.getPath());
-    //   }
-    // }
-    // trajectoryChooser.setDefaultOption("Run all", middleStart);
-    // for (String name: trajectoryList) {
-    //   trajectoryChooser.addOption(name, new SingleTrajectory(photonVision, driveBase, name));
-    // }
-    // SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
-
     driveBase.setDefaultCommand(NFD);
   }
 
@@ -86,6 +74,24 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // return trajectoryChooser.getSelected();
     return autoChooser;
+  }
+
+  public void initiateTrajectoryChooser() {
+    // Initiate SendableChooser
+    List<String> trajectoryList = new ArrayList<>();
+    for (File file: Objects.requireNonNull(pathFileList)) {
+      if (file.isFile()) {
+        String pureFileName = file.getName().replaceFirst("[.][^.]+$", "");  // Use regex to remove extension
+        trajectoryList.add(pureFileName);
+        System.out.println(pureFileName);
+      }
+    }
+    trajectoryChooser.setDefaultOption("Run all", middleStart);
+    for (String name: trajectoryList) {
+      trajectoryChooser.addOption(name, new SingleTrajectory(photonVision, driveBase, name));
+    }
+
+    SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
   }
   
   public void sendGamePadValueToDashboard() {
