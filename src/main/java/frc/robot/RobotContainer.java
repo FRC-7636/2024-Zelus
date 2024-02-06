@@ -88,7 +88,6 @@ public class RobotContainer {
     for (String name: trajectoryList) {
       trajectoryChooser.addOption(name, new SingleTrajectory(photonVision, driveBase, name));
     }
-    //test
     SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
   }
 
