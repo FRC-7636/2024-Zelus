@@ -52,7 +52,6 @@ public class RobotContainer {
 
   private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
-
     public RobotContainer() {
     // Configure controller buttons
     configureBindings();
@@ -91,7 +90,6 @@ public class RobotContainer {
     for (String name: trajectoryList) {
       trajectoryChooser.addOption(name, new SingleTrajectory(limelight, driveBase, name));
     }
-
     SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
   }
 
