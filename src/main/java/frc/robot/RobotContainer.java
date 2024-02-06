@@ -77,11 +77,12 @@ public class RobotContainer {
   public void initiateTrajectoryChooser() {
     // Initiate SendableChooser
     List<String> trajectoryList = new ArrayList<>();
+    System.out.println("Detected paths:");
     for (File file: Objects.requireNonNull(pathFileList)) {
       if (file.isFile()) {
         String pureFileName = file.getName().replaceFirst("[.][^.]+$", "");  // Use regex to remove extension
         trajectoryList.add(pureFileName);
-        System.out.println(pureFileName);
+        System.out.println(" " + pureFileName);
       }
     }
     trajectoryChooser.setDefaultOption("Run all", middleStart);
