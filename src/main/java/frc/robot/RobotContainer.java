@@ -96,7 +96,4 @@ public class RobotContainer {
     autoChooser.setDefaultOption("MiddleStart", middleStart);
     autoChooser.addOption("LeftStart", leftStart);
   }
-  
-  public void sendGamePadValueToDashboard() {
-  }
 }
