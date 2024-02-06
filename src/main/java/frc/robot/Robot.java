@@ -27,6 +27,7 @@ public class Robot extends TimedRobot {
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
     m_robotContainer.initiateTrajectoryChooser();
+    m_robotContainer.initiateAutoChooser();
   }
 
   @Override
@@ -54,10 +55,6 @@ public class Robot extends TimedRobot {
     //   m_autonomousCommand.schedule();
     // }
 
-
-    m_autoSelected = m_chooser.getSelected();
-    // m_autoSelected = SmartDashboard.getString("Auto Selector", kDefaultAuto);
-    System.out.println("Auto selected: " + m_autoSelected);
   }
 
   @Override

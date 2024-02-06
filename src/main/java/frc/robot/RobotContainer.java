@@ -22,7 +22,6 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.PhotonVision;
 import frc.robot.commands.AbsDrive;
-import frc.robot.commands.AutoChooser;
 import frc.robot.commands.FieldRelativeDrive;
 import frc.robot.commands.LeftStart;
 import frc.robot.commands.MiddleStart;
@@ -39,8 +38,7 @@ public class RobotContainer {
   private final MiddleStart middleStart = new MiddleStart(photonVision, driveBase);
   private final LeftStart leftStart = new LeftStart(photonVision, driveBase);
   private final SendableChooser<Command> trajectoryChooser = new SendableChooser<>();
-
-  AutoChooser autoChooser = new AutoChooser(middleStart, leftStart);
+  private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   // TeleOp Commands
   AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
@@ -50,7 +48,7 @@ public class RobotContainer {
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
 
-  // private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
+  private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
 
     public RobotContainer() {
@@ -73,7 +71,7 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     // return trajectoryChooser.getSelected();
-    return autoChooser;
+    return autoChooser.getSelected();
   }
 
   public void initiateTrajectoryChooser() {
@@ -92,6 +90,11 @@ public class RobotContainer {
     }
 
     SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
+  }
+
+  public void initiateAutoChooser(){
+    autoChooser.setDefaultOption("MiddleStart", middleStart);
+    autoChooser.addOption("LeftStart", leftStart);
   }
   
   public void sendGamePadValueToDashboard() {
