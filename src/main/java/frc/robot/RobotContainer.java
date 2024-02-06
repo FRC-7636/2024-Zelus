@@ -20,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.PhotonVision;
+// import frc.robot.subsystems.PhotonVision;
+import frc.robot.subsystems.Limelight;
 import frc.robot.commands.AbsDrive;
 import frc.robot.commands.FieldRelativeDrive;
 import frc.robot.commands.LeftStart;
@@ -32,11 +33,12 @@ public class RobotContainer {
   // Objects, Instances
   private final Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
   private final XboxController chassisCtrl = new XboxController(0);
-  private final PhotonVision photonVision = new PhotonVision();
+  // private final PhotonVision photonVision = new PhotonVision();
+  private final Limelight limelight = new Limelight(); 
 
   // Auto Commands
-  private final MiddleStart middleStart = new MiddleStart(photonVision, driveBase);
-  private final LeftStart leftStart = new LeftStart(photonVision, driveBase);
+  private final MiddleStart middleStart = new MiddleStart(limelight, driveBase);
+  private final LeftStart leftStart = new LeftStart(limelight, driveBase);
   private final SendableChooser<Command> trajectoryChooser = new SendableChooser<>();
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -71,6 +73,7 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // return trajectoryChooser.getSelected();
     return autoChooser.getSelected();
+    // return middleStart;
   }
 
   public void initiateTrajectoryChooser() {
@@ -85,13 +88,15 @@ public class RobotContainer {
     }
     trajectoryChooser.setDefaultOption("Run all", middleStart);
     for (String name: trajectoryList) {
-      trajectoryChooser.addOption(name, new SingleTrajectory(photonVision, driveBase, name));
+      trajectoryChooser.addOption(name, new SingleTrajectory(limelight, driveBase, name));
     }
     SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
   }
 
   public void initiateAutoChooser(){
-    autoChooser.setDefaultOption("MiddleStart", middleStart);
-    autoChooser.addOption("LeftStart", leftStart);
+    autoChooser.setDefaultOption("MiddleStart", leftStart);
+    autoChooser.addOption("LeftStart", middleStart);
+
+    SmartDashboard.putData("Choose Auto", autoChooser);
   }
 }
