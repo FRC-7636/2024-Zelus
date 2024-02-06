@@ -46,9 +46,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void autonomousPeriodic() {
-  
-  }
+  public void autonomousPeriodic() {}
 
 
   @Override
@@ -61,13 +59,4 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {}
-
-
-  @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-  }
-
-  @Override
-  public void testPeriodic() {}
 }
