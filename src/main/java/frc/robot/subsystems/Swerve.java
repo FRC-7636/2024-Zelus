@@ -28,7 +28,6 @@ import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
-import com.pathplanner.lib.util.PIDConstants;
 
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
@@ -231,12 +230,11 @@ public class Swerve extends SubsystemBase{
 
   @Override
   public void periodic() {
-    // SmartDashboard.putData("stop", new InstantCommand(()->swerveDrive.lockPose()));
-  }
-
-  @Override
-  public void simulationPeriodic()
-  {
+    SwerveModule[] modules = swerveDrive.getModules();
+    for (SwerveModule module: modules) {
+      String moduleName = module.getConfiguration().name;
+      SmartDashboard.putNumber("["+moduleName+"] Drive Speed", Math.abs(module.getDriveMotor().getVelocity()));
+    }
   }
 
   /**
