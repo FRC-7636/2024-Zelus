@@ -29,16 +29,16 @@ import frc.robot.commands.MiddleStart;
 import frc.robot.commands.NewFieldDrive;
 import frc.robot.commands.SingleTrajectory;
 
+
 public class RobotContainer {
   // Objects, Instances
   private final Swerve driveBase = new Swerve(new File(Filesystem.getDeployDirectory(), "swerve/Neo"));
   private final XboxController chassisCtrl = new XboxController(0);
-  // private final PhotonVision photonVision = new PhotonVision();
-  private final Limelight limelight = new Limelight(); 
+  //  private final PhotonVision photonVision = new PhotonVision();
 
   // Auto Commands
-  private final MiddleStart middleStart = new MiddleStart(limelight, driveBase);
-  private final LeftStart leftStart = new LeftStart(limelight, driveBase);
+  private final MiddleStart middleStart = new MiddleStart(driveBase);
+  private final LeftStart leftStart = new LeftStart(driveBase);
   private final SendableChooser<Command> trajectoryChooser = new SendableChooser<>();
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
@@ -88,7 +88,7 @@ public class RobotContainer {
     }
     trajectoryChooser.setDefaultOption("Run all", middleStart);
     for (String name: trajectoryList) {
-      trajectoryChooser.addOption(name, new SingleTrajectory(limelight, driveBase, name));
+      trajectoryChooser.addOption(name, new SingleTrajectory(driveBase, name));
     }
     SmartDashboard.putData("Choose Trajectory", trajectoryChooser);
   }
