@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.LimelightHelpers.LimelightTarget_Retro;
+import frc.robot.LimelightHelpers;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,7 +28,7 @@ public class Limelight extends SubsystemBase{
         // and running subsystem periodic() methods.  This must be called from the robot's periodic
         // block in order for anything in the Command-based framework to work.
         field2d.setRobotPose(LimelightHelpers.getBotPose2d_wpiBlue("limelight"));
-        SmartDashboard.putData("L_Field2d", field2d);
+        SmartDashboard.putData("Lime_Field2d", field2d);
     }
 
     public Pose2d getPose2d(){
