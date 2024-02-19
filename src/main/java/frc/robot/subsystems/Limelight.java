@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Limelight extends SubsystemBase{
-    private final Field2d field2d = new Field2d();
+    private final Field2d field2d;
     NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
     DoubleArraySubscriber CameraSeeBot = table.getDoubleArrayTopic("targetpose_cameraspace").subscribe(new double[]{});
 
     public Limelight() {
-        
+        field2d = new Field2d();
     }
 
     @Override
@@ -32,4 +32,6 @@ public class Limelight extends SubsystemBase{
     public Pose2d getPose2d(){
         return LimelightHelpers.getBotPose2d_wpiBlue("limelight");
     }
+
+    
 }
