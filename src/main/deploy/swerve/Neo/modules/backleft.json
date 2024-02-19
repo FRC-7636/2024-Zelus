@@ -1,8 +1,8 @@
 {
   "drive": {
-    "type": "sparkmax",
+    "type": "talonfx",
     "id": 7,
-    "canbus": null
+    "canbus": "cantivore"
   },
   "angle": {
     "type": "sparkmax",
