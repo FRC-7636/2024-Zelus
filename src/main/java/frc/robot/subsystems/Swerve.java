@@ -427,7 +427,7 @@ public class Swerve extends SubsystemBase{
   }
 
   public Command SwerveLock(Swerve swerve){
-    return new InstantCommand(()->swerve.lock());
+    return new InstantCommand(swerve::lock);
   }
 
   /**
