@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -14,9 +15,9 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.Chassis;
 import frc.robot.Constants.drivePIDF;
 import frc.robot.Constants.turnPIDF;
 
@@ -32,6 +33,7 @@ import com.pathplanner.lib.util.ReplanningConfig;
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 
+import org.opencv.core.Mat;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveModule;
@@ -120,7 +122,7 @@ public class Swerve extends SubsystemBase{
                                          // Translation PID constants
                                          new PIDConstants(turnPIDF.turnKP, turnPIDF.turnKI, turnPIDF.turnKD, turnPIDF.turnIzone),
                                          // Rotation PID constants
-                                         3.81,
+                                         Chassis.MODULE_MAX_SPEED,
                                          // Max module speed, in m/s
                                          swerveDrive.swerveDriveConfiguration.getDriveBaseRadiusMeters(),
                                          // Drive base radius in meters. Distance from robot center to the furthest module.
@@ -301,6 +303,11 @@ public class Swerve extends SubsystemBase{
 
     // Create a path following command using AutoBuilder. This will also trigger event markers.
     return AutoBuilder.followPath(path);
+  }
+
+  public Command fromPoseToPath(Pose2d desiredPose) {
+    return AutoBuilder.pathfindToPose(desiredPose,
+            new PathConstraints(3, 3, Math.PI, Math.PI));
   }
 
   /**
