@@ -27,6 +27,7 @@ import frc.robot.commands.LeftStart;
 import frc.robot.commands.MiddleStart;
 import frc.robot.commands.NewFieldDrive;
 import frc.robot.commands.SingleTrajectory;
+import frc.robot.commands.AutoAim;
 
 
 public class RobotContainer {
@@ -45,10 +46,11 @@ public class RobotContainer {
   // TeleOp Commands
   AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
   FieldRelativeDrive fieldRelativeDrive = new FieldRelativeDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
-  NewFieldDrive NFD = new NewFieldDrive(driveBase, 
+  private final NewFieldDrive NFD = new NewFieldDrive(driveBase,
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
+  private final AutoAim autoAim = new AutoAim(driveBase);
 
   private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
@@ -66,8 +68,9 @@ public class RobotContainer {
     new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(
       () -> SmartDashboard.putNumber("Delta Heading", SmartDashboard.getNumber("Delta Heading", 0)-driveBase.getHeading().getDegrees())
     ));
+    new JoystickButton(chassisCtrl, 2).onTrue(autoAim);
 
-    SmartDashboard.putData("control", driveBase.SwerveLock(driveBase));
+//    SmartDashboard.putData("control", driveBase.SwerveLock(driveBase));
   }
 
   public Command getAutonomousCommand() {
