@@ -1,22 +1,14 @@
 package frc.robot.commands;
 
-import com.pathplanner.lib.path.PathPlannerPath;
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.Swerve;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.LimelightHelpers;
-
-import java.util.ArrayList;
 
 
 public class AutoAim extends Command {
@@ -39,35 +31,37 @@ public class AutoAim extends Command {
 
     @Override
     public void execute() {
-        double deltaDeg = Units.degreesToRadians(LimelightHelpers.getTX(VisionConstants.NAME));
-        double tagId = LimelightHelpers.getFiducialID(VisionConstants.NAME);
-        SmartDashboard.putNumber("Delta Deg.", deltaDeg);
-        SmartDashboard.putNumber("Current ID", tagId);
-        Trajectory trajToTargetPose;
-        if (tagId == 4d || tagId == 7d) {
-            Rotation2d targetHeading = new Rotation2d(deltaDeg);
-            Pose2d targetPose = swerve.getPose().rotateBy(targetHeading);
-            trajToTargetPose = TrajectoryGenerator.generateTrajectory(
-                    swerve.getPose(),
-                    new ArrayList<>(),
-                    targetPose,
-                    new TrajectoryConfig(10, 10));
-        }
-        else {
-            trajToTargetPose = new Trajectory();
-        }
-
-        swerve.postTrajectory(trajToTargetPose);
+        double deltaRad = Units.degreesToRadians(LimelightHelpers.getTX(""));
+        double tagId = LimelightHelpers.getFiducialID("");
+        SmartDashboard.putNumber("Delta Rad.", deltaRad);
+        Rotation2d targetHeading = swerve.getHeading().minus(new Rotation2d(deltaRad));
+//        Trajectory trajToTargetPose;
+//        if (tagId == 4d || tagId == 7d) {
+//            Rotation2d targetHeading = new Rotation2d(deltaRad);
+//            Pose2d targetPose = swerve.getPose().rotateBy(targetHeading);
+//            trajToTargetPose = TrajectoryGenerator.generateTrajectory(
+//                    swerve.getPose(),
+//                    new ArrayList<>(),
+//                    targetPose,
+//                    new TrajectoryConfig(10, 10));
+//        }
+//        else {
+//            trajToTargetPose = new Trajectory();
+//        }
+//
+//        swerve.postTrajectory(trajToTargetPose);
+        ChassisSpeeds targetSpeeds = swerve.getTargetSpeeds(0, 0, targetHeading);
+        SmartDashboard.putNumberArray("AutoAim Speed", new Double[] {
+                targetSpeeds.vxMetersPerSecond,
+                targetSpeeds.vyMetersPerSecond,
+                targetSpeeds.omegaRadiansPerSecond
+        });
+        swerve.drive(targetSpeeds);
     }
 
     @Override
     public boolean isFinished() {
-        // TODO: Make this return true when this Command no longer needs to run execute()
-        return false;
-    }
-
-    @Override
-    public void end(boolean interrupted) {
-
+        double deltaDeg = Math.abs(LimelightHelpers.getTX(""));
+        return deltaDeg < 0.05;
     }
 }
