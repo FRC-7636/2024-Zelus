@@ -16,17 +16,17 @@ public class Constants {
     }
 
     public static class drivePIDF {
-        public static final double driveKP = 0.07;
-        public static final double driveKI = 0.007;
-        public static final double driveKD = 0;
-        public static final double driveIzone = 0;
+        public static final double P = 0.07;
+        public static final double I = 0.007;
+        public static final double D = 0;
+        public static final double IZone = 0;
     }
 
     public static class turnPIDF {
-        public static final double turnKP = 1;
-        public static final double turnKI = 0.003;
-        public static final double turnKD = 0.005;
-        public static final double turnIzone = 0;
+        public static final double P = 1;
+        public static final double I = 0.003;
+        public static final double D = 0.005;
+        public static final double IZone = 0;
     }
 
     public static class AutoAimPID {
