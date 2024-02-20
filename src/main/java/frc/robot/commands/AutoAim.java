@@ -6,9 +6,11 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.controller.PIDController;
 
 import frc.robot.subsystems.Swerve;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.AutoAimPID;
 
 import java.util.Arrays;
 
@@ -16,6 +18,7 @@ import java.util.Arrays;
 public class AutoAim extends Command {
 //    private final PhotonVision photonVision;
     private final Swerve swerve;
+    private final PIDController pidCtrl = new PIDController(AutoAimPID.P, AutoAimPID.I, AutoAimPID.D);
 
 //    public AutoAim(PhotonVision photonVision, Swerve swerve) {
 //        this.photonVision = photonVision;
@@ -61,7 +64,7 @@ public class AutoAim extends Command {
         }));
 //        swerve.drive(targetSpeeds);
         if (!isFinished()) {
-            swerve.drive(new Translation2d(), deltaDeg/360*-15, false);
+            swerve.drive(new Translation2d(), pidCtrl.calculate(deltaDeg), false);
         } else {
             swerve.drive(new Translation2d(), 0, false);
         }

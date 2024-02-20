@@ -29,6 +29,12 @@ public class Constants {
         public static final double turnIzone = 0;
     }
 
+    public static class AutoAimPID {
+        public static final double P = 0.05;
+        public static final double I = 0;
+        public static final double D = 0;
+    }
+
     public static class VisionConstants {
         public static final String NAME = "limelight";
         public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0.46, 0.365, -0.7,  // Unit: Meters
