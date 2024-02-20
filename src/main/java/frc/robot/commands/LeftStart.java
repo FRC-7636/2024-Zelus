@@ -17,7 +17,7 @@ public class LeftStart extends SequentialCommandGroup{
     }
 
     public LeftStart(Swerve m_swerve){
-        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue(Constants.VisionConstants.NAME)), m_swerve));
+        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve));
         addCommands(m_swerve.getAutonomousCommand("1", false));
         addCommands(m_swerve.getAutonomousCommand("2", false));
         addCommands(m_swerve.getAutonomousCommand("2 Shoot", false));

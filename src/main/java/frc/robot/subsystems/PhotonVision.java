@@ -27,7 +27,7 @@
    // private static final Transform3d camera_to_robot = new Transform3d(-17, 36.5, -70, new Rotation3d(0, 0.125*Math.PI, 0));
    /**
     * Standard deviations of the vision measurements. Increase these numbers to trust global measurements from vision
-    * less. This matrix is in the form [x, y, theta]ᵀ, with units in meters and radians.
+    * less. This matrix is in the form [x, y, theta], with units in meters and radians.
     */
 
    public PhotonVision() {

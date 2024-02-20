@@ -17,7 +17,7 @@ public class MiddleStart extends SequentialCommandGroup{
     }
 
     public MiddleStart(Swerve m_swerve){
-        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue(Constants.VisionConstants.NAME)), m_swerve)); // TODO: Solve the "getBotPose2d" not working
+        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve)); // TODO: Solve the "getBotPose2d" not working
         addCommands(m_swerve.getAutonomousCommand("1", false));
         addCommands(m_swerve.getAutonomousCommand("2", false));
         addCommands(m_swerve.getAutonomousCommand("2 Shoot", false));

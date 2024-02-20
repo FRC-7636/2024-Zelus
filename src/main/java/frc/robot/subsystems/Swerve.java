@@ -80,9 +80,9 @@ public class Swerve extends SubsystemBase{
     SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
     try
     {
-      swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, 360, driveConversionFactor);
+      // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed);
       // Alternative method if you don't want to supply the conversion factor via JSON files.
-      // swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, angleConversionFactor, driveConversionFactor);
+      swerveDrive = new SwerveParser(directory).createSwerveDrive(maximumSpeed, 360, driveConversionFactor);
     } catch (Exception e)
     {
       throw new RuntimeException(e);
@@ -427,7 +427,7 @@ public class Swerve extends SubsystemBase{
   }
 
   public Command SwerveLock(Swerve swerve){
-    return new InstantCommand(()->swerve.lock());
+    return new InstantCommand(swerve::lock);
   }
 
   /**
