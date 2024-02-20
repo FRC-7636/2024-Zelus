@@ -118,9 +118,9 @@ public class Swerve extends SubsystemBase{
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         new PIDConstants(drivePIDF.driveKP, drivePIDF.driveKI, drivePIDF.driveKD, drivePIDF.driveIzone),
+                                         new PIDConstants(drivePIDF.P, drivePIDF.I, drivePIDF.D, drivePIDF.IZone),
                                          // Translation PID constants
-                                         new PIDConstants(turnPIDF.turnKP, turnPIDF.turnKI, turnPIDF.turnKD, turnPIDF.turnIzone),
+                                         new PIDConstants(turnPIDF.P, turnPIDF.I, turnPIDF.D, turnPIDF.IZone),
                                          // Rotation PID constants
                                          Chassis.MODULE_MAX_SPEED,
                                          // Max module speed, in m/s
