@@ -89,14 +89,6 @@ public class Shooter extends SubsystemBase {
         transMotor.set(ShooterConstants.Control.TRANS_SPEED);
     }
 
-    /**
-     * Set the shooter to the desired position.
-     * @param position  Desired shooter position, will be applied using {@link com.revrobotics.SparkPIDController}
-     */
-
-    public void setPosition(double position) {
-        angleController.setReference(position, ControlType.kSmartMotion);
-    }
 
     /**
      * Stop the shooter motors.
@@ -119,6 +111,15 @@ public class Shooter extends SubsystemBase {
     public void stopAll() {
         stopShoot();
         stopTransport();
+    }
+
+    /**
+     * Set the shooter to the desired position.
+     * @param position  Desired shooter position, will be applied using {@link com.revrobotics.SparkPIDController}
+     */
+
+    public void setPosition(double position) {
+        angleController.setReference(position, ControlType.kSmartMotion);
     }
 
     /**
