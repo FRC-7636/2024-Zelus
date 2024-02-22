@@ -105,6 +105,14 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
+     * Stop all motors.
+     */
+    public void stopAll() {
+        stopShoot();
+        stopTransport();
+    }
+
+    /**
      * Get the sensor value of the note sensor.
      * @return Whether the note sensor is detecting a note.
      */
