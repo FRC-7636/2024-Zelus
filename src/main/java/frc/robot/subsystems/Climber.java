@@ -47,7 +47,7 @@ public class Climber extends SubsystemBase {
         PIDConfig.kP = ClimberConstants.PIDF.P;
         PIDConfig.kI = ClimberConstants.PIDF.I;
         PIDConfig.kD = ClimberConstants.PIDF.D;
-        PIDConfig.kV = ClimberConstants.PIDF.F;  // kF is actually kV...?
+        PIDConfig.kV = ClimberConstants.PIDF.F;  // kF is actually kV...? Better keep it at zero...
         frontMotorConfigurator.apply(PIDConfig);
         rearMotorConfigurator.apply(PIDConfig);
     }
