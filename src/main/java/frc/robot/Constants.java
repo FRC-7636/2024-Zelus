@@ -7,6 +7,14 @@ import edu.wpi.first.math.util.Units;
 
 import swervelib.math.Matter;
 
+/*
+ * CAN ID rules:
+ *  0-9: Drive Base (configured in json)
+ *  10-19: Shooter
+ *  20-29: Intake
+ *  30-39: Climber
+ *  40+: Other
+ */
 public class Constants {
     public static class Chassis {
         public static final double ROBOT_MASS = 31.8;  //kg
@@ -37,6 +45,7 @@ public class Constants {
 
     public static class ShooterConstants {
         public static class Config {
+            // CAN ID: 10-19
             public static final int L_ID = 0;
             public static final int R_ID = 0;
             public static final int TRANS_ID = 0;
@@ -75,6 +84,7 @@ public class Constants {
 
     public static class IntakeConstants {
         public static class Config {
+            // CAN ID: 20-29
             public static final int INTAKE_ID = 0;
             public static final int ANGLE_ID = 0;
             public static final boolean INTAKE_INVERTED = false;
