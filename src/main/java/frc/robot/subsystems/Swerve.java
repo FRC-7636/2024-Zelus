@@ -17,9 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoDrivePIDF;
+import frc.robot.Constants.AutoTurnPIDF;
 import frc.robot.Constants.Chassis;
-import frc.robot.Constants.drivePIDF;
-import frc.robot.Constants.turnPIDF;
 
 import java.io.File;
 import java.util.function.DoubleSupplier;
@@ -118,9 +118,9 @@ public class Swerve extends SubsystemBase{
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         new PIDConstants(drivePIDF.P, drivePIDF.I, drivePIDF.D, drivePIDF.IZone),
+                                         new PIDConstants(AutoDrivePIDF.P, AutoDrivePIDF.I, AutoDrivePIDF.D, AutoDrivePIDF.IZone),
                                          // Translation PID constants
-                                         new PIDConstants(turnPIDF.P, turnPIDF.I, turnPIDF.D, turnPIDF.IZone),
+                                         new PIDConstants(AutoTurnPIDF.P, AutoTurnPIDF.I, AutoTurnPIDF.D, AutoTurnPIDF.IZone),
                                          // Rotation PID constants
                                          Chassis.MODULE_MAX_SPEED,
                                          // Max module speed, in m/s
