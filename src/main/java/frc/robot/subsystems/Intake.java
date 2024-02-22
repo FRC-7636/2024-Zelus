@@ -13,10 +13,10 @@ import com.revrobotics.CANSparkLowLevel.MotorType;
 
 
 public class Intake extends SubsystemBase{
-    CANSparkMax pipeIntake = new CANSparkMax(IntakeConstants.Config.PIPE_ID, MotorType.kBrushless);
-    CANSparkMax angleIntake = new CANSparkMax(IntakeConstants.Config.ANGLE_ID, MotorType.kBrushless);
-    RelativeEncoder intakEncoder = angleIntake.getEncoder();
-    SparkPIDController intakPidController = angleIntake.getPIDController();
+    private final CANSparkMax pipeIntake = new CANSparkMax(IntakeConstants.Config.PIPE_ID, MotorType.kBrushless);
+    private final CANSparkMax angleIntake = new CANSparkMax(IntakeConstants.Config.ANGLE_ID, MotorType.kBrushless);
+    private final RelativeEncoder intakEncoder = angleIntake.getEncoder();
+    private final SparkPIDController intakPidController = angleIntake.getPIDController();
 
     private SparkPIDController setPID(SparkPIDController sparkPIDController, double p, double i, double d){
         sparkPIDController.setP(p);
@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase{
         return sparkPIDController;
     }
 
-    public  Intake(){
+    public Intake(){
         pipeIntake.restoreFactoryDefaults();
         angleIntake.restoreFactoryDefaults();
 
@@ -50,6 +50,10 @@ public class Intake extends SubsystemBase{
 
     public void suck(){
         pipeIntake.set(IntakeConstants.Control.SUCK_SPEED);
+    }
+
+    public void stop() {
+        pipeIntake.stopMotor();
     }
 
     public void floorAngle(){
