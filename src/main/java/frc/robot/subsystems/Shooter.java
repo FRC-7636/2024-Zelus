@@ -91,7 +91,7 @@ public class Shooter extends SubsystemBase {
      */
 
     public void setPosition(double position) {
-        angleController.setReference(position, ControlType.kPosition);
+        angleController.setReference(position, ControlType.kSmartMotion);
     }
 
     /**
