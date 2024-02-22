@@ -19,14 +19,14 @@ public class Constants {
         public static final double P = 35;
         public static final double I = 0.001;
         public static final double D = 0;
-        public static final double IZone = 0;
+        public static final double I_ZONE = 0;
     }
 
     public static class AutoTurnPIDF {
         public static final double P = 0.009;
         public static final double I = 0;
         public static final double D = 0.001;
-        public static final double IZone = 0.005;
+        public static final double I_ZONE = 0.005;
     }
 
     public static class AutoAimPID {
