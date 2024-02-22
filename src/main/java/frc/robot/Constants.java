@@ -73,6 +73,26 @@ public class Constants {
         }
     }
 
+    public static class IntakeConstants {
+        public static class Config {
+            public static final int INTAKE_ID = 0;
+            public static final int ANGLE_ID = 0;
+            public static final boolean INTAKE_INVERTED = false;
+            public static final boolean ANGLE_INVERTED = false;
+        }
+
+        public static class Control {
+            public static final double INTAKE_SPEED = 0;
+            public static final double ANGLE_POSITION = 0;
+        }
+
+        public static class AnglePIDF {
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+        }
+    }
+
     public static class VisionConstants {
         public static final String NAME = "limelight";
         public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0.46, 0.365, -0.7,  // Unit: Meters
