@@ -96,4 +96,12 @@ public class Shooter extends SubsystemBase {
         leftMotor.stopMotor();
         rightMotor.stopMotor();
     }
+
+    /**
+     * Get the sensor value of the note sensor.
+     * @return Whether the note sensor is detecting a note.
+     */
+    public boolean noteDetected() {
+        return noteSensor.get();
+    }
 }
