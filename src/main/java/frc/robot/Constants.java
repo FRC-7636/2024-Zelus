@@ -112,10 +112,12 @@ public class Constants {
             public static final int F_ID = 0;
             public static final int R_ID = 0;
             public static final boolean INVERTED = false;
+            public static final double MAX_ACCEL = 0;
+            public static final double MAX_VELOCITY = 0;
         }
 
         public static class Control {
-            public static final double BASE = 0;
+            public static final double FLOOR = 0;
             public static final double AMP = 0;
             public static final double BALANCE = 0;
             public static final double TRAP = 0;
