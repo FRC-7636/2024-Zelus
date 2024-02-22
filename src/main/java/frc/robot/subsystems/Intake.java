@@ -56,7 +56,7 @@ public class Intake extends SubsystemBase{
         intakPidController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kSmartMotion);
     }
 
-    public void AMPangle(){
+    public void ampAngle(){
         intakPidController.setReference(IntakeConstants.Control.AMP_POSITION, ControlType.kSmartMotion);
     }
 
