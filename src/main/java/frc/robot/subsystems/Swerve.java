@@ -33,7 +33,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 
-import org.opencv.core.Mat;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveModule;
