@@ -44,6 +44,11 @@ public class Shooter extends SubsystemBase {
         transMotor.setInverted(ShooterConstants.Config.TRANS_INVERTED);
         angleMotor.setInverted(ShooterConstants.Config.ANGLE_INVERTED);
 
+        leftMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
+        rightMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
+        transMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
+        angleMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
+
         // apply PID to the angle motor
         angleController = angleMotor.getPIDController();
         setPID(angleController, ShooterConstants.AnglePIDF.P, ShooterConstants.AnglePIDF.I, ShooterConstants.AnglePIDF.D);
