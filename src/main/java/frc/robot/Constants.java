@@ -84,6 +84,13 @@ public class Constants {
 
     public static class IntakeConstants {
         public static class Config {
+<<<<<<< HEAD
+            public static final int PIPE_ID = 50;
+            public static final int ANGLE_ID = 50;
+            public static final boolean PIPE_INVERTED = false;
+            public static final boolean ANGLE_INVERTED = false;
+        }
+=======
             // CAN ID: 20-29
             public static final int INTAKE_ID = 0;
             public static final int ANGLE_ID = 0;
@@ -96,11 +103,23 @@ public class Constants {
             public static final double ANGLE_POSITION = 0;
         }
 
+>>>>>>> 62de98d6d93dd458bae4a31dafd90ff86ba70216
         public static class AnglePIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+<<<<<<< HEAD
+        public static class Control {
+            public static final double FLOOR_POSITION = 0;
+            public static final double AMP_POSITION = 0;
+            public static final double TRAP_POSITION = 0;
+            public static final double ORIGIN_POSITION = 0;
+            public static final double SHOOT_SPEED = 0;
+            public static final double SUCK_SPEED = 0;
+        }
+=======
+>>>>>>> 62de98d6d93dd458bae4a31dafd90ff86ba70216
     }
 
     public static class VisionConstants {
