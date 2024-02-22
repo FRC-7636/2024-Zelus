@@ -7,6 +7,14 @@ import edu.wpi.first.math.util.Units;
 
 import swervelib.math.Matter;
 
+/*
+ * CAN ID rules:
+ *  0-9: Drive Base (configured in json)
+ *  10-19: Shooter
+ *  20-29: Intake
+ *  30-39: Climber
+ *  40+: Other
+ */
 public class Constants {
     public static class Chassis {
         public static final double ROBOT_MASS = 31.8;  //kg
@@ -19,14 +27,14 @@ public class Constants {
         public static final double P = 35;
         public static final double I = 0.001;
         public static final double D = 0;
-        public static final double IZone = 0;
+        public static final double I_ZONE = 0;
     }
 
     public static class AutoTurnPIDF {
         public static final double P = 0.009;
         public static final double I = 0;
         public static final double D = 0.001;
-        public static final double IZone = 0.005;
+        public static final double I_ZONE = 0.005;
     }
 
     public static class AutoAimPID {
@@ -37,6 +45,7 @@ public class Constants {
 
     public static class ShooterConstants {
         public static class Config {
+            // CAN ID: 10-19
             public static final int L_ID = 0;
             public static final int R_ID = 0;
             public static final int TRANS_ID = 0;
@@ -46,22 +55,26 @@ public class Constants {
             public static final boolean ANGLE_INVERTED = false;
             public static final int SENSOR_ID = 9;
         }
+
         public static class Control {
             public static final double SHOOT_VELOCITY = 0;  // Absolute
             public static final double SUCK_SPEED = 0;  // Relative
             public static final double SHOOTER_POSITION = 0;
             public static final double TRANS_SPEED = 0;
         }
+
         public static class AnglePIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+
         public static class LeftPIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+
         public static class RightPIDF {
             public static final double P = 0;
             public static final double I = 0;
@@ -71,16 +84,32 @@ public class Constants {
 
     public static class IntakeConstants {
         public static class Config {
+<<<<<<< HEAD
             public static final int PIPE_ID = 50;
             public static final int ANGLE_ID = 50;
             public static final boolean PIPE_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
         }
+=======
+            // CAN ID: 20-29
+            public static final int INTAKE_ID = 0;
+            public static final int ANGLE_ID = 0;
+            public static final boolean INTAKE_INVERTED = false;
+            public static final boolean ANGLE_INVERTED = false;
+        }
+
+        public static class Control {
+            public static final double INTAKE_SPEED = 0;
+            public static final double ANGLE_POSITION = 0;
+        }
+
+>>>>>>> 62de98d6d93dd458bae4a31dafd90ff86ba70216
         public static class AnglePIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+<<<<<<< HEAD
         public static class Control {
             public static final double FLOOR_POSITION = 0;
             public static final double AMP_POSITION = 0;
@@ -89,6 +118,8 @@ public class Constants {
             public static final double SHOOT_SPEED = 0;
             public static final double SUCK_SPEED = 0;
         }
+=======
+>>>>>>> 62de98d6d93dd458bae4a31dafd90ff86ba70216
     }
 
     public static class VisionConstants {

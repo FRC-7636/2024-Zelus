@@ -20,11 +20,12 @@ public class Shooter extends SubsystemBase {
     private final SparkPIDController angleController;
     private final SparkPIDController leftPIDController;
     private final SparkPIDController rightPIDController;
-    private final SparkPIDController setPID(SparkPIDController sparkPIDController , double p, double i, double d){
+
+
+    private void setPID(SparkPIDController sparkPIDController, double p, double i, double d) {
         sparkPIDController.setP(p);
         sparkPIDController.setI(i);
         sparkPIDController.setD(d);
-        return sparkPIDController;
     }
 
 
@@ -49,7 +50,7 @@ public class Shooter extends SubsystemBase {
         transMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
         angleMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
 
-        // apply PID to the angle motor
+        // apply PIDs to motors
         angleController = angleMotor.getPIDController();
         setPID(angleController, ShooterConstants.AnglePIDF.P, ShooterConstants.AnglePIDF.I, ShooterConstants.AnglePIDF.D);
         leftPIDController = leftMotor.getPIDController();
@@ -97,6 +98,30 @@ public class Shooter extends SubsystemBase {
      * Stop the shooter motors.
      */
     public void stopShoot() {
-        leftMotor.set(0);
+        leftMotor.stopMotor();
+        rightMotor.stopMotor();
+    }
+
+    /**
+     * Stop the transportation motor.
+     */
+    public void stopTransport() {
+        transMotor.stopMotor();
+    }
+
+    /**
+     * Stop all motors.
+     */
+    public void stopAll() {
+        stopShoot();
+        stopTransport();
+    }
+
+    /**
+     * Get the sensor value of the note sensor.
+     * @return Whether the note sensor is detecting a note.
+     */
+    public boolean noteDetected() {
+        return noteSensor.get();
     }
 }

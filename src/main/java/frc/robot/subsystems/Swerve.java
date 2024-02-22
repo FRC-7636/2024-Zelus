@@ -33,7 +33,6 @@ import com.pathplanner.lib.util.ReplanningConfig;
 // import com.pathplanner.lib.auto.AutoBuilder;
 // import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 
-import org.opencv.core.Mat;
 import swervelib.SwerveController;
 import swervelib.SwerveDrive;
 import swervelib.SwerveModule;
@@ -53,7 +52,7 @@ public class Swerve extends SubsystemBase{
   /**
    * Maximum speed of the robot in meters per second, used to limit acceleration.
    */
-  public double maximumSpeed = Units.feetToMeters(12.5);
+  public double maximumSpeed = Units.feetToMeters(17.1);
 
   /**
    * Initialize {@link SwerveDrive} with the directory provided.
@@ -65,12 +64,12 @@ public class Swerve extends SubsystemBase{
     // Angle conversion factor is 360 / (GEAR RATIO * ENCODER RESOLUTION)
     //  In this case the gear ratio is 12.8 motor revolutions per wheel rotation.
     //  The encoder resolution per motor revolution is 1 per motor revolution.
-    double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(12.8, 1);
+    double angleConversionFactor = SwerveMath.calculateDegreesPerSteeringRotation(12.8);
     // Motor conversion factor is (PI * WHEEL DIAMETER IN METERS) / (GEAR RATIO * ENCODER RESOLUTION).
     //  In this case the wheel diameter is 4 inches, which must be converted to meters to get meters/second.
     //  The gear ratio is 6.75 motor revolutions per wheel rotation.
     //  The encoder resolution per motor revolution is 1 per motor revolution.
-    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 8.14, 1);
+    double driveConversionFactor = SwerveMath.calculateMetersPerRotation(Units.inchesToMeters(4), 6.12);
     System.out.println("\"conversionFactor\": {");
     System.out.println("\t\"angle\": " + angleConversionFactor + ",");
     System.out.println("\t\"drive\": " + driveConversionFactor);
@@ -112,15 +111,17 @@ public class Swerve extends SubsystemBase{
   ///////////
   public void setupPathPlanner()
   {
+    System.out.println("Setting up PathPlanner...");
+    System.out.print(AutoDrivePIDF.P); System.out.print(" ");System.out.print(AutoDrivePIDF.I); System.out.print(" ");System.out.println(AutoDrivePIDF.D);
     AutoBuilder.configureHolonomic(
         this::getPose, // Robot pose supplier
         this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
         this::getRobotVelocity, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
         this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
         new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                                         new PIDConstants(AutoDrivePIDF.P, AutoDrivePIDF.I, AutoDrivePIDF.D, AutoDrivePIDF.IZone),
+                                         new PIDConstants(AutoDrivePIDF.P, AutoDrivePIDF.I, AutoDrivePIDF.D, AutoDrivePIDF.I_ZONE),
                                          // Translation PID constants
-                                         new PIDConstants(AutoTurnPIDF.P, AutoTurnPIDF.I, AutoTurnPIDF.D, AutoTurnPIDF.IZone),
+                                         new PIDConstants(AutoTurnPIDF.P, AutoTurnPIDF.I, AutoTurnPIDF.D, AutoTurnPIDF.I_ZONE),
                                          // Rotation PID constants
                                          Chassis.MODULE_MAX_SPEED,
                                          // Max module speed, in m/s
@@ -137,7 +138,7 @@ public class Swerve extends SubsystemBase{
           return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
         },
         this // Reference to this subsystem to set requirements
-                                  );
+    );
   }
 
   /**
