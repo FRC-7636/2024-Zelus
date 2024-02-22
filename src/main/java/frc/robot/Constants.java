@@ -9,23 +9,23 @@ import swervelib.math.Matter;
 
 public class Constants {
     public static class Chassis {
-        public static final double ROBOT_MASS = 25.23;  //kg
+        public static final double ROBOT_MASS = 31.8;  //kg
         public static final double LOOP_TIME = 0.13;  //s, 20ms + 110ms SPARK MAX velocity lag
         public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
         public static final double MODULE_MAX_SPEED = 5.88264;  // L3, NEO
     }
 
     public static class drivePIDF {
-        public static final double P = 0.07;
-        public static final double I = 0.007;
+        public static final double P = 35;
+        public static final double I = 0.001;
         public static final double D = 0;
         public static final double IZone = 0;
     }
 
     public static class turnPIDF {
-        public static final double P = 1;
-        public static final double I = 0.003;
-        public static final double D = 0.005;
+        public static final double P = 0;
+        public static final double I = 0;
+        public static final double D = 0;
         public static final double IZone = 0;
     }
 
@@ -33,6 +33,40 @@ public class Constants {
         public static final double P = 0.05;
         public static final double I = 0;
         public static final double D = 0;
+    }
+
+    public static class ShooterConstants {
+        public static class Config {
+            public static final int L_ID = 0;
+            public static final int R_ID = 0;
+            public static final int TRANS_ID = 0;
+            public static final int ANGLE_ID = 0;
+            public static final boolean SHOOTER_INVERTED = false;
+            public static final boolean TRANS_INVERTED = false;
+            public static final boolean ANGLE_INVERTED = false;
+            public static final int SENSOR_ID = 9;
+        }
+        public static class Control {
+            public static final double SHOOT_VELOCITY = 0;  // Absolute
+            public static final double SUCK_SPEED = 0;  // Relative
+            public static final double SHOOTER_POSITION = 0;
+            public static final double TRANS_SPEED = 0;
+        }
+        public static class AnglePIDF {
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+        }
+        public static class LeftPIDF {
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+        }
+        public static class RightPIDF {
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+        }
     }
 
     public static class VisionConstants {
