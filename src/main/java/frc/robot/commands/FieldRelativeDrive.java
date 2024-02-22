@@ -26,7 +26,7 @@ public class FieldRelativeDrive extends Command {
     public void execute() {
         new Rotation2d();
         Rotation2d heading2d = Rotation2d.fromRotations(-heading.getAsDouble()*0.499);
-        ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(-vX.getAsDouble(), -vY.getAsDouble(), heading2d);  // 將heading設為目前搖桿位置
+        ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(-vX.getAsDouble(), -vY.getAsDouble(), heading2d);
         ChassisSpeeds fieldSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(desiredSpeeds, swerve.getHeading());
 
         swerve.drive(fieldSpeeds);
