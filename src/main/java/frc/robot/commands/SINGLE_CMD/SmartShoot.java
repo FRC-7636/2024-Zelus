@@ -24,6 +24,7 @@ public class SmartShoot extends Command {
 
     @Override
     public boolean isFinished() {
+        // TODO: return "true" when the note is out
         return false;
     }
 
