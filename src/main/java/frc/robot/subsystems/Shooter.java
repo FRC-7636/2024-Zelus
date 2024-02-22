@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.RelativeEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -17,9 +18,9 @@ public class Shooter extends SubsystemBase {
     private final DigitalInput noteSensor = new DigitalInput(ShooterConstants.Config.SENSOR_ID);
     private final CANSparkMax transMotor = new CANSparkMax(ShooterConstants.Config.TRANS_ID, CANSparkLowLevel.MotorType.kBrushless);
     private final CANSparkMax angleMotor = new CANSparkMax(ShooterConstants.Config.ANGLE_ID, CANSparkLowLevel.MotorType.kBrushless);
-    private final SparkPIDController angleController;
-    private final SparkPIDController leftPIDController;
-    private final SparkPIDController rightPIDController;
+    private final SparkPIDController angleController, leftPIDController, rightPIDController;
+
+    private final RelativeEncoder leftMotorEncoder, rightMotorEncoder;
 
 
     private void setPID(SparkPIDController sparkPIDController, double p, double i, double d) {
@@ -57,6 +58,9 @@ public class Shooter extends SubsystemBase {
         setPID(leftPIDController, ShooterConstants.LeftPIDF.P, ShooterConstants.LeftPIDF.I, ShooterConstants.LeftPIDF.D);
         rightPIDController = rightMotor.getPIDController();
         setPID(rightPIDController, ShooterConstants.RightPIDF.P, ShooterConstants.RightPIDF.I, ShooterConstants.RightPIDF.D);
+
+        leftMotorEncoder = leftMotor.getEncoder();
+        rightMotorEncoder = rightMotor.getEncoder();
     }
 
     /**
@@ -123,5 +127,11 @@ public class Shooter extends SubsystemBase {
      */
     public boolean noteDetected() {
         return noteSensor.get();
+    }
+
+    public boolean readyToShoot() {
+        boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
+        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
+        return (leftReady && rightReady);
     }
 }
