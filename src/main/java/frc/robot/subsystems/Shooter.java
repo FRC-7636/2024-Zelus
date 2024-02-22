@@ -20,11 +20,12 @@ public class Shooter extends SubsystemBase {
     private final SparkPIDController angleController;
     private final SparkPIDController leftPIDController;
     private final SparkPIDController rightPIDController;
-    private final SparkPIDController setPID(SparkPIDController sparkPIDController , double p, double i, double d){
+
+
+    private void setPID(SparkPIDController sparkPIDController, double p, double i, double d) {
         sparkPIDController.setP(p);
         sparkPIDController.setI(i);
         sparkPIDController.setD(d);
-        return sparkPIDController;
     }
 
 
