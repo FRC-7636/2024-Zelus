@@ -15,7 +15,7 @@ import frc.robot.Constants.AutoAimPID;
 public class AutoAim extends Command {
 //    private final PhotonVision photonVision;
     private final Swerve swerve;
-    private final PIDController pidCtrl = new PIDController(AutoAimPID.P, AutoAimPID.I, AutoAimPID.D);
+    private final PIDController yawCtrl = new PIDController(AutoAimPID.P, AutoAimPID.I, AutoAimPID.D);
 
 //    public AutoAim(PhotonVision photonVision, Swerve swerve) {
 //        this.photonVision = photonVision;
@@ -39,7 +39,7 @@ public class AutoAim extends Command {
         Rotation2d targetHeading = swerve.getHeading().plus(new Rotation2d(deltaRad));
         SmartDashboard.putNumber("Heading offset", targetHeading.getDegrees());
         if (!isFinished()) {
-            swerve.drive(new Translation2d(), pidCtrl.calculate(deltaDeg), false);
+            swerve.drive(new Translation2d(), yawCtrl.calculate(deltaDeg), false);
         } else {
             swerve.drive(new Translation2d(), 0, false);
         }
