@@ -46,22 +46,26 @@ public class Constants {
             public static final boolean ANGLE_INVERTED = false;
             public static final int SENSOR_ID = 9;
         }
+
         public static class Control {
             public static final double SHOOT_VELOCITY = 0;  // Absolute
             public static final double SUCK_SPEED = 0;  // Relative
             public static final double SHOOTER_POSITION = 0;
             public static final double TRANS_SPEED = 0;
         }
+
         public static class AnglePIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+
         public static class LeftPIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+
         public static class RightPIDF {
             public static final double P = 0;
             public static final double I = 0;
