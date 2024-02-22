@@ -111,6 +111,8 @@ public class Swerve extends SubsystemBase{
   ///////////
   public void setupPathPlanner()
   {
+    System.out.println("Setting up PathPlanner...");
+    System.out.print(AutoDrivePIDF.P); System.out.print(" ");System.out.print(AutoDrivePIDF.I); System.out.print(" ");System.out.println(AutoDrivePIDF.D);
     AutoBuilder.configureHolonomic(
         this::getPose, // Robot pose supplier
         this::resetOdometry, // Method to reset odometry (will be called if your auto has a starting pose)
@@ -136,7 +138,7 @@ public class Swerve extends SubsystemBase{
           return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
         },
         this // Reference to this subsystem to set requirements
-                                  );
+    );
   }
 
   /**
