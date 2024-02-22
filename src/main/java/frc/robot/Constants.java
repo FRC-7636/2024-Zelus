@@ -24,17 +24,17 @@ public class Constants {
     }
 
     public static class AutoDrivePIDF {
-        public static final double P = 35;
-        public static final double I = 0.001;
+        public static final double P = 6;
+        public static final double I = 0.00;
         public static final double D = 0;
         public static final double I_ZONE = 0;
     }
 
     public static class AutoTurnPIDF {
-        public static final double P = 0.009;
-        public static final double I = 0;
-        public static final double D = 0.001;
-        public static final double I_ZONE = 0.005;
+        public static final double P = 1.55;
+        public static final double I = 0.0;
+        public static final double D = 0.00;
+        public static final double I_ZONE = 0.0;
     }
 
     public static class AutoAimPID {
@@ -54,6 +54,7 @@ public class Constants {
             public static final boolean TRANS_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
             public static final int SENSOR_ID = 9;
+            public static final int CURRENT_LIMIT = 30;
         }
 
         public static class Control {
@@ -84,32 +85,17 @@ public class Constants {
 
     public static class IntakeConstants {
         public static class Config {
-<<<<<<< HEAD
             public static final int PIPE_ID = 50;
             public static final int ANGLE_ID = 50;
             public static final boolean PIPE_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
+            public static final int CURRENT_LIMIT = 30;
         }
-=======
-            // CAN ID: 20-29
-            public static final int INTAKE_ID = 0;
-            public static final int ANGLE_ID = 0;
-            public static final boolean INTAKE_INVERTED = false;
-            public static final boolean ANGLE_INVERTED = false;
-        }
-
-        public static class Control {
-            public static final double INTAKE_SPEED = 0;
-            public static final double ANGLE_POSITION = 0;
-        }
-
->>>>>>> 62de98d6d93dd458bae4a31dafd90ff86ba70216
         public static class AnglePIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
-<<<<<<< HEAD
         public static class Control {
             public static final double FLOOR_POSITION = 0;
             public static final double AMP_POSITION = 0;
@@ -118,8 +104,29 @@ public class Constants {
             public static final double SHOOT_SPEED = 0;
             public static final double SUCK_SPEED = 0;
         }
-=======
->>>>>>> 62de98d6d93dd458bae4a31dafd90ff86ba70216
+    }
+
+    public static class ClimberConstants {
+        public static class Config {
+            // CAN ID: 30-39
+            public static final int F_ID = 0;
+            public static final int R_ID = 0;
+            public static final boolean INVERTED = false;
+        }
+
+        public static class Control {
+            public static final double BASE = 0;
+            public static final double AMP = 0;
+            public static final double BALANCE = 0;
+            public static final double TRAP = 0;
+        }
+
+        public static class PIDF {
+            public static final double P = 0;
+            public static final double I = 0;
+            public static final double D = 0;
+            public static final double F = 0;
+        }
     }
 
     public static class VisionConstants {
