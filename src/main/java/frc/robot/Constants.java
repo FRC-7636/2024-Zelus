@@ -15,18 +15,18 @@ public class Constants {
         public static final double MODULE_MAX_SPEED = 5.88264;  // L3, NEO
     }
 
-    public static class drivePIDF {
+    public static class AutoDrivePIDF {
         public static final double P = 35;
         public static final double I = 0.001;
         public static final double D = 0;
         public static final double IZone = 0;
     }
 
-    public static class turnPIDF {
-        public static final double P = 0;
+    public static class AutoTurnPIDF {
+        public static final double P = 0.009;
         public static final double I = 0;
-        public static final double D = 0;
-        public static final double IZone = 0;
+        public static final double D = 0.001;
+        public static final double IZone = 0.005;
     }
 
     public static class AutoAimPID {
