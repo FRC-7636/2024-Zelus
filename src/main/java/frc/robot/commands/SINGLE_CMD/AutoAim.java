@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.SINGLE_CMD;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;

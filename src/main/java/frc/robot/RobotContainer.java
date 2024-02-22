@@ -21,13 +21,13 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.PhotonVision;
-import frc.robot.commands.AbsDrive;
-import frc.robot.commands.FieldRelativeDrive;
-import frc.robot.commands.LeftStart;
-import frc.robot.commands.MiddleStart;
-import frc.robot.commands.NewFieldDrive;
-import frc.robot.commands.SingleTrajectory;
-import frc.robot.commands.AutoAim;
+import frc.robot.commands.AUTO_CMD.LeftStart;
+import frc.robot.commands.AUTO_CMD.MiddleStart;
+import frc.robot.commands.AUTO_CMD.SingleTrajectory;
+import frc.robot.commands.SINGLE_CMD.AutoAim;
+import frc.robot.commands.SWERVE_CMD.AbsDrive;
+import frc.robot.commands.SWERVE_CMD.FieldRelativeDrive;
+import frc.robot.commands.SWERVE_CMD.NewFieldDrive;
 
 
 public class RobotContainer {
