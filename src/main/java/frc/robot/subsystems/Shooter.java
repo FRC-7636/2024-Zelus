@@ -45,7 +45,7 @@ public class Shooter extends SubsystemBase {
         transMotor.setInverted(ShooterConstants.Config.TRANS_INVERTED);
         angleMotor.setInverted(ShooterConstants.Config.ANGLE_INVERTED);
 
-        // apply PID to the angle motor
+        // apply PIDs to motors
         angleController = angleMotor.getPIDController();
         setPID(angleController, ShooterConstants.AnglePIDF.P, ShooterConstants.AnglePIDF.I, ShooterConstants.AnglePIDF.D);
         leftPIDController = leftMotor.getPIDController();
