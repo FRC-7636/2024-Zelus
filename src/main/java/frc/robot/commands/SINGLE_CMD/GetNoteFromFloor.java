@@ -21,13 +21,15 @@ public class GetNoteFromFloor extends Command {
     public void execute() {
         intake.floorAngle();
         intake.suck();
+        intake.startITS();
         shooter.transport();
     }
 
     @Override
     public void end(boolean interrupted) {
         shooter.stopTransport();
-        intake.stop();
+        intake.stopITS();
+        intake.stopIntake();
     }
 
     @Override
