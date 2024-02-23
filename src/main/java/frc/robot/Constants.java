@@ -54,7 +54,7 @@ public class Constants {
             public static final boolean TRANS_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
             public static final int SENSOR_ID = 9;
-            public static final int CURRENT_LIMIT = 30;
+            public static final int CURRENT_LIMIT = 35;
         }
 
         public static class Control {
@@ -89,7 +89,7 @@ public class Constants {
             public static final int ANGLE_ID = 50;
             public static final boolean PIPE_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
-            public static final int CURRENT_LIMIT = 30;
+            public static final int CURRENT_LIMIT = 35;
         }
         public static class AnglePIDF {
             public static final double P = 0;
