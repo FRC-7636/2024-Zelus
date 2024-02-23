@@ -17,9 +17,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.AutoDrivePIDF;
-import frc.robot.Constants.AutoTurnPIDF;
-import frc.robot.Constants.Chassis;
 
 import java.io.File;
 import java.util.function.DoubleSupplier;
@@ -42,6 +39,10 @@ import swervelib.parser.SwerveDriveConfiguration;
 import swervelib.parser.SwerveParser;
 import swervelib.telemetry.SwerveDriveTelemetry;
 import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
+
+import frc.robot.Constants.AutoDrivePIDF;
+import frc.robot.Constants.AutoTurnPIDF;
+import frc.robot.Constants.Chassis;
 
 public class Swerve extends SubsystemBase{
 
@@ -238,6 +239,7 @@ public class Swerve extends SubsystemBase{
       String moduleName = module.getConfiguration().name;
       SmartDashboard.putNumber("["+moduleName+"] Drive Speed", Math.abs(module.getDriveMotor().getVelocity()));
     }
+    SmartDashboard.putNumber("Robot X", swerveDrive.getPose().getX());
   }
 
   /**
