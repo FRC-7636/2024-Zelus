@@ -68,6 +68,11 @@ public class Intake extends SubsystemBase{
         intakeToShooter.stopMotor();
     }
 
+    public void stopAll() {
+        stopIntake();
+        stopITS();
+    }
+
     public void floorAngle(){
         intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kSmartMotion);
     }
