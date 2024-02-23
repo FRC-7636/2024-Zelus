@@ -89,10 +89,10 @@ public class Constants {
             // CAN ID: 20-29
             public static final int PIPE_ID = 50;
             public static final int ANGLE_ID = 50;
-            public static final int ITS_ID = 0;
+            public static final int CONVEYOR_ID = 0;
             public static final boolean PIPE_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
-            public static final boolean ITS_INVERTED = false;
+            public static final boolean CONVEYOR_INVERTED = false;
             public static final int CURRENT_LIMIT = 35;
         }
         public static class AnglePIDF {
@@ -107,7 +107,7 @@ public class Constants {
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = 0;
             public static final double SUCK_SPEED = 0;
-            public static final double ITS_SPEED = 0;
+            public static final double CONVEYOR_SPEED = 0;
         }
     }
 
