@@ -81,6 +81,11 @@ public class Shooter extends SubsystemBase {
         rightMotor.set(ShooterConstants.Control.SUCK_SPEED);
     }
 
+    public void standby() {
+        leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+        rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+    }
+
     /**
      * Set transportation motor to the specified speed.
      * (set the speed in {@link ShooterConstants.Control})
