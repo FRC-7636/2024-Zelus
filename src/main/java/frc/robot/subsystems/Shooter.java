@@ -117,7 +117,6 @@ public class Shooter extends SubsystemBase {
      * Set the shooter to the desired position.
      * @param position  Desired shooter position, will be applied using {@link com.revrobotics.SparkPIDController}
      */
-
     public void setPosition(double position) {
         angleController.setReference(position, ControlType.kSmartMotion);
     }
@@ -130,6 +129,9 @@ public class Shooter extends SubsystemBase {
         return noteSensor.get();
     }
 
+    /**
+     * @return true when both motors are ready
+     */
     public boolean readyToShoot() {
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
         boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
