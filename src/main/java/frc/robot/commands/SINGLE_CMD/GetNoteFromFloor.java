@@ -28,6 +28,7 @@ public class GetNoteFromFloor extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.stopTransport();
+        shooter.standby();
         intake.stopITS();
         intake.stopIntake();
     }
