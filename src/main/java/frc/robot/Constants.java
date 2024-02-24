@@ -17,7 +17,7 @@ import swervelib.math.Matter;
  */
 public class Constants {
     public static class Chassis {
-        public static final double ROBOT_MASS = 31.8;  // kg
+        public static final double ROBOT_MASS = 45.0;  // kg
         public static final double LOOP_TIME = 0.13;  // s, 20ms + 110ms SPARK MAX velocity lag
         public static final Matter CHASSIS = new Matter(new Translation3d(0, 0, Units.inchesToMeters(8)), ROBOT_MASS);
         public static final double MODULE_MAX_SPEED = 5.88264;  // L3, NEO
@@ -46,10 +46,10 @@ public class Constants {
     public static class ShooterConstants {
         public static class Config {
             // CAN ID: 10-19
-            public static final int L_ID = 0;
-            public static final int R_ID = 0;
-            public static final int TRANS_ID = 0;
-            public static final int ANGLE_ID = 0;
+            public static final int L_ID = 11;
+            public static final int R_ID = 12;
+            public static final int TRANS_ID = 13;
+            public static final int ANGLE_ID = 10;
             public static final boolean SHOOTER_INVERTED = false;
             public static final boolean TRANS_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
@@ -87,19 +87,21 @@ public class Constants {
     public static class IntakeConstants {
         public static class Config {
             // CAN ID: 20-29
-            public static final int PIPE_ID = 50;
-            public static final int ANGLE_ID = 50;
-            public static final int CONVEYOR_ID = 0;
+            public static final int PIPE_ID = 22;
+            public static final int ANGLE_ID = 20;
+            public static final int CONVEYOR_ID = 21;
             public static final boolean PIPE_INVERTED = false;
             public static final boolean ANGLE_INVERTED = false;
             public static final boolean CONVEYOR_INVERTED = false;
             public static final int CURRENT_LIMIT = 35;
         }
+
         public static class AnglePIDF {
             public static final double P = 0;
             public static final double I = 0;
             public static final double D = 0;
         }
+
         public static class Control {
             public static final double FLOOR_POSITION = 0;
             public static final double AMP_POSITION = 0;
@@ -114,8 +116,8 @@ public class Constants {
     public static class ClimberConstants {
         public static class Config {
             // CAN ID: 30-39
-            public static final int F_ID = 0;
-            public static final int R_ID = 0;
+            public static final int F_ID = 30;
+            public static final int R_ID = 31;
             public static final boolean INVERTED = false;
             public static final double MAX_ACCEL = 0;
             public static final double MAX_VELOCITY = 0;
@@ -139,6 +141,6 @@ public class Constants {
     public static class VisionConstants {
         public static final String NAME = "limelight";
         public static final Transform3d CAMERA_TO_ROBOT = new Transform3d(0.46, 0.365, -0.7,  // Unit: Meters
-                new Rotation3d(0, 0.125*Math.PI, 0));  // Unit: Radians
+                new Rotation3d(0, 0.125 * Math.PI, 0));  // Unit: Radians
     }
 }
