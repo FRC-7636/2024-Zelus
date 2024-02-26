@@ -19,10 +19,10 @@ public class GetNoteFromFloor extends Command {
 
     @Override
     public void execute() {
-        intake.floorAngle();
+        // intake.floorAngle();
         intake.suck();
         intake.startITS();
-        shooter.transport();
+        // shooter.transport();
     }
 
     @Override
@@ -35,6 +35,7 @@ public class GetNoteFromFloor extends Command {
 
     @Override
     public boolean isFinished() {
-        return shooter.noteDetected();
+//        return shooter.noteDetected();
+        return false;
     }
 }

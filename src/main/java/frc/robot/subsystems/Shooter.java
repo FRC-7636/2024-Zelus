@@ -1,6 +1,6 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.RelativeEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.DigitalInput;
 
@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkLowLevel;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Constants.ShooterConstants;
 
@@ -18,9 +19,9 @@ public class Shooter extends SubsystemBase {
     private final DigitalInput noteSensor = new DigitalInput(ShooterConstants.Config.SENSOR_ID);
     private final CANSparkMax transMotor = new CANSparkMax(ShooterConstants.Config.TRANS_ID, CANSparkLowLevel.MotorType.kBrushless);
     private final CANSparkMax angleMotor = new CANSparkMax(ShooterConstants.Config.ANGLE_ID, CANSparkLowLevel.MotorType.kBrushless);
-    private final SparkPIDController angleController, leftPIDController, rightPIDController;
+    private final SparkPIDController anglePIDController, leftPIDController, rightPIDController;
 
-    private final RelativeEncoder leftMotorEncoder, rightMotorEncoder;
+    private final RelativeEncoder leftMotorEncoder, rightMotorEncoder, angleEncoder;
 
 
     private void setPID(SparkPIDController sparkPIDController, double p, double i, double d) {
@@ -51,30 +52,40 @@ public class Shooter extends SubsystemBase {
         transMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
         angleMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
 
+        angleEncoder = angleMotor.getEncoder();
+        leftMotorEncoder = leftMotor.getEncoder();
+        rightMotorEncoder = rightMotor.getEncoder();
+
         // apply PIDs to motors
-        angleController = angleMotor.getPIDController();
-        setPID(angleController, ShooterConstants.AnglePIDF.P, ShooterConstants.AnglePIDF.I, ShooterConstants.AnglePIDF.D);
+        anglePIDController = angleMotor.getPIDController();
+        setPID(anglePIDController, ShooterConstants.AnglePIDF.P, ShooterConstants.AnglePIDF.I, ShooterConstants.AnglePIDF.D);
         leftPIDController = leftMotor.getPIDController();
         setPID(leftPIDController, ShooterConstants.LeftPIDF.P, ShooterConstants.LeftPIDF.I, ShooterConstants.LeftPIDF.D);
         rightPIDController = rightMotor.getPIDController();
         setPID(rightPIDController, ShooterConstants.RightPIDF.P, ShooterConstants.RightPIDF.I, ShooterConstants.RightPIDF.D);
 
-        leftMotorEncoder = leftMotor.getEncoder();
-        rightMotorEncoder = rightMotor.getEncoder();
+        anglePIDController.setFeedbackDevice(angleEncoder);
+        leftPIDController.setFeedbackDevice(leftMotorEncoder);
+        rightPIDController.setFeedbackDevice(rightMotorEncoder);
+        anglePIDController.setOutputRange(-1, 1);
+        leftPIDController.setOutputRange(-1, 1);
+        rightPIDController.setOutputRange(-1, 1);
     }
 
     /**
      * Set both shooter motors to the "shoot" status.
-     * (set the speed in {@link ShooterConstants.Control})
+     * <p>(set the speed in {@link ShooterConstants.Control})
      */
     public void shoot() {
-        leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
-        rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+//         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+//         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+        leftMotor.set(0.65);
+        rightMotor.set(0.65);
     }
 
     /**
      * Set both shooter motors to the "suck" status.
-     * (set the speed in {@link ShooterConstants.Control})
+     * <p>(set the speed in {@link ShooterConstants.Control})
      */
     public void suck() {
         leftMotor.set(ShooterConstants.Control.SUCK_SPEED);
@@ -82,18 +93,24 @@ public class Shooter extends SubsystemBase {
     }
 
     public void standby() {
-        leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
-        rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+        leftPIDController.setReference(ShooterConstants.Control.STANDBY_SPEED, ControlType.kVelocity);
+        rightPIDController.setReference(ShooterConstants.Control.STANDBY_SPEED, ControlType.kVelocity);
     }
 
     /**
      * Set transportation motor to the specified speed.
-     * (set the speed in {@link ShooterConstants.Control})
+     * <p>(set the speed in {@link ShooterConstants.Control})
      */
     public void transport() {
         transMotor.set(ShooterConstants.Control.TRANS_SPEED);
     }
 
+    /**
+     * Reverse the transportation motor.
+     */
+    public void antiTransport() {
+        transMotor.set(-ShooterConstants.Control.TRANS_SPEED);
+    }
 
     /**
      * Stop the shooter motors.
@@ -123,12 +140,12 @@ public class Shooter extends SubsystemBase {
      * @param position  Desired shooter position, will be applied using {@link com.revrobotics.SparkPIDController}
      */
     public void setPosition(double position) {
-        angleController.setReference(position, ControlType.kSmartMotion);
+        anglePIDController.setReference(position, ControlType.kSmartMotion);
     }
 
     /**
      * Get the sensor value of the note sensor.
-     * @return Whether the note sensor is detecting a note.
+     * @return Whether the digital sensor is detecting a note.
      */
     public boolean noteDetected() {
         return noteSensor.get();
@@ -141,5 +158,23 @@ public class Shooter extends SubsystemBase {
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
         boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
         return (leftReady && rightReady);
+    }
+
+    public void up() {
+        angleMotor.set(0.5);
+    }
+
+    public void down() {
+        angleMotor.set(-0.5);
+    }
+
+    public void stopAngle() {
+        angleMotor.stopMotor();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Shooter Position", angleEncoder.getPosition());
+        SmartDashboard.putNumber("Shooter Velocity", leftMotorEncoder.getVelocity());
     }
 }

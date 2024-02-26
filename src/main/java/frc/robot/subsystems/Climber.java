@@ -1,18 +1,19 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.ctre.phoenix6.configs.*;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.signals.FeedbackSensorSourceValue;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.robot.Constants.ClimberConstants;
 
 public class Climber extends SubsystemBase {
-    private final TalonFX frontMotor = new TalonFX(ClimberConstants.Config.F_ID);
-    private final TalonFX rearMotor = new TalonFX(ClimberConstants.Config.R_ID);
+    private final TalonFX frontMotor = new TalonFX(ClimberConstants.Config.F_ID, "cantivore");
+    private final TalonFX rearMotor = new TalonFX(ClimberConstants.Config.R_ID, "cantivore");
 
     public Climber() {
         var frontMotorConfigurator = frontMotor.getConfigurator();
@@ -70,6 +71,26 @@ public class Climber extends SubsystemBase {
     public void setTrapLevel() {
         frontMotor.setControl(new MotionMagicDutyCycle(ClimberConstants.Control.TRAP));
         rearMotor.setControl(new MotionMagicDutyCycle(ClimberConstants.Control.TRAP));
+    }
+
+    public void up() {
+        frontMotor.set(0.5);
+        rearMotor.set(0.5);
+    }
+
+    public void down() {
+        frontMotor.set(-0.5);
+        rearMotor.set(-0.5);
+    }
+
+    public void stop() {
+        frontMotor.stopMotor();
+        rearMotor.stopMotor();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Climber Position", frontMotor.getPosition().getValueAsDouble());
     }
 }
 

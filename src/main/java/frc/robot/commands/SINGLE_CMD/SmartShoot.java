@@ -1,16 +1,19 @@
 package frc.robot.commands.SINGLE_CMD;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Shooter;
 
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class SmartShoot extends Command {
     private final Shooter shooter;
+    private final Intake intake;
 
-    public SmartShoot(Shooter shooter) {
+    public SmartShoot(Shooter shooter, Intake intake) {
         this.shooter = shooter;
+        this.intake = intake;
 
-        addRequirements(this.shooter);
+        addRequirements(this.shooter, this.intake);
     }
 
 
@@ -18,6 +21,7 @@ public class SmartShoot extends Command {
     public void execute() {
         shooter.shoot();
         if (shooter.readyToShoot()) {
+            intake.ITSShoot();
             shooter.transport();
         }
     }
