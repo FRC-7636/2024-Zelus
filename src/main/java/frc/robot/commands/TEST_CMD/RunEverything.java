@@ -20,7 +20,7 @@ public class RunEverything extends Command {
     public void execute() {
         shooter.shoot();
         shooter.transport();
-        intake.startITS();
+        intake.startConvey();
         intake.suck();
     }
 }

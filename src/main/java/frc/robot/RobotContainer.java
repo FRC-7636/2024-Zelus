@@ -78,8 +78,8 @@ public class RobotContainer {
     new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(shooter::shoot)).whileFalse(new InstantCommand(shooter::stopShoot));
     new JoystickButton(chassisCtrl, 2).onTrue(new InstantCommand(shooter::suck)).whileFalse(new InstantCommand(shooter::stopShoot));
     new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(shooter::transport)).whileFalse(new InstantCommand(shooter::stopTransport));
-//    new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(intake::suck, intake).andThen(new InstantCommand(intake::startITS, intake)))
-//            .whileFalse(new InstantCommand(intake::stopIntake, intake).andThen(new InstantCommand(intake::stopITS, intake)));
+//    new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(intake::suck, intake).andThen(new InstantCommand(intake::startConvey, intake)))
+//            .whileFalse(new InstantCommand(intake::stopIntake, intake).andThen(new InstantCommand(intake::stopConvey, intake)));
     new JoystickButton(chassisCtrl, 4).onTrue(new InstantCommand(intake::shoot)).whileFalse(new InstantCommand(intake::stopIntake));
     new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(driveBase::zeroGyro));
     new JoystickButton(chassisCtrl, 6).onTrue(new InstantCommand(shooter::antiTransport, shooter)).whileFalse(new InstantCommand(shooter::stopTransport, shooter));
