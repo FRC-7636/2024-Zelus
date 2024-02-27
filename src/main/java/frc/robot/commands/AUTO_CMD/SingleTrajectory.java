@@ -3,7 +3,6 @@ package frc.robot.commands.AUTO_CMD;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
-import frc.robot.Constants;
 import frc.robot.subsystems.PhotonVision;
 import frc.robot.subsystems.Swerve;
 import frc.robot.LimelightHelpers;
