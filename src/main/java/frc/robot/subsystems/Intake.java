@@ -62,7 +62,7 @@ public class Intake extends SubsystemBase{
         pipeIntake.set(IntakeConstants.Control.SUCK_SPEED);
     }
 
-    public void startITS() {
+    public void startConvey() {
         conveyor.set(IntakeConstants.Control.CONVEYOR_SPEED);
     }
 
@@ -70,13 +70,13 @@ public class Intake extends SubsystemBase{
         pipeIntake.stopMotor();
     }
 
-    public void stopITS() {
+    public void stopConvey() {
         conveyor.stopMotor();
     }
 
     public void stopAll() {
         stopIntake();
-        stopITS();
+        stopConvey();
     }
 
     public void floorAngle(){
@@ -111,7 +111,7 @@ public class Intake extends SubsystemBase{
         angleIntake.stopMotor();
     }
 
-    public void ITSShoot() {
+    public void conveyorShoot() {
         conveyor.set(-IntakeConstants.Control.CONVEYOR_SPEED);
     }
 

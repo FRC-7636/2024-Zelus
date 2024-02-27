@@ -21,7 +21,7 @@ public class GetNoteFromFloor extends Command {
     public void execute() {
         // intake.floorAngle();
         intake.suck();
-        intake.startITS();
+        intake.startConvey();
         // shooter.transport();
     }
 
@@ -29,7 +29,7 @@ public class GetNoteFromFloor extends Command {
     public void end(boolean interrupted) {
         shooter.stopTransport();
         shooter.standby();
-        intake.stopITS();
+        intake.stopConvey();
         intake.stopIntake();
     }
 

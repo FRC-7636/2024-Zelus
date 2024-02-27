@@ -21,7 +21,7 @@ public class SmartShoot extends Command {
     public void execute() {
         shooter.shoot();
         if (shooter.readyToShoot()) {
-            intake.ITSShoot();
+            intake.conveyorShoot();
             shooter.transport();
         }
     }
