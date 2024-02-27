@@ -166,6 +166,9 @@ public class Shooter extends SubsystemBase {
         return (leftReady && rightReady);
     }
 
+    /**
+     * set the angle motor to the origin position
+     */
     public void originAngle(){
         anglePIDController.setReference(ShooterConstants.Control.ORIGIN_POSITION, ControlType.kSmartMotion);
     }

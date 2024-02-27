@@ -86,20 +86,36 @@ public class Intake extends SubsystemBase{
         stopConvey();
     }
 
+    /**
+     * set intake angle motor to the floor position
+     * <p> (set floor angle at {@link IntakeConstants.Control})
+     */
     public void floorAngle(){
         intakePIDController.setSmartMotionMaxAccel(1200, 0);
         intakePIDController.setSmartMotionMaxVelocity(4000, 0);
-        intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION/2, ControlType.kSmartMotion);
+        intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kSmartMotion);
     }
 
+    /**
+     * set intake angle motor to the amp position
+     * <p> (set amp angle at {@link IntakeConstants.Control})
+     */
     public void ampAngle(){
         intakePIDController.setReference(IntakeConstants.Control.AMP_POSITION, ControlType.kSmartMotion);
     }
 
+    /**
+     * set intake angle motor to the trap position
+     * <p> (set trap angle at {@link IntakeConstants.Control})
+     */
     public void trapAngle(){
         intakePIDController.setReference(IntakeConstants.Control.TRAP_POSITION, ControlType.kSmartMotion);
     }
 
+    /**
+     * set intake angle motor to the origin position
+     * <p> (set origin angle at {@link IntakeConstants.Control})
+     */
     public void backToZero(){
         intakePIDController.setSmartMotionMaxAccel(4000, 0);
         intakePIDController.setSmartMotionMaxVelocity(8000, 0);
