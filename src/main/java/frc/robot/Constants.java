@@ -103,7 +103,7 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double FLOOR_POSITION = -3.5;
+            public static final double FLOOR_POSITION = -3.5/2;
             public static final double AMP_POSITION = -1;
             public static final double TRAP_POSITION = 0;
             public static final double ORIGIN_POSITION = 0;
