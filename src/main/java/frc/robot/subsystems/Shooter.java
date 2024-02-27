@@ -160,6 +160,10 @@ public class Shooter extends SubsystemBase {
         return (leftReady && rightReady);
     }
 
+    public void originAngle(){
+        anglePIDController.setReference(ShooterConstants.Control.ORIGIN_POSITION, ControlType.kSmartMotion);
+    }
+
     public void up() {
         angleMotor.set(0.5);
     }
