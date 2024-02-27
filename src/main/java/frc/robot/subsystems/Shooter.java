@@ -23,7 +23,13 @@ public class Shooter extends SubsystemBase {
 
     private final RelativeEncoder leftMotorEncoder, rightMotorEncoder, angleEncoder;
 
-
+    /**
+     * set PID using SparkPIDController
+     * @param sparkPIDController sparkPIDController which you want to set PID for
+     * @param p set P
+     * @param i set I
+     * @param d set D
+     */
     private void setPID(SparkPIDController sparkPIDController, double p, double i, double d) {
         sparkPIDController.setP(p);
         sparkPIDController.setI(i);
