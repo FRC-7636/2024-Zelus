@@ -6,10 +6,12 @@ import edu.wpi.first.wpilibj.DigitalInput;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel;
+import com.revrobotics.SparkPIDController;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.SparkPIDController;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.SparkAbsoluteEncoder;
 
 import frc.robot.Constants.ShooterConstants;
 
@@ -21,7 +23,8 @@ public class Shooter extends SubsystemBase {
     private final CANSparkMax angleMotor = new CANSparkMax(ShooterConstants.Config.ANGLE_ID, CANSparkLowLevel.MotorType.kBrushless);
     private final SparkPIDController anglePIDController, leftPIDController, rightPIDController;
 
-    private final RelativeEncoder leftMotorEncoder, rightMotorEncoder, angleEncoder;
+    private final RelativeEncoder leftMotorEncoder, rightMotorEncoder;
+    private final AbsoluteEncoder angleEncoder;
 
     /**
      * set PID using SparkPIDController
@@ -58,9 +61,11 @@ public class Shooter extends SubsystemBase {
         transMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
         angleMotor.setSmartCurrentLimit(ShooterConstants.Config.CURRENT_LIMIT);
 
-        angleEncoder = angleMotor.getEncoder();
         leftMotorEncoder = leftMotor.getEncoder();
         rightMotorEncoder = rightMotor.getEncoder();
+
+        angleEncoder = angleMotor.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        angleEncoder.setPositionConversionFactor(360);
 
         // apply PIDs to motors
         anglePIDController = angleMotor.getPIDController();
@@ -73,9 +78,21 @@ public class Shooter extends SubsystemBase {
         anglePIDController.setFeedbackDevice(angleEncoder);
         leftPIDController.setFeedbackDevice(leftMotorEncoder);
         rightPIDController.setFeedbackDevice(rightMotorEncoder);
-        anglePIDController.setOutputRange(-1, 1);
+        anglePIDController.setOutputRange(-0.35, 0.65);
         leftPIDController.setOutputRange(-1, 1);
         rightPIDController.setOutputRange(-1, 1);
+        /* enable PID wrapping
+         * after wrapping:
+         *   set "0 -> 350", motor will go -10 instead of +350
+         */
+        anglePIDController.setPositionPIDWrappingEnabled(true);
+        anglePIDController.setPositionPIDWrappingMinInput(0);
+        anglePIDController.setPositionPIDWrappingMaxInput(360);
+
+        leftMotor.burnFlash();
+        rightMotor.burnFlash();
+        transMotor.burnFlash();
+        angleMotor.burnFlash();
     }
 
     /**
@@ -85,8 +102,8 @@ public class Shooter extends SubsystemBase {
     public void shoot() {
 //         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
 //         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
-        leftMotor.set(0.65);
-        rightMotor.set(0.65);
+        leftMotor.set(0.7);
+        rightMotor.set(0.7);
     }
 
     /**
@@ -146,7 +163,7 @@ public class Shooter extends SubsystemBase {
      * @param position  Desired shooter position, will be applied using {@link com.revrobotics.SparkPIDController}
      */
     public void setPosition(double position) {
-        anglePIDController.setReference(position, ControlType.kSmartMotion);
+        anglePIDController.setReference(position, ControlType.kPosition);
     }
 
     /**
@@ -170,7 +187,7 @@ public class Shooter extends SubsystemBase {
      * set the angle motor to the origin position
      */
     public void originAngle(){
-        anglePIDController.setReference(ShooterConstants.Control.ORIGIN_POSITION, ControlType.kSmartMotion);
+        anglePIDController.setReference(ShooterConstants.Control.ORIGIN_POSITION, ControlType.kPosition);
     }
 
     public void up() {
@@ -189,5 +206,6 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Shooter Position", angleEncoder.getPosition());
         SmartDashboard.putNumber("Shooter Velocity", leftMotorEncoder.getVelocity());
+        SmartDashboard.putNumber("Shooter Applied Output", angleMotor.getAppliedOutput());
     }
 }

@@ -4,8 +4,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.SparkPIDController;
+import com.revrobotics.SparkAbsoluteEncoder;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
@@ -16,7 +17,7 @@ public class Intake extends SubsystemBase{
     private final CANSparkMax pipeIntake = new CANSparkMax(IntakeConstants.Config.PIPE_ID, MotorType.kBrushless);
     private final CANSparkMax angleIntake = new CANSparkMax(IntakeConstants.Config.ANGLE_ID, MotorType.kBrushless);
     private final CANSparkMax conveyor = new CANSparkMax(IntakeConstants.Config.CONVEYOR_ID, MotorType.kBrushless);
-    private final RelativeEncoder intakeEncoder;
+    private final AbsoluteEncoder intakeEncoder;
     private final SparkPIDController intakePIDController;
 
     /**
@@ -49,16 +50,28 @@ public class Intake extends SubsystemBase{
         angleIntake.setSmartCurrentLimit(IntakeConstants.Config.CURRENT_LIMIT);
         conveyor.setSmartCurrentLimit(IntakeConstants.Config.CURRENT_LIMIT);
 
-        intakeEncoder = angleIntake.getEncoder();
-
-        // define current position as zero
-        intakeEncoder.setPosition(0);
+        intakeEncoder = angleIntake.getAbsoluteEncoder(SparkAbsoluteEncoder.Type.kDutyCycle);
+        intakeEncoder.setInverted(true);
+        intakeEncoder.setPositionConversionFactor(360);  // 0~1 -> 0~360
 
         intakePIDController = angleIntake.getPIDController();
         intakePIDController.setFeedbackDevice(intakeEncoder);
         setPID(intakePIDController, IntakeConstants.AnglePIDF.P, IntakeConstants.AnglePIDF.I, IntakeConstants.AnglePIDF.D);
-        intakePIDController.setFF(0.0001);
-        intakePIDController.setOutputRange(-1, 1);
+        // configuration for Smart Motion
+        intakePIDController.setSmartMotionMaxAccel(2000, 0);
+        intakePIDController.setSmartMotionMaxVelocity(2000, 0);
+        /* enable PID wrapping
+         * after wrapping:
+         *   set "0 -> 350", motor will go -10 instead of +350
+         */
+        intakePIDController.setPositionPIDWrappingEnabled(true);
+        intakePIDController.setPositionPIDWrappingMinInput(0);
+        intakePIDController.setPositionPIDWrappingMaxInput(360);
+        intakePIDController.setOutputRange(-0.3, 1);
+
+        pipeIntake.burnFlash();
+        angleIntake.burnFlash();
+        conveyor.burnFlash();
     }
 
     public void shoot(){
@@ -91,9 +104,7 @@ public class Intake extends SubsystemBase{
      * <p> (set floor angle at {@link IntakeConstants.Control})
      */
     public void floorAngle(){
-        intakePIDController.setSmartMotionMaxAccel(1200, 0);
-        intakePIDController.setSmartMotionMaxVelocity(4000, 0);
-        intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kSmartMotion);
+        intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kPosition);
     }
 
     /**
@@ -101,7 +112,7 @@ public class Intake extends SubsystemBase{
      * <p> (set amp angle at {@link IntakeConstants.Control})
      */
     public void ampAngle(){
-        intakePIDController.setReference(IntakeConstants.Control.AMP_POSITION, ControlType.kSmartMotion);
+        intakePIDController.setReference(IntakeConstants.Control.AMP_POSITION, ControlType.kPosition);
     }
 
     /**
@@ -109,7 +120,7 @@ public class Intake extends SubsystemBase{
      * <p> (set trap angle at {@link IntakeConstants.Control})
      */
     public void trapAngle(){
-        intakePIDController.setReference(IntakeConstants.Control.TRAP_POSITION, ControlType.kSmartMotion);
+        intakePIDController.setReference(IntakeConstants.Control.TRAP_POSITION, ControlType.kPosition);
     }
 
     /**
@@ -117,9 +128,7 @@ public class Intake extends SubsystemBase{
      * <p> (set origin angle at {@link IntakeConstants.Control})
      */
     public void backToZero(){
-        intakePIDController.setSmartMotionMaxAccel(4000, 0);
-        intakePIDController.setSmartMotionMaxVelocity(8000, 0);
-        intakePIDController.setReference(-2.54, ControlType.kSmartMotion);
+        intakePIDController.setReference(5, ControlType.kPosition);
     }
 
     public void up() {
@@ -135,7 +144,7 @@ public class Intake extends SubsystemBase{
     }
 
     public void conveyorShoot() {
-        conveyor.set(-IntakeConstants.Control.CONVEYOR_SPEED);
+        conveyor.set(IntakeConstants.Control.CONVEYOR_SPEED);
     }
 
     @Override

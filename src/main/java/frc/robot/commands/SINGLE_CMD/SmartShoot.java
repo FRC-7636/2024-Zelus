@@ -35,5 +35,6 @@ public class SmartShoot extends Command {
     @Override
     public void end(boolean interrupted) {
         shooter.stopAll();
+        intake.stopConvey();
     }
 }

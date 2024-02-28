@@ -52,7 +52,7 @@ public class Constants {
             public static final int ANGLE_ID = 10;
             public static final boolean SHOOTER_INVERTED = true;
             public static final boolean TRANS_INVERTED = false;
-            public static final boolean ANGLE_INVERTED = false;
+            public static final boolean ANGLE_INVERTED = true;
             public static final int SENSOR_ID = 9;
             public static final int CURRENT_LIMIT = 35;
         }
@@ -61,14 +61,14 @@ public class Constants {
             public static final double SHOOT_VELOCITY = 3690;  // Absolute
             public static final double SUCK_SPEED = -0.25;  // Relative
             public static final double STANDBY_SPEED = 0;
-            public static final double ORIGIN_POSITION = 0;
+            public static final double ORIGIN_POSITION = 5;
             public static final double TRANS_SPEED = 0.4;
         }
 
         public static class AnglePIDF {
-            public static final double P = 0;
+            public static final double P = 0.02;
             public static final double I = 0;
-            public static final double D = 0;
+            public static final double D = 0.02;
         }
 
         public static class LeftPIDF {
@@ -92,23 +92,23 @@ public class Constants {
             public static final int CONVEYOR_ID = 21;
             public static final boolean PIPE_INVERTED = false;
             public static final boolean ANGLE_INVERTED = true;
-            public static final boolean CONVEYOR_INVERTED = true;
+            public static final boolean CONVEYOR_INVERTED = false;
             public static final int CURRENT_LIMIT = 35;
         }
 
         public static class AnglePIDF {
-            public static final double P = 0.0017;
-            public static final double I = 0.0000001;
+            public static final double P = 0.0048;
+            public static final double I = 0;
             public static final double D = 0;
         }
 
         public static class Control {
-            public static final double FLOOR_POSITION = -3.5/2;
+            public static final double FLOOR_POSITION = 125;  // 226
             public static final double AMP_POSITION = -1;
             public static final double TRAP_POSITION = 0;
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = -1;
-            public static final double SUCK_SPEED = 0.6;
+            public static final double SUCK_SPEED = 0.4;
             public static final double CONVEYOR_SPEED = 0.6;
         }
     }

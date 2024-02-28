@@ -1,5 +1,6 @@
 package frc.robot.commands.AUTO_CMD;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Commands;
 
@@ -19,6 +20,7 @@ public class MiddleStart extends SequentialCommandGroup{
         addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve)); // TODO: Solve the "getBotPose2d" not working
         addCommands(m_swerve.getAutonomousCommand("1", false));
         addCommands(m_swerve.getAutonomousCommand("2", false));
+        addCommands(new InstantCommand());
         addCommands(m_swerve.getAutonomousCommand("4", false));
     }
 }

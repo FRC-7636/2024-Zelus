@@ -31,6 +31,7 @@ import frc.robot.commands.AUTO_CMD.BlueTest2;
 import frc.robot.commands.SINGLE_CMD.AutoAim;
 import frc.robot.commands.SINGLE_CMD.SmartShoot;
 import frc.robot.commands.SINGLE_CMD.GetNoteFromFloor;
+import frc.robot.commands.SINGLE_CMD.SmartIntake;
 import frc.robot.commands.TEST_CMD.StopEverything;
 import frc.robot.commands.SWERVE_CMD.AbsDrive;
 import frc.robot.commands.SWERVE_CMD.FieldRelativeDrive;
@@ -63,6 +64,7 @@ public class RobotContainer {
   private final AutoAim autoAim = new AutoAim(driveBase);
   private final StopEverything stopEverything = new StopEverything(intake, shooter);
   private final SmartShoot smartShoot = new SmartShoot(shooter, intake);
+  private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
   private final GetNoteFromFloor getNoteFromFloor = new GetNoteFromFloor(intake, shooter);
 
   private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
@@ -75,23 +77,14 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-    new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(shooter::shoot)).whileFalse(new InstantCommand(shooter::stopShoot));
-    new JoystickButton(chassisCtrl, 2).onTrue(new InstantCommand(shooter::suck)).whileFalse(new InstantCommand(shooter::stopShoot));
-    new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(shooter::transport)).whileFalse(new InstantCommand(shooter::stopTransport));
-//    new JoystickButton(chassisCtrl, 3).onTrue(new InstantCommand(intake::suck, intake).andThen(new InstantCommand(intake::startConvey, intake)))
-//            .whileFalse(new InstantCommand(intake::stopIntake, intake).andThen(new InstantCommand(intake::stopConvey, intake)));
-    new JoystickButton(chassisCtrl, 4).onTrue(new InstantCommand(intake::shoot)).whileFalse(new InstantCommand(intake::stopIntake));
-    new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(driveBase::zeroGyro));
-    new JoystickButton(chassisCtrl, 6).onTrue(new InstantCommand(shooter::antiTransport, shooter)).whileFalse(new InstantCommand(shooter::stopTransport, shooter));
-    new POVButton(chassisCtrl, 0).onTrue(new InstantCommand(intake::up)).whileFalse(new InstantCommand(intake::stopAngle));
-    new POVButton(chassisCtrl, 180).onTrue(new InstantCommand(intake::down)).whileFalse(new InstantCommand(intake::stopAngle));
+    new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(45), shooter));
+    new JoystickButton(chassisCtrl, 2).onTrue(new InstantCommand(() -> shooter.setPosition(7), shooter));
+    new JoystickButton(chassisCtrl, 3).whileTrue(smartIntake);
+    new JoystickButton(chassisCtrl, 4).whileTrue(smartShoot);
+    new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::zeroGyro));
 
-    new JoystickButton(botCtrl, 1).whileTrue(new InstantCommand(intake::ampAngle));
-    new JoystickButton(botCtrl, 2).whileTrue(new InstantCommand(intake::backToZero));
-    new JoystickButton(botCtrl, 3).onTrue(new InstantCommand(climber::up)).whileFalse(new InstantCommand(climber::stop));
-    new JoystickButton(botCtrl, 4).onTrue(new InstantCommand(climber::down)).whileFalse(new InstantCommand(climber::stop));
-    new JoystickButton(botCtrl, 5).onTrue(new InstantCommand(shooter::up)).whileFalse(new InstantCommand(shooter::stopAngle));
-    new JoystickButton(botCtrl, 6).onTrue(new InstantCommand(shooter::down)).whileFalse(new InstantCommand(shooter::stopAngle));
+//    new POVButton(chassisCtrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop));
+//    new POVButton(chassisCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
   }
 
   public Command getAutonomousCommand() {
