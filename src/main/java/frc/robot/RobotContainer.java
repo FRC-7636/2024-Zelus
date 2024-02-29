@@ -28,6 +28,7 @@ import frc.robot.commands.AUTO_CMD.LeftStart;
 import frc.robot.commands.AUTO_CMD.MiddleStart;
 import frc.robot.commands.AUTO_CMD.SingleTrajectory;
 import frc.robot.commands.AUTO_CMD.BlueTest2;
+import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.SINGLE_CMD.AutoAim;
 import frc.robot.commands.SINGLE_CMD.SmartShoot;
 import frc.robot.commands.SINGLE_CMD.GetNoteFromFloor;
@@ -61,10 +62,11 @@ public class RobotContainer {
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.05), 
                                         () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
-  private final AutoAim autoAim = new AutoAim(driveBase);
+  private final AutoAim autoAim = new AutoAim(driveBase, shooter);
   private final StopEverything stopEverything = new StopEverything(intake, shooter);
   private final SmartShoot smartShoot = new SmartShoot(shooter, intake);
   private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
+  private final BackToOrigin backToOrigin = new BackToOrigin(climber, intake, shooter);
   private final GetNoteFromFloor getNoteFromFloor = new GetNoteFromFloor(intake, shooter);
 
   private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
@@ -79,9 +81,13 @@ public class RobotContainer {
   private void configureBindings() {
     new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(45), shooter));
     new JoystickButton(chassisCtrl, 2).onTrue(new InstantCommand(() -> shooter.setPosition(7), shooter));
-    new JoystickButton(chassisCtrl, 3).whileTrue(smartIntake);
+    new JoystickButton(chassisCtrl, 3).onTrue(smartIntake);
     new JoystickButton(chassisCtrl, 4).whileTrue(smartShoot);
+
+    new JoystickButton(chassisCtrl, 5).whileTrue(autoAim);
+
     new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::zeroGyro));
+    new JoystickButton(chassisCtrl, 8).onTrue(backToOrigin);
 
 //    new POVButton(chassisCtrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop));
 //    new POVButton(chassisCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
