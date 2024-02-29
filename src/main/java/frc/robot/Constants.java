@@ -38,7 +38,7 @@ public class Constants {
     }
 
     public static class AutoAimPID {
-        public static final double P = 0.05;
+        public static final double P = 0.07;
         public static final double I = 0;
         public static final double D = 0;
     }
@@ -60,19 +60,19 @@ public class Constants {
         public static class Control {
             public static final double SHOOT_VELOCITY = 3690;  // Absolute
             public static final double SUCK_SPEED = -0.25;  // Relative
-            public static final double STANDBY_SPEED = 0;
+            public static final double STANDBY_SPEED = 0.5;
             public static final double ORIGIN_POSITION = 5;
-            public static final double TRANS_SPEED = 0.4;
+            public static final double TRANS_SPEED = 0.3;
         }
 
         public static class AnglePIDF {
             public static final double P = 0.02;
-            public static final double I = 0;
+            public static final double I = 0.00001;
             public static final double D = 0.02;
         }
 
         public static class LeftPIDF {
-            public static final double P = 0;
+            public static final double P = 0.001;
             public static final double I = 0;
             public static final double D = 0;
         }
@@ -97,7 +97,7 @@ public class Constants {
         }
 
         public static class AnglePIDF {
-            public static final double P = 0.0048;
+            public static final double P = 0.0045;
             public static final double I = 0;
             public static final double D = 0;
         }
@@ -108,7 +108,7 @@ public class Constants {
             public static final double TRAP_POSITION = 0;
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = -1;
-            public static final double SUCK_SPEED = 0.4;
+            public static final double SUCK_SPEED = 0.8;
             public static final double CONVEYOR_SPEED = 0.6;
         }
     }
