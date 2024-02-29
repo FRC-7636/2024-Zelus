@@ -20,7 +20,7 @@ public class SmartIntake extends Command {
 
     @Override
     public void execute() {
-        shooter.setPosition(25);
+        shooter.setPosition(22);
         intake.floorAngle();
         intake.suck();
         intake.startConvey();
@@ -29,13 +29,16 @@ public class SmartIntake extends Command {
 
     @Override
     public boolean isFinished() {
-        // TODO: return true when Shooter has detected NOTE
-        return false;
+        return shooter.noteDetected();
     }
 
     @Override
     public void end(boolean interrupted) {
         intake.stopAll();
+        intake.backToZero();
         shooter.stopTransport();
+        if (shooter.noteDetected()) {
+            shooter.standby();
+        }
     }
 }
