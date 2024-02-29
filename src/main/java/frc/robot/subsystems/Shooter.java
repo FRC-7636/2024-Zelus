@@ -102,8 +102,8 @@ public class Shooter extends SubsystemBase {
     public void shoot() {
 //         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
 //         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
-        leftMotor.set(0.7);
-        rightMotor.set(0.7);
+        leftMotor.set(0.85);
+        rightMotor.set(0.85);
     }
 
     /**
@@ -116,8 +116,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public void standby() {
-        leftPIDController.setReference(ShooterConstants.Control.STANDBY_SPEED, ControlType.kVelocity);
-        rightPIDController.setReference(ShooterConstants.Control.STANDBY_SPEED, ControlType.kVelocity);
+        leftMotor.set(ShooterConstants.Control.STANDBY_SPEED);
+        rightMotor.set(ShooterConstants.Control.STANDBY_SPEED);
     }
 
     /**
@@ -171,7 +171,7 @@ public class Shooter extends SubsystemBase {
      * @return Whether the digital sensor is detecting a note.
      */
     public boolean noteDetected() {
-        return noteSensor.get();
+        return !noteSensor.get();
     }
 
     /**
@@ -207,5 +207,6 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Position", angleEncoder.getPosition());
         SmartDashboard.putNumber("Shooter Velocity", leftMotorEncoder.getVelocity());
         SmartDashboard.putNumber("Shooter Applied Output", angleMotor.getAppliedOutput());
+        SmartDashboard.putBoolean("NOTE Detected?", noteDetected());
     }
 }
