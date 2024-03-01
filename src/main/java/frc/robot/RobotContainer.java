@@ -121,11 +121,6 @@ public class RobotContainer {
     SmartDashboard.putData("Choose Auto", autoChooser);
   }
 
-  public void autoResetOdometry() {
-    Pose2d currentPose = driveBase.getPose().plus(new Transform2d(0, 0, Rotation2d.fromDegrees(180)));
-    driveBase.resetOdometry(currentPose);
-  }
-
   public void rumbleeeeeeee() {
     chassisCtrl.setRumble(GenericHID.RumbleType.kBothRumble, Math.abs(chassisCtrl.getRightY()));
   }
