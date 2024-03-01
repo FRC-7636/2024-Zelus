@@ -3,6 +3,7 @@ package frc.robot.commands.AUTO_CMD;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 import frc.robot.LimelightHelpers;
 import frc.robot.subsystems.Intake;
@@ -22,6 +23,7 @@ public class MiddleStart extends SequentialCommandGroup {
         addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve));
         addCommands(new AutoIntake(shooter, intake)
                 .alongWith(m_swerve.getAutonomousCommand("1", false)));
+        addCommands(new WaitCommand(3));
         addCommands(new AutoIntakeStop(shooter, intake));
         addCommands(m_swerve.getAutonomousCommand("2", false));
         addCommands(m_swerve.getAutonomousCommand("4", false));

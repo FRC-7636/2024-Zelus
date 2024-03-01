@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
+import frc.robot.Constants.ShooterConstants;
 
 public class SmartIntake extends Command {
     private final Intake intake;
@@ -20,7 +21,7 @@ public class SmartIntake extends Command {
 
     @Override
     public void execute() {
-        shooter.setPosition(17);
+        shooter.setPosition(ShooterConstants.Control.INTAKE_POSITION);
         intake.floorAngle();
         intake.suck();
         intake.startConvey();

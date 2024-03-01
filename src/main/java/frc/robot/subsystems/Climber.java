@@ -75,8 +75,8 @@ public class Climber extends SubsystemBase {
     }
 
     public void down() {
-        frontMotor.set(-0.3);
-        rearMotor.set(-0.3);
+        frontMotor.set(-0.2);
+        rearMotor.set(-0.2);
     }
 
     public void stop() {

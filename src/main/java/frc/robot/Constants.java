@@ -63,6 +63,7 @@ public class Constants {
             public static final double SUCK_SPEED = -0.25;  // Relative
             public static final double STANDBY_SPEED = 0.5;
             public static final double ORIGIN_POSITION = 5;
+            public static final double INTAKE_POSITION = 13;
             public static final double TOP_POSITION = 49;
             public static final double TRANS_SPEED = 0.55;
         }
@@ -105,13 +106,13 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double FLOOR_POSITION = 122;
+            public static final double FLOOR_POSITION = 120;
             public static final double AMP_POSITION = 10;
             public static final double TRAP_POSITION = 0;
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = -1;
-            public static final double SUCK_SPEED = 0.75;
-            public static final double CONVEYOR_SPEED = 0.65;
+            public static final double SUCK_SPEED = 0.85;
+            public static final double CONVEYOR_SPEED = 0.8;
         }
     }
 
