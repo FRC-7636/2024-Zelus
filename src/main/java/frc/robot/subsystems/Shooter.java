@@ -26,6 +26,8 @@ public class Shooter extends SubsystemBase {
     private final RelativeEncoder leftMotorEncoder, rightMotorEncoder;
     private final AbsoluteEncoder angleEncoder;
 
+    private double desiredSpeed = 0;
+
     /**
      * set PID using SparkPIDController
      * @param sparkPIDController sparkPIDController which you want to set PID for
@@ -102,8 +104,15 @@ public class Shooter extends SubsystemBase {
     public void shoot() {
 //         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
 //         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
+        desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
         leftMotor.set(0.85);
         rightMotor.set(0.85);
+    }
+
+    public void shootNear() {
+        desiredSpeed = ShooterConstants.Control.SHOOT_NEAR_VELOCITY;
+        leftMotor.set(0.7);
+        rightMotor.set(0.7);
     }
 
     /**
@@ -178,8 +187,8 @@ public class Shooter extends SubsystemBase {
      * @return true when both motors are ready
      */
     public boolean readyToShoot() {
-        boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
-        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - ShooterConstants.Control.SHOOT_VELOCITY) <= 50;
+        boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
+        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         return (leftReady && rightReady);
     }
 
@@ -196,6 +205,10 @@ public class Shooter extends SubsystemBase {
 
     public void down() {
         angleMotor.set(-0.5);
+    }
+
+    public void topAngle(){
+        anglePIDController.setReference(ShooterConstants.Control.TOP_POSITION, ControlType.kPosition);
     }
 
     public void stopAngle() {

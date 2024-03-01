@@ -1,4 +1,4 @@
-package frc.robot.commands.SINGLE_CMD;
+package frc.robot.commands.AUTO_CMD;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -16,7 +16,6 @@ public class AutoIntake extends Command {
         // addRequirements() method (which takes a vararg of Subsystem)
         addRequirements(this.intake, this.shooter);
     }
-
 
     @Override
     public void execute() {

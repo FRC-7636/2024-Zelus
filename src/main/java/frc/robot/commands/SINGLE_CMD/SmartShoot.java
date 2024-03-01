@@ -1,5 +1,6 @@
 package frc.robot.commands.SINGLE_CMD;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -24,7 +25,7 @@ public class SmartShoot extends Command {
         Pose3d robotToTarget = LimelightHelpers.getBotPose3d_TargetSpace("");
         double deltaDegY = 90 - Math.toDegrees(Math.atan2(-robotToTarget.getZ(), robotToTarget.getY() + 0.45));
         System.out.println(deltaDegY);
-        shooter.setPosition(deltaDegY - 16);
+        shooter.setPosition(MathUtil.clamp(deltaDegY - 16, 5, 50));
 
         shooter.shoot();
         if (shooter.readyToShoot()) {
@@ -35,8 +36,7 @@ public class SmartShoot extends Command {
 
     @Override
     public boolean isFinished() {
-        // TODO: return "true" when the note is out
-        return false;
+        return !shooter.noteDetected();
     }
 
     @Override

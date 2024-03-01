@@ -72,6 +72,8 @@ public class Intake extends SubsystemBase{
         pipeIntake.burnFlash();
         angleIntake.burnFlash();
         conveyor.burnFlash();
+
+        backToZero();
     }
 
     public void shoot(){

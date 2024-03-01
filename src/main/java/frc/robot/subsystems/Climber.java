@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.InvertType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -68,19 +69,14 @@ public class Climber extends SubsystemBase {
         rearMotor.setControl(new MotionMagicDutyCycle(ClimberConstants.Control.BALANCE));
     }
 
-    public void setTrapLevel() {
-        frontMotor.setControl(new MotionMagicDutyCycle(ClimberConstants.Control.TRAP));
-        rearMotor.setControl(new MotionMagicDutyCycle(ClimberConstants.Control.TRAP));
-    }
-
     public void up() {
         frontMotor.set(0.2);
         rearMotor.set(0.2);
     }
 
     public void down() {
-        frontMotor.set(-0.2);
-        rearMotor.set(-0.2);
+        frontMotor.set(-0.3);
+        rearMotor.set(-0.3);
     }
 
     public void stop() {
@@ -90,7 +86,9 @@ public class Climber extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Climber Position", frontMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Climber Position F", frontMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Climber Position R", rearMotor.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("Climber Velocity", frontMotor.getVelocity().getValueAsDouble());
     }
 }
 

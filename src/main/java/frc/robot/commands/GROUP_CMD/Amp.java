@@ -8,6 +8,6 @@ import frc.robot.subsystems.Intake;
 public class Amp extends SequentialCommandGroup {
     public Amp(Climber climber, Intake intake) {
         addCommands(new InstantCommand(climber::setAmpLevel, climber));
-        andThen(new InstantCommand(intake::ampAngle, intake));
+        addCommands(new InstantCommand(intake::ampAngle, intake));
     }
 }

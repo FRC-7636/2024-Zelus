@@ -5,22 +5,25 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.Commands;
 
 import frc.robot.LimelightHelpers;
-import frc.robot.subsystems.PhotonVision;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
+import frc.robot.commands.AUTO_CMD.AutoIntake;
+import frc.robot.commands.AUTO_CMD.AutoIntakeStop;
+import frc.robot.commands.SINGLE_CMD.SmartShoot;
+import frc.robot.commands.SINGLE_CMD.SmartIntake;
 
-public class MiddleStart extends SequentialCommandGroup{
-    public MiddleStart(PhotonVision m_photonVision, Swerve m_swerve){
-        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(m_photonVision.getLatestEstimatedRobotPose()), m_swerve, m_photonVision));
-        addCommands(m_swerve.getAutonomousCommand("1", false));
-        addCommands(m_swerve.getAutonomousCommand("2", false));
-        addCommands(m_swerve.getAutonomousCommand("2 Shoot", false));
-    }
+public class MiddleStart extends SequentialCommandGroup {
 
-    public MiddleStart(Swerve m_swerve){
-        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve)); // TODO: Solve the "getBotPose2d" not working
-        addCommands(m_swerve.getAutonomousCommand("1", false));
+    public MiddleStart(Swerve m_swerve, Shooter shooter, Intake intake) {
+        addCommands(new InstantCommand(intake::floorAngle));
+        addCommands(new InstantCommand(() -> shooter.setPosition(50)));
+        addCommands(new SmartShoot(shooter, intake));
+        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve));
+        addCommands(new AutoIntake(shooter, intake)
+                .alongWith(m_swerve.getAutonomousCommand("1", false)));
+        addCommands(new AutoIntakeStop(shooter, intake));
         addCommands(m_swerve.getAutonomousCommand("2", false));
-        addCommands(new InstantCommand());
         addCommands(m_swerve.getAutonomousCommand("4", false));
     }
 }

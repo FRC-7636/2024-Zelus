@@ -24,14 +24,14 @@ public class Constants {
     }
 
     public static class AutoDrivePIDF {
-        public static final double P = 6.2;
+        public static final double P = 4.5;
         public static final double I = 0.00;
         public static final double D = 0;
         public static final double I_ZONE = 0;
     }
 
     public static class AutoTurnPIDF {
-        public static final double P = 1.55;
+        public static final double P = 1.3;
         public static final double I = 0.0;
         public static final double D = 0.00;
         public static final double I_ZONE = 0.0;
@@ -51,18 +51,20 @@ public class Constants {
             public static final int TRANS_ID = 13;
             public static final int ANGLE_ID = 10;
             public static final boolean SHOOTER_INVERTED = true;
-            public static final boolean TRANS_INVERTED = false;
+            public static final boolean TRANS_INVERTED = true;
             public static final boolean ANGLE_INVERTED = true;
             public static final int SENSOR_ID = 9;
             public static final int CURRENT_LIMIT = 35;
         }
 
         public static class Control {
-            public static final double SHOOT_VELOCITY = 3690;  // Absolute
+            public static final double SHOOT_VELOCITY = 3700;  // Absolute
+            public static final double SHOOT_NEAR_VELOCITY = 3970;
             public static final double SUCK_SPEED = -0.25;  // Relative
             public static final double STANDBY_SPEED = 0.5;
             public static final double ORIGIN_POSITION = 5;
-            public static final double TRANS_SPEED = 0.3;
+            public static final double TOP_POSITION = 49;
+            public static final double TRANS_SPEED = 0.55;
         }
 
         public static class AnglePIDF {
@@ -103,13 +105,13 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double FLOOR_POSITION = 125;  // 226
-            public static final double AMP_POSITION = -1;
+            public static final double FLOOR_POSITION = 122;
+            public static final double AMP_POSITION = 10;
             public static final double TRAP_POSITION = 0;
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = -1;
-            public static final double SUCK_SPEED = 0.8;
-            public static final double CONVEYOR_SPEED = 0.6;
+            public static final double SUCK_SPEED = 0.75;
+            public static final double CONVEYOR_SPEED = 0.65;
         }
     }
 
@@ -119,23 +121,26 @@ public class Constants {
             public static final int F_ID = 30;
             public static final int R_ID = 31;
             public static final boolean INVERTED = false;
-            public static final double MAX_ACCEL = 0;
-            public static final double MAX_VELOCITY = 0;
+            public static final double MAX_ACCEL = 500;
+            public static final double MAX_VELOCITY = 200;
         }
 
         public static class Control {
             public static final double FLOOR = 0;
-            public static final double AMP = 0;
-            public static final double BALANCE = 50;
-            public static final double TRAP = 0;
+            public static final double AMP = 20;
+            public static final double BALANCE = 32;
         }
 
         public static class PIDF {
-            public static final double P = 0;
+            public static final double P = 0.1;
             public static final double I = 0;
             public static final double D = 0;
             public static final double F = 0;
         }
+    }
+
+    public static class OthersConstants {
+        public static final int CANDLE_ID = 40;
     }
 
     public static class VisionConstants {

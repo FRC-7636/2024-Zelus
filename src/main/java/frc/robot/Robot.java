@@ -6,10 +6,13 @@ package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import frc.robot.LimelightHelpers;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -25,6 +28,16 @@ public class Robot extends TimedRobot {
     m_robotContainer.initiateAutoChooser();
 
     CameraServer.startAutomaticCapture();
+
+    var allianceSide = DriverStation.getAlliance();
+    if (allianceSide.isPresent()) {
+      if (allianceSide.get() == DriverStation.Alliance.Red) {
+        LimelightHelpers.setPriorityTagID("", 4);
+      }
+      else {
+        LimelightHelpers.setPriorityTagID("", 7);
+      }
+    }
   }
 
   @Override
@@ -57,7 +70,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    SmartDashboard.putNumber("Delta Heading", 0);
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
