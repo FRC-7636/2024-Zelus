@@ -41,21 +41,11 @@ public class AutoAim extends Command {
         SmartDashboard.putNumber("Delta Rad.", deltaDegX);
         Rotation2d targetHeading = swerve.getHeading().plus(new Rotation2d(deltaRad));
         SmartDashboard.putNumber("Heading offset", targetHeading.getDegrees());
-        if (!isFinished()) {
-            swerve.drive(new Translation2d(), yawCtrl.calculate(deltaDegX), false);
-        } else {
-            swerve.drive(new Translation2d(), 0, false);
-        }
+        swerve.drive(new Translation2d(), yawCtrl.calculate(deltaDegX), false);
 
         Pose3d robotToTarget = LimelightHelpers.getBotPose3d_TargetSpace("");
         double deltaDegY = 90 - Math.toDegrees(Math.atan2(-robotToTarget.getZ(), robotToTarget.getY() + 0.45));
         System.out.println(deltaDegY);
         shooter.setPosition(deltaDegY - 16);
-    }
-
-    @Override
-    public boolean isFinished() {
-        double deltaDeg = Math.abs(LimelightHelpers.getTX(""));
-        return deltaDeg < 1;
     }
 }
