@@ -41,6 +41,6 @@ public class NewFieldDrive extends Command {
             SmartDashboard.putNumber("X", translation.getX());
             SmartDashboard.putNumber("Y", translation.getY());
         
-            swerve.drive(translation, -heading.getAsDouble()*9, true);}
+            swerve.drive(translation, -heading.getAsDouble()*8.5, true);}
     // }
 }
