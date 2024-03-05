@@ -95,6 +95,8 @@ public class Shooter extends SubsystemBase {
         rightMotor.burnFlash();
         transMotor.burnFlash();
         angleMotor.burnFlash();
+
+        anglePIDController.setReference(50, ControlType.kPosition);
     }
 
     /**
@@ -190,6 +192,10 @@ public class Shooter extends SubsystemBase {
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         return (leftReady && rightReady);
+    }
+
+    public double currentPosition() {
+        return angleEncoder.getPosition();
     }
 
     /**
