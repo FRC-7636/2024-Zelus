@@ -55,23 +55,25 @@ public class Constants {
             public static final boolean ANGLE_INVERTED = true;
             public static final int SENSOR_ID = 9;
             public static final int CURRENT_LIMIT = 35;
+            public static final int ANGLE_OFFSET = 11;
         }
 
         public static class Control {
             public static final double SHOOT_VELOCITY = 3700;  // Absolute
             public static final double SHOOT_NEAR_VELOCITY = 3970;
-            public static final double SUCK_SPEED = -0.25;  // Relative
+            public static final double SUCK_SPEED = -0.3;  // Relative
             public static final double STANDBY_SPEED = 0.5;
             public static final double ORIGIN_POSITION = 5;
-            public static final double INTAKE_POSITION = 13;
-            public static final double TOP_POSITION = 49;
-            public static final double TRANS_SPEED = 0.55;
+            public static final double INTAKE_POSITION = 9.5+2;  //9.5
+            public static final double SOURCE_POSITION = 28.8;
+            public static final double TOP_POSITION = 50;
+            public static final double TRANS_SPEED = 0.23;
         }
 
         public static class AnglePIDF {
             public static final double P = 0.02;
-            public static final double I = 0.00001;
-            public static final double D = 0.02;
+            public static final double I = 0.00003;
+            public static final double D = 0.0;
         }
 
         public static class LeftPIDF {
@@ -106,13 +108,13 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double FLOOR_POSITION = 120;
+            public static final double FLOOR_POSITION = 132;
             public static final double AMP_POSITION = 10;
             public static final double TRAP_POSITION = 0;
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = -1;
-            public static final double SUCK_SPEED = 0.85;
-            public static final double CONVEYOR_SPEED = 0.8;
+            public static final double SUCK_SPEED = 1;
+            public static final double CONVEYOR_SPEED = 0.5;
         }
     }
 
