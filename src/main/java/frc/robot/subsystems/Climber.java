@@ -44,6 +44,9 @@ public class Climber extends SubsystemBase {
                 .withMotionMagicAcceleration(ClimberConstants.Config.MAX_ACCEL)
                 .withMotionMagicCruiseVelocity(ClimberConstants.Config.MAX_VELOCITY));
 
+        frontMotorConfigurator.setPosition(0);
+        rearMotorConfigurator.setPosition(0);
+
         // setup PIDConfig
         Slot0Configs PIDConfig = new Slot0Configs();
         PIDConfig.kP = ClimberConstants.PIDF.P;
