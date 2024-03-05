@@ -64,7 +64,8 @@ public class RobotContainer {
   private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
   private final BackToOrigin backToOrigin = new BackToOrigin(climber, intake, shooter);
   private final Amp ampCmd = new Amp(climber, intake);
-  private final GetNoteFromFloor getNoteFromFloor = new GetNoteFromFloor(intake, shooter);
+  private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
+  private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
 
   private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
@@ -77,9 +78,8 @@ public class RobotContainer {
   }
 
   private void configureTestingBindings() {
-    new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(45), shooter));
-    new JoystickButton(chassisCtrl, 2).onTrue(new InstantCommand(() -> shooter.setPosition(7), shooter));
-    new JoystickButton(chassisCtrl, 3).onTrue(smartIntake);
+    new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
+    new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
     new JoystickButton(chassisCtrl, 4).onTrue(smartShoot);
 
 //    new POVButton(chassisCtrl, 0).whileTrue(smartShoot);
@@ -89,18 +89,19 @@ public class RobotContainer {
     new JoystickButton(chassisCtrl, 6).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll));
 
     new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::zeroGyro));
-    new JoystickButton(chassisCtrl, 8).onTrue(backToOrigin);
-
-    new POVButton(chassisCtrl, 0).whileTrue(new InstantCommand(climber::setBalanceLevel, climber));
-    new POVButton(chassisCtrl, 90).whileTrue(new InstantCommand(climber::setAmpLevel, climber));
-    new POVButton(chassisCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
-    new POVButton(chassisCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
   }
 
   private void configureYuJieBindings() {
     new JoystickButton(assistCtrl, 1).onTrue(ampCmd);
+    new JoystickButton(assistCtrl, 2).onTrue(backToOrigin);
+    new JoystickButton(assistCtrl, 3).onTrue(smartIntake);
+    new JoystickButton(assistCtrl, 4).whileTrue(new InstantCommand(intake::shoot, intake)).onFalse(new InstantCommand(intake::stopIntake));
+    new JoystickButton(assistCtrl, 5).whileTrue(new InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake));
 
-    new JoystickButton(assistCtrl, 2).onTrue(new InstantCommand(shooter::topAngle));
+    new POVButton(assistCtrl, 0).whileTrue(safeClimbTop);
+    new POVButton(assistCtrl, 90).whileTrue(new InstantCommand(climber::setAmpLevel, climber));
+    new POVButton(assistCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
+    new POVButton(assistCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
   }
 
   public Command getAutonomousCommand() {
