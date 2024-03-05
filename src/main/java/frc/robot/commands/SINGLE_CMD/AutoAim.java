@@ -12,6 +12,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Swerve;
 import frc.robot.LimelightHelpers;
 import frc.robot.Constants.AutoAimPID;
+import frc.robot.Constants.ShooterConstants;
 
 
 public class AutoAim extends Command {
@@ -37,16 +38,9 @@ public class AutoAim extends Command {
 
     @Override
     public void execute() {
-        double deltaDegX = LimelightHelpers.getTX("");
-        double deltaRad = Math.toRadians(deltaDegX);
-        SmartDashboard.putNumber("Delta Rad.", deltaDegX);
-        Rotation2d targetHeading = swerve.getHeading().plus(new Rotation2d(deltaRad));
-        SmartDashboard.putNumber("Heading offset", targetHeading.getDegrees());
-        swerve.drive(new Translation2d(), yawCtrl.calculate(deltaDegX), false);
-
-        Pose3d robotToTarget = LimelightHelpers.getBotPose3d_TargetSpace("");
-        double deltaDegY = 90 - Math.toDegrees(Math.atan2(-robotToTarget.getZ(), robotToTarget.getY() + 0.45));
+                Pose3d robotToTarget = LimelightHelpers.getBotPose3d_TargetSpace("");
+        double deltaDegY = 90 - Math.toDegrees(Math.atan2(-robotToTarget.getZ(), robotToTarget.getY() + 0.53));
         System.out.println(deltaDegY);
-        shooter.setPosition(MathUtil.clamp(deltaDegY - 16, 5, 50));
+        shooter.setPosition(MathUtil.clamp(deltaDegY - ShooterConstants.Config.ANGLE_OFFSET, 5, 32));
     }
 }
