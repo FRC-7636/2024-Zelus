@@ -72,6 +72,11 @@ public class Climber extends SubsystemBase {
         rearMotor.setControl(new MotionMagicDutyCycle(ClimberConstants.Control.BALANCE));
     }
 
+    public void setPosition(double position) {
+        frontMotor.setControl(new MotionMagicDutyCycle(position));
+        rearMotor.setControl(new MotionMagicDutyCycle(position));
+    }
+
     public void up() {
         frontMotor.set(0.2);
         rearMotor.set(0.2);
