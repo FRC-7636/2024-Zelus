@@ -88,6 +88,10 @@ public class Intake extends SubsystemBase{
         conveyor.set(IntakeConstants.Control.CONVEYOR_SPEED);
     }
 
+    public void reverseConvey() {
+        conveyor.set(-0.8);
+    }
+
     public void stopIntake() {
         pipeIntake.stopMotor();
     }
@@ -118,11 +122,11 @@ public class Intake extends SubsystemBase{
     }
 
     /**
-     * set intake angle motor to the trap position
+     * set intake angle motor to the source position
      * <p> (set trap angle at {@link IntakeConstants.Control})
      */
-    public void trapAngle(){
-        intakePIDController.setReference(IntakeConstants.Control.TRAP_POSITION, ControlType.kPosition);
+    public void sourceAngle(){
+        intakePIDController.setReference(IntakeConstants.Control.SOURCE_POSITION, ControlType.kPosition);
     }
 
     /**
