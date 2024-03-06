@@ -27,6 +27,7 @@ public class Shooter extends SubsystemBase {
     private final AbsoluteEncoder angleEncoder;
 
     private double desiredSpeed = 0;
+    private double desiredAngle = 0;
 
     /**
      * set PID using SparkPIDController
@@ -96,7 +97,7 @@ public class Shooter extends SubsystemBase {
         transMotor.burnFlash();
         angleMotor.burnFlash();
 
-        anglePIDController.setReference(50, ControlType.kPosition);
+        anglePIDController.setReference(ShooterConstants.Control.TOP_POSITION, ControlType.kPosition);
     }
 
     /**
@@ -107,8 +108,8 @@ public class Shooter extends SubsystemBase {
 //         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
 //         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
         desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
-        leftMotor.set(0.85);
-        rightMotor.set(0.85);
+        leftMotor.set(0.7);
+        rightMotor.set(0.7);
     }
 
     public void shootNear() {
@@ -175,6 +176,7 @@ public class Shooter extends SubsystemBase {
      */
     public void setPosition(double position) {
         anglePIDController.setReference(position, ControlType.kPosition);
+        desiredAngle = position;
     }
 
     /**
@@ -191,7 +193,8 @@ public class Shooter extends SubsystemBase {
     public boolean readyToShoot() {
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
-        return (leftReady && rightReady);
+        boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 3;
+        return (leftReady && rightReady && angleReady);
     }
 
     public double currentPosition() {
