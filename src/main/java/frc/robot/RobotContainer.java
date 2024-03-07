@@ -79,6 +79,7 @@ public class RobotContainer {
 
     new POVButton(chassisCtrl, 0).onTrue(nearShoot);
     new POVButton(chassisCtrl, 180).onTrue(farShoot);
+    new POVButton(chassisCtrl, 270).whileTrue(justShoot);
 //    new POVButton(chassisCtrl, 180).whileTrue(smartShootNear);
 
     new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll));
