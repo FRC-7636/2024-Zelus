@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
-import frc.robot.commands.GROUP_CMD.Amp;
 import frc.robot.subsystems.*;
 import frc.robot.commands.AUTO_CMD.LeftStart;
 import frc.robot.commands.AUTO_CMD.MiddleStart;
 import frc.robot.commands.AUTO_CMD.SingleTrajectory;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
+import frc.robot.commands.GROUP_CMD.Amp;
 import frc.robot.commands.SINGLE_CMD.*;
 import frc.robot.commands.TEST_CMD.StopEverything;
 import frc.robot.commands.SWERVE_CMD.NewFieldDrive;
@@ -146,9 +146,5 @@ public class RobotContainer {
     autoChooser.addOption("LeftStart", middleStart);
 
     SmartDashboard.putData("Choose Auto", autoChooser);
-  }
-
-  public void rumbleeeeeeee() {
-    chassisCtrl.setRumble(GenericHID.RumbleType.kBothRumble, Math.abs(chassisCtrl.getRightY()));
   }
 }
