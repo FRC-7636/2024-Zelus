@@ -40,6 +40,7 @@ public class SmartIntake extends Command {
         shooter.stopTransport();
         if (shooter.noteDetected()) {
             shooter.standby();
+            shooter.setPosition(ShooterConstants.Control.NEARSHOOT_POSITION);
         }
     }
 }

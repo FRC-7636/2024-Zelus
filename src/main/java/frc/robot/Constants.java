@@ -59,20 +59,21 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double SHOOT_VELOCITY = 3700;  // Absolute
+            public static final double SHOOT_VELOCITY = 2520;  // Absolute
             public static final double SHOOT_NEAR_VELOCITY = 3970;
             public static final double SUCK_SPEED = -0.3;  // Relative
-            public static final double STANDBY_SPEED = 0.5;
+            public static final double STANDBY_SPEED = 0.4;
             public static final double ORIGIN_POSITION = 5;
-            public static final double INTAKE_POSITION = 9.5+2;  //9.5
+            public static final double INTAKE_POSITION = 29;  //9.5
             public static final double SOURCE_POSITION = 28.8;
-            public static final double TOP_POSITION = 50;
+            public static final double TOP_POSITION = 46.5;
+            public static final double NEARSHOOT_POSITION = 43;
             public static final double TRANS_SPEED = 0.23;
         }
 
         public static class AnglePIDF {
-            public static final double P = 0.02;
-            public static final double I = 0.00003;
+            public static final double P = 0.0103;
+            public static final double I = 0.000002;
             public static final double D = 0.0;
         }
 
@@ -108,9 +109,9 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double FLOOR_POSITION = 132;
-            public static final double AMP_POSITION = 10;
-            public static final double TRAP_POSITION = 0;
+            public static final double FLOOR_POSITION = 129.5;
+            public static final double AMP_POSITION = 25;
+            public static final double SOURCE_POSITION = 10;
             public static final double ORIGIN_POSITION = 0;
             public static final double SHOOT_SPEED = -1;
             public static final double SUCK_SPEED = 1;
@@ -131,7 +132,7 @@ public class Constants {
         public static class Control {
             public static final double FLOOR = 0;
             public static final double AMP = 20;
-            public static final double BALANCE = 32;
+            public static final double BALANCE = 30;
         }
 
         public static class PIDF {

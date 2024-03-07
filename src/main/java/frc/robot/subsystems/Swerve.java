@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -137,6 +138,7 @@ public class Swerve extends SubsystemBase{
           // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
           var alliance = DriverStation.getAlliance();
           return alliance.isPresent() ? alliance.get() == DriverStation.Alliance.Red : false;
+//          return false;
         },
         this // Reference to this subsystem to set requirements
     );
@@ -319,6 +321,10 @@ public class Swerve extends SubsystemBase{
   public void zeroGyro()
   {
     swerveDrive.zeroGyro();
+  }
+
+  public void setIntakeAsHead() {
+    swerveDrive.setGyro(new Rotation3d(0, 0, Math.PI));
   }
 
   /**

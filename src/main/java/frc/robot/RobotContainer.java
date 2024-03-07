@@ -25,7 +25,6 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.AUTO_CMD.LeftStart;
 import frc.robot.commands.AUTO_CMD.MiddleStart;
 import frc.robot.commands.AUTO_CMD.SingleTrajectory;
-import frc.robot.commands.AUTO_CMD.BlueTest2;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.SINGLE_CMD.*;
 import frc.robot.commands.TEST_CMD.StopEverything;
@@ -55,15 +54,16 @@ public class RobotContainer {
   private final AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
   private final FieldRelativeDrive fieldRelativeDrive = new FieldRelativeDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
   private final NewFieldDrive NFD = new NewFieldDrive(driveBase,
-                                        () -> MathUtil.applyDeadband(chassisCtrl.getLeftY(), 0.05), 
-                                        () -> MathUtil.applyDeadband(chassisCtrl.getLeftX(), 0.05), 
-                                        () -> MathUtil.applyDeadband(chassisCtrl.getRightX(), 0.05));
+                                        chassisCtrl::getLeftY,
+                                        chassisCtrl::getLeftX,
+                                        chassisCtrl::getRightX);
   private final AutoAim autoAim = new AutoAim(driveBase, shooter);
   private final StopEverything stopEverything = new StopEverything(intake, shooter);
   private final SmartShoot smartShoot = new SmartShoot(shooter, intake);
+  private final JustShoot justShoot = new JustShoot(shooter, intake);
   private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
   private final BackToOrigin backToOrigin = new BackToOrigin(climber, intake, shooter);
-  private final Amp ampCmd = new Amp(climber, intake);
+  private final Amp ampCmd = new Amp(climber, shooter, intake);
   private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
   private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
 
@@ -73,41 +73,60 @@ public class RobotContainer {
     // Configure controller buttons
     configureTestingBindings();
     configureYuJieBindings();
+    createButtonsOnDS();
 
     driveBase.setDefaultCommand(NFD);
   }
 
   private void configureTestingBindings() {
     new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
+    new JoystickButton(chassisCtrl, 2).onTrue(new InstantCommand(intake::ampAngle));
     new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
     new JoystickButton(chassisCtrl, 4).onTrue(smartShoot);
 
-//    new POVButton(chassisCtrl, 0).whileTrue(smartShoot);
+    new POVButton(chassisCtrl, 0).whileTrue(justShoot);
 //    new POVButton(chassisCtrl, 180).whileTrue(smartShootNear);
 
-    new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::suck)).onFalse(new InstantCommand(intake::stopAll));
+    new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll));
     new JoystickButton(chassisCtrl, 6).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll));
 
-    new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::zeroGyro));
+    new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::setIntakeAsHead));
+    new JoystickButton(chassisCtrl, 8).onTrue(new InstantCommand(() -> shooter.setPosition(Constants.ShooterConstants.Control.NEARSHOOT_POSITION-15)));
   }
 
   private void configureYuJieBindings() {
-    new JoystickButton(assistCtrl, 1).onTrue(ampCmd);
+    new JoystickButton(assistCtrl, 1).whileTrue(safeClimbTop);
     new JoystickButton(assistCtrl, 2).onTrue(backToOrigin);
     new JoystickButton(assistCtrl, 3).onTrue(smartIntake);
     new JoystickButton(assistCtrl, 4).whileTrue(new InstantCommand(intake::shoot, intake)).onFalse(new InstantCommand(intake::stopIntake));
-    new JoystickButton(assistCtrl, 5).whileTrue(new InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake));
+    new JoystickButton(assistCtrl, 5).whileTrue(new InstantCommand(intake::floorAngle)
+            .alongWith(new InstantCommand(intake::suck))).onFalse(new InstantCommand(intake::stopAll));
 
-    new POVButton(assistCtrl, 0).whileTrue(safeClimbTop);
+    new POVButton(assistCtrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop));
     new POVButton(assistCtrl, 90).whileTrue(new InstantCommand(climber::setAmpLevel, climber));
     new POVButton(assistCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
     new POVButton(assistCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
+  }
+
+  public void createButtonsOnDS() {
+    // Climber
+    SmartDashboard.putData("Climber Up", new InstantCommand(climber::up, climber));
+    SmartDashboard.putData("Climber Down", new InstantCommand(climber::down, climber));
+    SmartDashboard.putData("Climber Stop", new InstantCommand(climber::stop, climber));
+
+    // Intake
+    SmartDashboard.putData("Intake Up", new InstantCommand(intake::up, intake));
+    SmartDashboard.putData("Intake Down", new InstantCommand(intake::down, intake));
+    SmartDashboard.putData("Intake Stop", new InstantCommand(intake::stopAngle, intake));
+    SmartDashboard.putData("Intake Suck", new InstantCommand(intake::suck, intake));
+    SmartDashboard.putData("Intake Shoot", new InstantCommand(intake::shoot, intake));
   }
 
   public Command getAutonomousCommand() {
 //       return new BlueTest2(driveBase);
 //       return trajectoryChooser.getSelected();
        return middleStart;
+//    return new SingleTrajectory(driveBase, "simple go out");
   }
 
   public void initiateTrajectoryChooser() {

@@ -108,8 +108,8 @@ public class Shooter extends SubsystemBase {
 //         leftPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
 //         rightPIDController.setReference(ShooterConstants.Control.SHOOT_VELOCITY, ControlType.kVelocity);
         desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
-        leftMotor.set(0.7);
-        rightMotor.set(0.7);
+        leftMotor.set(0.47);
+        rightMotor.set(0.47);
     }
 
     public void shootNear() {
@@ -128,8 +128,7 @@ public class Shooter extends SubsystemBase {
     }
 
     public void standby() {
-        leftMotor.set(ShooterConstants.Control.STANDBY_SPEED);
-        rightMotor.set(ShooterConstants.Control.STANDBY_SPEED);
+        shoot();
     }
 
     /**
@@ -179,6 +178,12 @@ public class Shooter extends SubsystemBase {
         desiredAngle = position;
     }
 
+    public void shootTwo() {
+        desiredSpeed = 2760;
+        leftMotor.set(0.53);
+        rightMotor.set(0.53);
+    }
+
     /**
      * Get the sensor value of the note sensor.
      * @return Whether the digital sensor is detecting a note.
@@ -191,10 +196,13 @@ public class Shooter extends SubsystemBase {
      * @return true when both motors are ready
      */
     public boolean readyToShoot() {
-        boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
-        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
-        boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 3;
-        return (leftReady && rightReady && angleReady);
+        //        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
+//        boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
+        return (Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50);
+    }
+
+    public boolean angleReady() {
+        return Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
     }
 
     public double currentPosition() {
@@ -230,5 +238,6 @@ public class Shooter extends SubsystemBase {
         SmartDashboard.putNumber("Shooter Velocity", leftMotorEncoder.getVelocity());
         SmartDashboard.putNumber("Shooter Applied Output", angleMotor.getAppliedOutput());
         SmartDashboard.putBoolean("NOTE Detected?", noteDetected());
+        SmartDashboard.putBoolean("Correct Angle?", angleReady());
     }
 }

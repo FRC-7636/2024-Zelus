@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
     m_robotContainer.initiateTrajectoryChooser();
     m_robotContainer.initiateAutoChooser();
 
-    CameraServer.startAutomaticCapture();
+//    CameraServer.startAutomaticCapture();
 
     var allianceSide = DriverStation.getAlliance();
     if (allianceSide.isPresent()) {
