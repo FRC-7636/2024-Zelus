@@ -22,7 +22,7 @@ public class SmartIntake extends Command {
     @Override
     public void execute() {
         shooter.setPosition(ShooterConstants.Control.INTAKE_POSITION);
-        intake.floorAngle();
+        intake.setFloorAngle();
         intake.suck();
         intake.startConvey();
         shooter.transport();

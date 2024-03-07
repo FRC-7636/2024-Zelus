@@ -11,7 +11,7 @@ public class AutoIntake extends SequentialCommandGroup {
 
     public AutoIntake(Shooter shooter, Intake intake) {
         addCommands(new InstantCommand(() -> shooter.setPosition(ShooterConstants.Control.INTAKE_POSITION)));
-        addCommands(new InstantCommand(intake::floorAngle));
+        addCommands(new InstantCommand(intake::setFloorAngle));
         addCommands(new InstantCommand(intake::suck));
         addCommands(new InstantCommand(intake::startConvey));
     }

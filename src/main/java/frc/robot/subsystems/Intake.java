@@ -109,7 +109,7 @@ public class Intake extends SubsystemBase{
      * set intake angle motor to the floor position
      * <p> (set floor angle at {@link IntakeConstants.Control})
      */
-    public void floorAngle(){
+    public void setFloorAngle(){
         intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kPosition);
     }
 
@@ -117,7 +117,7 @@ public class Intake extends SubsystemBase{
      * set intake angle motor to the amp position
      * <p> (set amp angle at {@link IntakeConstants.Control})
      */
-    public void ampAngle(){
+    public void setAmpAngle(){
         intakePIDController.setReference(IntakeConstants.Control.AMP_POSITION, ControlType.kPosition);
     }
 
@@ -125,7 +125,7 @@ public class Intake extends SubsystemBase{
      * set intake angle motor to the source position
      * <p> (set trap angle at {@link IntakeConstants.Control})
      */
-    public void sourceAngle(){
+    public void setSourceAngle(){
         intakePIDController.setReference(IntakeConstants.Control.SOURCE_POSITION, ControlType.kPosition);
     }
 

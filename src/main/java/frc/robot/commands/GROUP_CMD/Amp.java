@@ -2,7 +2,6 @@ package frc.robot.commands.GROUP_CMD;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Intake;
@@ -27,7 +26,7 @@ public class Amp extends Command {
         shooter.setPosition(5);
         if (Math.abs(shooter.currentPosition() - 5) <= 2.5) {
             climber.setBalanceLevel();
-            intake.ampAngle();
+            intake.setAmpAngle();
         }
     }
 
