@@ -56,7 +56,6 @@ public class RobotContainer {
                                         chassisCtrl::getLeftY,
                                         chassisCtrl::getLeftX,
                                         chassisCtrl::getRightX);
-  private final AutoAim autoAim = new AutoAim(driveBase, shooter);
   private final StopEverything stopEverything = new StopEverything(intake, shooter);
   private final SmartShoot smartShoot = new SmartShoot(shooter, intake);
   private final NearShoot nearShoot = new NearShoot(shooter, intake);
@@ -65,7 +64,7 @@ public class RobotContainer {
   private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
   private final BackToOrigin backToOrigin = new BackToOrigin(climber, intake, shooter);
   private final Amp ampCmd = new Amp(climber, shooter, intake);
-  private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter, intake);
+  private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
   private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
 
   private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
@@ -94,7 +93,7 @@ public class RobotContainer {
   }
 
   private void configureYuJieBindings() {
-    new JoystickButton(assistCtrl, 1).onTrue(safeClimbTop);
+    new JoystickButton(assistCtrl, 1).onTrue(ampCmd);
     new JoystickButton(assistCtrl, 2).onTrue(backToOrigin);
     new JoystickButton(assistCtrl, 3).onTrue(smartIntake);
     new JoystickButton(assistCtrl, 4).whileTrue(new InstantCommand(intake::shoot, intake)).onFalse(new InstantCommand(intake::stopIntake));

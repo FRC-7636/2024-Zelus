@@ -29,9 +29,4 @@ public class Amp extends Command {
             intake.setAmpAngle();
         }
     }
-
-    @Override
-    public void end(boolean interrupted) {
-        climber.stop();
-    }
 }

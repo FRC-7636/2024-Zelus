@@ -2,23 +2,21 @@ package frc.robot.commands.SINGLE_CMD;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Intake;
 
 
 public class SafeClimbTop extends Command {
     private final Climber climber;
     private final Shooter shooter;
-    private final Intake intake;
 
-    public SafeClimbTop(Climber climber, Shooter shooter, Intake intake) {
+    public SafeClimbTop(Climber climber, Shooter shooter) {
         this.climber = climber;
         this.shooter = shooter;
-        this.intake = intake;
         // each subsystem used by the command must be passed into the
         // addRequirements() method (which takes a vararg of Subsystem)
-        addRequirements(this.climber, this.shooter, this.intake);
+        addRequirements(this.climber, this.shooter);
     }
 
     @Override
@@ -26,7 +24,6 @@ public class SafeClimbTop extends Command {
         shooter.setPosition(5);
         if (Math.abs(shooter.currentPosition() - 5) <= 2.5) {
             climber.setBalanceLevel();
-            intake.setAmpAngle();
         }
     }
 }
