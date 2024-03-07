@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,8 +26,6 @@ import frc.robot.commands.AUTO_CMD.SingleTrajectory;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.SINGLE_CMD.*;
 import frc.robot.commands.TEST_CMD.StopEverything;
-import frc.robot.commands.SWERVE_CMD.AbsDrive;
-import frc.robot.commands.SWERVE_CMD.FieldRelativeDrive;
 import frc.robot.commands.SWERVE_CMD.NewFieldDrive;
 
 
@@ -50,8 +47,6 @@ public class RobotContainer {
   private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
   // TeleOp Commands
-  private final AbsDrive absoluteDrive = new AbsDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
-  private final FieldRelativeDrive fieldRelativeDrive = new FieldRelativeDrive(driveBase, chassisCtrl::getLeftY, chassisCtrl::getLeftX, chassisCtrl::getRightX);
   private final NewFieldDrive NFD = new NewFieldDrive(driveBase,
                                         chassisCtrl::getLeftY,
                                         chassisCtrl::getLeftX,
