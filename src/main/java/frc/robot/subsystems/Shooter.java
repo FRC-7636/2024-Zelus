@@ -179,9 +179,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public void shootTwo() {
-        desiredSpeed = 2760;
-        leftMotor.set(0.53);
-        rightMotor.set(0.53);
+        leftMotor.set(1);
+        rightMotor.set(1);
     }
 
     /**
@@ -196,9 +195,10 @@ public class Shooter extends SubsystemBase {
      * @return true when both motors are ready
      */
     public boolean readyToShoot() {
+        boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         //        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
-//        boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
-        return (Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50);
+        boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
+        return (leftReady && angleReady);
     }
 
     public boolean angleReady() {
