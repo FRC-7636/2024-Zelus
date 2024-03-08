@@ -21,15 +21,8 @@ public class JustShoot extends Command {
     @Override
     public void execute() {
         shooter.shootTwo();
-        if (shooter.readyToShoot()) {
-            intake.startConvey();
-            shooter.transport();
-        }
-    }
-
-    @Override
-    public boolean isFinished() {
-        return !shooter.noteDetected();
+        intake.startConvey();
+        shooter.transport();
     }
 
     @Override
