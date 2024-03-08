@@ -59,7 +59,7 @@ public class Constants {
         }
 
         public static class Control {
-            public static final double SHOOT_VELOCITY = 2520;  // Absolute
+            public static final double SHOOT_VELOCITY = 2430;  // Absolute
             public static final double SHOOT_NEAR_VELOCITY = 3970;
             public static final double SUCK_SPEED = -0.3;  // Relative
             public static final double STANDBY_SPEED = 0.4;
