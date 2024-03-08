@@ -192,7 +192,7 @@ public class Shooter extends SubsystemBase {
     }
 
     /**
-     * @return true when both motors are ready
+     * @return true when spinning speed and angle are ready
      */
     public boolean readyToShoot() {
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
