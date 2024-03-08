@@ -66,14 +66,14 @@ public class RobotContainer {
 
     public RobotContainer() {
         // Configure controller buttons
-        configureTestingBindings();
+        configureBangRenBindings();
         configureYuJieBindings();
         createButtonsOnDS();
 
         driveBase.setDefaultCommand(NFD);
     }
 
-    private void configureTestingBindings() {
+    private void configureBangRenBindings() {
         new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
         new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
 
