@@ -78,10 +78,10 @@ public class RobotContainer {
     private void configureBangRenBindings() {
         new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
         new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
+        new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
 
-        new POVButton(chassisCtrl, 0).onTrue(nearShoot);
-        new POVButton(chassisCtrl, 180).onTrue(farShoot);
-        new POVButton(chassisCtrl, 270).whileTrue(justShoot);
+        new POVButton(chassisCtrl, 0).whileTrue(justShoot);
+//        new POVButton(chassisCtrl, 180).onTrue(farShoot);
 //    new POVButton(chassisCtrl, 180).whileTrue(smartShootNear);
 
         new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll));
@@ -94,10 +94,12 @@ public class RobotContainer {
         new JoystickButton(assistCtrl, 1).onTrue(ampCmd);
         new JoystickButton(assistCtrl, 2).onTrue(backToOrigin);
         new JoystickButton(assistCtrl, 3).onTrue(smartIntake);
-        new JoystickButton(assistCtrl, 4).whileTrue(new InstantCommand(intake::shoot, intake)).onFalse(new InstantCommand(intake::stopIntake));
+        new JoystickButton(assistCtrl, 4).whileTrue(new InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake));
 
         new JoystickButton(assistCtrl, 5).whileTrue(new InstantCommand(intake::setFloorAngle)
-                .alongWith(new InstantCommand(intake::suck))).onFalse(new InstantCommand(intake::stopAll));
+                .alongWith(new InstantCommand(intake::slowSuck))
+                .alongWith(new InstantCommand(intake::reverseConvey)))
+                .onFalse(new InstantCommand(intake::stopAll));
         new JoystickButton(assistCtrl, 6).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll));
 
         new POVButton(assistCtrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop));
@@ -122,7 +124,7 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
 //       return new BlueTest2(driveBase);
 //       return trajectoryChooser.getSelected();
-        return middleStart;
+        return rightStart;
 //    return new SingleTrajectory(driveBase, "simple go out");
     }
 

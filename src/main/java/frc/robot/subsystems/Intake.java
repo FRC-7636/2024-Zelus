@@ -84,6 +84,10 @@ public class Intake extends SubsystemBase{
         pipeIntake.set(IntakeConstants.Control.SUCK_SPEED);
     }
 
+    public void slowSuck() {
+        pipeIntake.set(0.8);
+    }
+
     public void startConvey() {
         conveyor.set(IntakeConstants.Control.CONVEYOR_SPEED);
     }
