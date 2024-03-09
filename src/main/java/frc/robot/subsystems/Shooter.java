@@ -236,7 +236,6 @@ public class Shooter extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Shooter Position", angleEncoder.getPosition());
         SmartDashboard.putNumber("Shooter Velocity", leftMotorEncoder.getVelocity());
-        SmartDashboard.putNumber("Shooter Applied Output", angleMotor.getAppliedOutput());
         SmartDashboard.putBoolean("NOTE Detected?", noteDetected());
         SmartDashboard.putBoolean("Correct Angle?", angleReady());
     }
