@@ -303,7 +303,13 @@ public class Swerve extends SubsystemBase{
 
     if (setOdomToStart)
     {
-      resetOdometry(new Pose2d(path.getPoint(0).position, getHeading()));
+      if (DriverStation.getAlliance().isPresent()
+              && DriverStation.getAlliance().get().equals(DriverStation.Alliance.Blue)) {
+        resetOdometry(new Pose2d(path.getPoint(0).position, getHeading().plus(new Rotation2d(Math.PI))));
+      }
+      else {
+        resetOdometry(new Pose2d(path.getPoint(0).position, getHeading()));
+      }
     }
 
     // Create a path following command using AutoBuilder. This will also trigger event markers.
