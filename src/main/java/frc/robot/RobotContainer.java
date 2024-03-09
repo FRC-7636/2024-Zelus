@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -151,5 +152,14 @@ public class RobotContainer {
         autoChooser.addOption("LeftStart", middleStart);
 
         SmartDashboard.putData("Choose Auto", autoChooser);
+    }
+
+    public void rumbleWhenReady() {
+        if (shooter.readyToShoot()) {
+            chassisCtrl.setRumble(RumbleType.kBothRumble, 0.5);
+        }
+        else {
+            chassisCtrl.setRumble(RumbleType.kBothRumble, 0);
+        }
     }
 }
