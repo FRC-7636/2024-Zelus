@@ -1,5 +1,6 @@
 package frc.robot.commands.AUTO_CMD;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
@@ -15,15 +16,18 @@ public class MiddleStart extends SequentialCommandGroup {
         addCommands(new InstantCommand(intake::setFloorAngle));
         addCommands(new InstantCommand(() -> shooter.setPosition(50)));
         addCommands(new AutoShoot(shooter, intake));
-        addCommands(new InstantCommand(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve));
-        addCommands(new SmartIntake(shooter, intake)
-                .alongWith(m_swerve.getAutonomousCommand("mid 1", true)));
+        Pose2d LLPose = LimelightHelpers.getBotPose2d_wpiBlue("");
+        if (LLPose.getX() != 0) {
+            addCommands(new InstantCommand(() -> m_swerve.resetOdometry(LLPose), m_swerve));
+        }
+        addCommands(new AutoIntake(shooter, intake)
+                .raceWith(m_swerve.getAutonomousCommand("mid 1", LLPose.getX() == 0)));
         addCommands(new AutoShoot(shooter, intake).withTimeout(2));
-        addCommands(new SmartIntake(shooter, intake)
-                .alongWith(m_swerve.getAutonomousCommand("mid 3 2", false)));
+        addCommands(new AutoIntake(shooter, intake)
+                .raceWith(m_swerve.getAutonomousCommand("mid 3 2", false)));
         addCommands(new AutoShoot(shooter, intake).withTimeout(2));
-        addCommands(new SmartIntake(shooter, intake)
-                .alongWith(m_swerve.getAutonomousCommand("mid 3 3", false)));
+        addCommands(new AutoIntake(shooter, intake)
+                .raceWith(m_swerve.getAutonomousCommand("mid 3 3", false)));
         addCommands(new AutoShoot(shooter, intake));
 //        addCommands(new SmartIntake(shooter, intake)
 //                .alongWith(m_swerve.getAutonomousCommand("mid 3", false)));
