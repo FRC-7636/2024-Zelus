@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
+import frc.robot.commands.AUTO_CMD.RightStart;
 import frc.robot.subsystems.*;
 import frc.robot.commands.AUTO_CMD.LeftStart;
 import frc.robot.commands.AUTO_CMD.MiddleStart;
@@ -43,6 +44,7 @@ public class RobotContainer {
     // Auto Commands
     private final MiddleStart middleStart = new MiddleStart(driveBase, shooter, intake);
     private final LeftStart leftStart = new LeftStart(driveBase);
+    private final RightStart rightStart = new RightStart(driveBase, shooter, intake);
     private final SendableChooser<Command> trajectoryChooser = new SendableChooser<>();
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
 
