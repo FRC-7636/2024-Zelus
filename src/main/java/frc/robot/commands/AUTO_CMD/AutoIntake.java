@@ -32,4 +32,9 @@ public class AutoIntake extends Command {
     public boolean isFinished() {
         return shooter.noteDetected();
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        intake.stopAll();
+    }
 }

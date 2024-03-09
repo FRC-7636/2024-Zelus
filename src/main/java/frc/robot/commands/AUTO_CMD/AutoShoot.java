@@ -40,4 +40,10 @@ public class AutoShoot extends Command {
     public boolean isFinished() {
         return !shooter.noteDetected();
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        shooter.stopTransport();
+        intake.stopConvey();
+    }
 }
