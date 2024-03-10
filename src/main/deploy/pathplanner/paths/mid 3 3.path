@@ -61,7 +61,7 @@
   "reversed": false,
   "folder": "中間全",
   "previewStartingState": {
-    "rotation": -176.88994782377532,
+    "rotation": 180.0,
     "velocity": 0
   },
   "useDefaultConstraints": true
