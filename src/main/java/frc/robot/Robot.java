@@ -24,8 +24,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     m_robotContainer = new RobotContainer();
 
-    m_robotContainer.initiateTrajectoryChooser();
-    m_robotContainer.initiateAutoChooser();
+//    m_robotContainer.initiateTrajectoryChooser();
+//    m_robotContainer.initiateAutoChooser();
 
 //    CameraServer.startAutomaticCapture();
 
