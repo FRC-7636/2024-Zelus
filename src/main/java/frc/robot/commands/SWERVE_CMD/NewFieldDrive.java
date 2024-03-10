@@ -34,14 +34,14 @@ public class NewFieldDrive extends Command {
         //     swerve.lock();
         // }
         // else {
-            Translation2d translation = new Translation2d(-vX.getAsDouble()*5, -vY.getAsDouble()*5);
+            Translation2d translation = new Translation2d(-vX.getAsDouble()*6, -vY.getAsDouble()*6);
             translation = SwerveMath.limitVelocity(translation, swerve.getFieldVelocity(), swerve.getPose(),
                                                    Constants.Chassis.LOOP_TIME, Constants.Chassis.ROBOT_MASS, List.of(Constants.Chassis.CHASSIS),
                                                    swerve.getSwerveDriveConfiguration());
             SmartDashboard.putNumber("X", translation.getX());
             SmartDashboard.putNumber("Y", translation.getY());
         
-            swerve.drive(translation, -heading.getAsDouble()*5, true);
+            swerve.drive(translation, -heading.getAsDouble()*8, true);
         // }
     }
 }

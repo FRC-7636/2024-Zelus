@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,11 +22,8 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
-import frc.robot.commands.AUTO_CMD.RightStart;
+import frc.robot.commands.AUTO_CMD.*;
 import frc.robot.subsystems.*;
-import frc.robot.commands.AUTO_CMD.LeftStart;
-import frc.robot.commands.AUTO_CMD.MiddleStart;
-import frc.robot.commands.AUTO_CMD.SingleTrajectory;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.GROUP_CMD.Amp;
 import frc.robot.commands.SINGLE_CMD.*;
@@ -65,6 +65,8 @@ public class RobotContainer {
     private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
     private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
 
+    private SendableChooser<Command> getAutoChooser = new SendableChooser<>();
+
     private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
 
     public RobotContainer() {
@@ -73,15 +75,22 @@ public class RobotContainer {
         configureYuJieBindings();
         createButtonsOnDS();
 
+        getAutoChooser = AutoBuilder.buildAutoChooser();
+
+        NamedCommands.registerCommand("amplevel", ampCmd);
+        NamedCommands.registerCommand("ampshoot", new InstantCommand(intake::shoot));
+
+        SmartDashboard.putData("Auto", getAutoChooser);
+
         driveBase.setDefaultCommand(NFD);
     }
 
     private void configureBangRenBindings() {
-        new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
-        new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
-        new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
+//        new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
+//        new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
+//        new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
 
-        new POVButton(chassisCtrl, 0).whileTrue(justShoot);
+//        new POVButton(chassisCtrl, 0).whileTrue(justShoot);
 //        new POVButton(chassisCtrl, 180).onTrue(farShoot);
 //    new POVButton(chassisCtrl, 180).whileTrue(smartShootNear);
 
@@ -125,8 +134,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
 //       return new BlueTest2(driveBase);
 //       return trajectoryChooser.getSelected();
-        return middleStart;
-//    return new SingleTrajectory(driveBase, "Test Path 2");
+//        return getAutoChooser.getSelected();
+        return new AutoAmp(driveBase, intake, climber, shooter);
     }
 
     public void initiateTrajectoryChooser() {

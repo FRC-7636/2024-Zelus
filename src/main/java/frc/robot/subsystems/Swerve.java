@@ -310,8 +310,8 @@ public class Swerve extends SubsystemBase{
 //      else {
 //        resetOdometry(new Pose2d(path.getPoint(0).position, getHeading()));
 //      }
+//      setIntakeAsHead();
       resetOdometry(new Pose2d(path.getPoint(0).position, getHeading()));
-      setIntakeAsHead();
     }
 
     // Create a path following command using AutoBuilder. This will also trigger event markers.

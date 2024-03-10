@@ -3,11 +3,12 @@
   "robotLength": 0.66,
   "holonomicMode": true,
   "pathFolders": [
-    "中間全",
+    "AMP",
     "blue 1",
     "blue 2",
     "blue 3",
-    "red"
+    "red",
+    "中間全"
   ],
   "autoFolders": [
     "New Folder"

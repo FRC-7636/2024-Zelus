@@ -23,10 +23,7 @@ public class Amp extends Command {
 
     @Override
     public void execute() {
-        shooter.setPosition(5);
-        if (Math.abs(shooter.currentPosition() - 5) <= 2.5) {
-            climber.setBalanceLevel();
-            intake.setAmpAngle();
-        }
+        climber.setBalanceLevel();
+        intake.setAmpAngle();
     }
 }
