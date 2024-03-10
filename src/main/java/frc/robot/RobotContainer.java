@@ -125,8 +125,8 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
 //       return new BlueTest2(driveBase);
 //       return trajectoryChooser.getSelected();
-        return rightStart;
-//    return new SingleTrajectory(driveBase, "simple go out");
+        return middleStart;
+//    return new SingleTrajectory(driveBase, "Test Path 2");
     }
 
     public void initiateTrajectoryChooser() {

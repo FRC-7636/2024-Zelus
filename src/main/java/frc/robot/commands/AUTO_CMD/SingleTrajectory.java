@@ -14,7 +14,7 @@ public class SingleTrajectory extends SequentialCommandGroup {
     }
 
     public SingleTrajectory(Swerve m_swerve, String pathName) {
-        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve));
-        addCommands(m_swerve.getAutonomousCommand(pathName, false));
+//        addCommands(Commands.runOnce(() -> m_swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), m_swerve));
+        addCommands(m_swerve.getAutonomousCommand(pathName, true));
     }
 }

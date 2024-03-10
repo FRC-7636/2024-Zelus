@@ -21,16 +21,13 @@ public class MiddleStart extends SequentialCommandGroup {
 //            addCommands(new InstantCommand(() -> m_swerve.resetOdometry(LLPose), m_swerve));
 //        }
         addCommands(new AutoIntake(shooter, intake)
-                .raceWith(m_swerve.getAutonomousCommand("rmid 1 1", true)));
+                .raceWith(m_swerve.getAutonomousCommand("mid 1", true)));
         addCommands(new AutoShoot(shooter, intake));
         addCommands(new AutoIntake(shooter, intake)
-                .raceWith(m_swerve.getAutonomousCommand("rmid 1 2", false)));
+                .raceWith(m_swerve.getAutonomousCommand("mid 3 3", false)));
         addCommands(new AutoShoot(shooter, intake));
-//        addCommands(new AutoIntake(shooter, intake)
-//                .raceWith(m_swerve.getAutonomousCommand("rmid 1 3", false)));
-//        addCommands(new AutoShoot(shooter, intake));
-//        addCommands(new SmartIntake(shooter, intake)
-//                .alongWith(m_swerve.getAutonomousCommand("mid 3", false)));
-//        addCommands(new AutoShoot(shooter, intake));
+        addCommands(new AutoIntake(shooter, intake)
+                .raceWith(m_swerve.getAutonomousCommand("mid 3 2", false)));
+        addCommands(new AutoShoot(shooter, intake));
     }
 }
