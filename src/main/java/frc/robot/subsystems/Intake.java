@@ -138,7 +138,7 @@ public class Intake extends SubsystemBase{
      * <p> (set origin angle at {@link IntakeConstants.Control})
      */
     public void backToZero(){
-        intakePIDController.setReference(5, ControlType.kPosition);
+        intakePIDController.setReference(8, ControlType.kPosition);
     }
 
     public void up() {
