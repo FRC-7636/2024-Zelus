@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.SWERVE_CMD;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -35,7 +35,8 @@ public class AbsDrive extends Command {
     Rotation2d heading2d = Rotation2d.fromRadians(-heading.getAsDouble()*Math.PI);
     SmartDashboard.putNumber("Desired Heading", heading2d.getDegrees());
     // Get the desired chassis speeds based on a 2 joystick module.
-    ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(-vX.getAsDouble(), -vY.getAsDouble(), heading2d);  // 將heading設為目前搖桿位置
+    // set current joystick position as "desired heading"
+    ChassisSpeeds desiredSpeeds = swerve.getTargetSpeeds(-vX.getAsDouble(), -vY.getAsDouble(), heading2d);
 
     // Prevent Movement After Auto
     

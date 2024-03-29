@@ -1,8 +1,8 @@
 {
   "drive": {
-    "type": "sparkmax",
+    "type": "talonfx",
     "id": 1,
-    "canbus": null
+    "canbus": "cantivore"
   },
   "angle": {
     "type": "sparkmax",
@@ -15,7 +15,7 @@
     "canbus": null
   },
   "inverted": {
-    "drive": true,
+    "drive": false,
     "angle": true
   },
   "absoluteEncoderInverted": true,
