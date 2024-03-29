@@ -1,5 +1,6 @@
 # Zelus - Robot code
 這是7636於2024賽季Crescendo的機器人 - **Zelus**，所使用的程式。
+![Zelus的整機圖](./Robot%202024%20ver1_4%20%E9%80%8F%E6%98%8E.PNG)
 
 ## Devices & Manufacturers
 - Swerve
