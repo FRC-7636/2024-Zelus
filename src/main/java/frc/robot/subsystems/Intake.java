@@ -117,6 +117,9 @@ public class Intake extends SubsystemBase{
         intakePIDController.setReference(IntakeConstants.Control.FLOOR_POSITION, ControlType.kPosition);
     }
 
+    public void setReverseAngle(){
+        intakePIDController.setReference(IntakeConstants.Control.REVERSE_POSITION, ControlType.kPosition);
+    }
     /**
      * set intake angle motor to the amp position
      * <p> (set amp angle at {@link IntakeConstants.Control})
