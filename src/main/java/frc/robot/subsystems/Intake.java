@@ -163,5 +163,6 @@ public class Intake extends SubsystemBase{
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Intake Position", intakeEncoder.getPosition());
+        SmartDashboard.putNumber("Intake Velocity", pipeIntake.getEncoder().getVelocity());
     }
 }
