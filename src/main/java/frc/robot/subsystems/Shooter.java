@@ -13,6 +13,7 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.SparkAbsoluteEncoder;
 
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
@@ -111,7 +112,11 @@ public class Shooter extends SubsystemBase {
         leftMotor.set(0.47);
         rightMotor.set(0.47);
     }
-
+    public void AMPshoot(){
+        desiredSpeed = ShooterConstants.Control.SHOOT_VELOCITY;
+        leftMotor.set(0.3);
+        rightMotor.set(0.3);
+    }
     public void shootNear() {
         desiredSpeed = ShooterConstants.Control.SHOOT_NEAR_VELOCITY;
         leftMotor.set(0.7);
@@ -128,7 +133,8 @@ public class Shooter extends SubsystemBase {
     }
 
     public void standby() {
-        shoot();
+        leftMotor.set(ShooterConstants.Control.STANDBY_SPEED);
+        rightMotor.set(ShooterConstants.Control.STANDBY_SPEED);
     }
 
     /**
@@ -215,7 +221,9 @@ public class Shooter extends SubsystemBase {
     public void originAngle(){
         anglePIDController.setReference(ShooterConstants.Control.ORIGIN_POSITION, ControlType.kPosition);
     }
-
+    public void AmpAngle(){
+        anglePIDController.setReference(ShooterConstants.Control.AMP_POSITION, ControlType.kPosition);
+    }
     public void up() {
         angleMotor.set(0.5);
     }

@@ -27,6 +27,7 @@ import frc.robot.commands.GROUP_CMD.Reverse;
 import frc.robot.subsystems.*;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.GROUP_CMD.Amp;
+import frc.robot.commands.GROUP_CMD.AmpShoot;
 import frc.robot.commands.SINGLE_CMD.*;
 import frc.robot.commands.TEST_CMD.StopEverything;
 import frc.robot.commands.SWERVE_CMD.NewFieldDrive;
@@ -66,6 +67,7 @@ public class RobotContainer {
     private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
     private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
     private final Reverse reverse = new Reverse(shooter, intake);
+    private final AmpShoot ampShoot = new AmpShoot(shooter, intake);
 
     private SendableChooser<Command> getAutoChooser = new SendableChooser<>();
 
@@ -89,6 +91,7 @@ public class RobotContainer {
 
     private void configureBangRenBindings() {
         new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
+        new JoystickButton(chassisCtrl, 2).onTrue(ampShoot);
         new JoystickButton(chassisCtrl, 3).onTrue(reverse).onFalse(stopEverything);
         new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
 
@@ -115,21 +118,21 @@ public class RobotContainer {
 
         new POVButton(assistCtrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop));
         new POVButton(assistCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
-        new POVButton(assistCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
+        // new POVButton(assistCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
     }
 
     public void createButtonsOnDS() {
-        // Climber
-        SmartDashboard.putData("Climber Up", new InstantCommand(climber::up, climber));
-        SmartDashboard.putData("Climber Down", new InstantCommand(climber::down, climber));
-        SmartDashboard.putData("Climber Stop", new InstantCommand(climber::stop, climber));
+        // // Climber
+         SmartDashboard.putData("Climber Up", new InstantCommand(climber::up, climber));
+         SmartDashboard.putData("Climber Down", new InstantCommand(climber::down, climber));
+         SmartDashboard.putData("Climber Stop", new InstantCommand(climber::stop, climber));
 
-        // Intake
-        SmartDashboard.putData("Intake Up", new InstantCommand(intake::up, intake));
-        SmartDashboard.putData("Intake Down", new InstantCommand(intake::down, intake));
-        SmartDashboard.putData("Intake Stop", new InstantCommand(intake::stopAngle, intake));
-        SmartDashboard.putData("Intake Suck", new InstantCommand(intake::suck, intake));
-        SmartDashboard.putData("Intake Shoot", new InstantCommand(intake::shoot, intake));
+        // // Intake
+         SmartDashboard.putData("Intake Up", new InstantCommand(intake::up, intake));
+         SmartDashboard.putData("Intake Down", new InstantCommand(intake::down, intake));
+         SmartDashboard.putData("Intake Stop", new InstantCommand(intake::stopAngle, intake));
+         SmartDashboard.putData("Intake Suck", new InstantCommand(intake::suck, intake));
+         SmartDashboard.putData("Intake Shoot", new InstantCommand(intake::shoot, intake));
     }
 
     public Command getAutonomousCommand() {
