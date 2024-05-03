@@ -23,6 +23,7 @@ public class Amp extends Command {
 
     @Override
     public void execute() {
+        shooter.originAngle();
         climber.setBalanceLevel();
         intake.setAmpAngle();
     }
