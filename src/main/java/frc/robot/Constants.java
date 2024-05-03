@@ -65,6 +65,7 @@ public class Constants {
             public static final double STANDBY_SPEED = 0.4;
             public static final double ORIGIN_POSITION = 5;
             public static final double INTAKE_POSITION = 29;  //9.5
+            public static final double REVERSE_POSITION = 20;
             public static final double SOURCE_POSITION = 28.8;
             public static final double TOP_POSITION = 46.5;
             public static final double NEARSHOOT_POSITION = 43;
@@ -110,6 +111,7 @@ public class Constants {
 
         public static class Control {
             public static final double FLOOR_POSITION = 129.5;
+            public static final double REVERSE_POSITION = 80;
             public static final double AMP_POSITION = 25;
             public static final double SOURCE_POSITION = 10;
             public static final double ORIGIN_POSITION = 0;

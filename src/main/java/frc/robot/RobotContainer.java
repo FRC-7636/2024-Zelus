@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 import frc.robot.commands.AUTO_CMD.*;
+import frc.robot.commands.GROUP_CMD.Reverse;
 import frc.robot.subsystems.*;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.GROUP_CMD.Amp;
@@ -64,6 +65,7 @@ public class RobotContainer {
     private final Amp ampCmd = new Amp(climber, shooter, intake);
     private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
     private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
+    private final Reverse reverse = new Reverse(shooter, intake);
 
     private SendableChooser<Command> getAutoChooser = new SendableChooser<>();
 
@@ -86,13 +88,12 @@ public class RobotContainer {
     }
 
     private void configureBangRenBindings() {
-//        new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
-//        new JoystickButton(chassisCtrl, 3).onTrue(shooterSuck).onFalse(new InstantCommand(shooter::stopShoot));
-//        new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
+        new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
+        new JoystickButton(chassisCtrl, 3).onTrue(reverse).onFalse(stopEverything);
+        new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
 
-//        new POVButton(chassisCtrl, 0).whileTrue(justShoot);
-//        new POVButton(chassisCtrl, 180).onTrue(farShoot);
-//    new POVButton(chassisCtrl, 180).whileTrue(smartShootNear);
+        new POVButton(chassisCtrl, 0).whileTrue(justShoot);
+        new POVButton(chassisCtrl, 180).onTrue(farShoot);
 
         new JoystickButton(chassisCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll));
         new JoystickButton(chassisCtrl, 6).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll));
