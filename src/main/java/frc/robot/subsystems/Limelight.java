@@ -30,6 +30,22 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putData("Lime_Field2d", field2d);
     }
 
+    public void blink(){
+        LimelightHelpers.setLEDMode_ForceBlink("");
+    }
+
+    public void LEDon(){
+        LimelightHelpers.setLEDMode_ForceOn("");
+    }
+
+    public void LEDoff(){
+        LimelightHelpers.setLEDMode_ForceOff("");
+    }
+
+    public void LEDpipe(){
+        LimelightHelpers.setLEDMode_PipelineControl("");
+    }
+    
     public Pose2d getPose2d() {
         return LimelightHelpers.getBotPose2d_wpiBlue("");
     }

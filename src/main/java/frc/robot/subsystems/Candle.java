@@ -11,7 +11,7 @@ import frc.robot.Constants.OthersConstants;
 
 public class Candle extends SubsystemBase {
     private final CANdle candle = new CANdle(OthersConstants.CANDLE_ID, "cantivore");
-    private final Shooter shooter = new Shooter();
+    private final Limelight limelight = new Limelight();
 
     private final LarsonAnimation normalState = new LarsonAnimation(255, 255, 255);
     private final StrobeAnimation detectedState = new StrobeAnimation(255, 0, 255);
@@ -63,18 +63,23 @@ public class Candle extends SubsystemBase {
     public void periodic() {
         if ((shooterVelocity > 1500) & noteDetect & (climberPos < 10)){
               Shooting();
+              limelight.LEDoff();
         }
         else if ((intakeVelocity > 1) & !noteDetect & (climberPos < 10) & (intakePos > 100)){
              Intaking();
+             limelight.blink();;
         }
         else if ((climberPos > 20) & !noteDetect){
              AMPing();
+             limelight.LEDoff();
         }
         else if (noteDetect & (climberPos < 10)) {
              noteDetectedState();
+             limelight.LEDoff();
         }
         else if(!noteDetect & (climberPos < 10)){
              backToNormalState();
+             limelight.LEDoff();
         }
     }
 }
