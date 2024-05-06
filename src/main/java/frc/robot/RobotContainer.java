@@ -138,7 +138,7 @@ public class RobotContainer {
         new POVButton(testCtrl, 0).onTrue(ampCmd); //amp
         new POVButton(testCtrl, 90).onTrue(ampShoot); //amp shoot
         new POVButton(testCtrl, 180).onTrue(nearShoot); //near shoot
-        new POVButton(testCtrl, 270).whileTrue(jnew InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake)); //intake suck
+        new POVButton(testCtrl, 270).whileTrue(new InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake)); //intake suck
     }
 
     public void createButtonsOnDS() {
