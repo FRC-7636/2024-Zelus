@@ -20,12 +20,6 @@ public class Candle extends SubsystemBase {
     private final StrobeAnimation ampState = new StrobeAnimation(255, 0, 0);
     private final double blinkSpeed = 0.4;
 
-    private final double shooterVelocity = SmartDashboard.getNumber("Shooter Velocity", 0);
-    private final double intakeVelocity = SmartDashboard.getNumber("Intake Velocity", 0);
-    private final boolean noteDetect = SmartDashboard.getBoolean("NOTE Detected?", false);
-    private final double climberPos = SmartDashboard.getNumber("Climber Position R", 0);
-    private final double intakePos = SmartDashboard.getNumber("Intake Position", 0);
-    
     public Candle() {
         candle.configFactoryDefault();
 
@@ -59,8 +53,14 @@ public class Candle extends SubsystemBase {
         candle.animate(ampState);
         ampState.setSpeed(blinkSpeed);
     }
+    
     @Override
     public void periodic() {
+        double shooterVelocity = SmartDashboard.getNumber("Shooter Velocity", 0);
+        double intakeVelocity = SmartDashboard.getNumber("Intake Velocity", 0);
+        boolean noteDetect = SmartDashboard.getBoolean("NOTE Detected?", false);
+        double climberPos = SmartDashboard.getNumber("Climber Position R", 0);
+        double intakePos = SmartDashboard.getNumber("Intake Position", 0);
         if ((shooterVelocity > 1500) & noteDetect & (climberPos < 10)){
               Shooting();
               limelight.LEDoff();
