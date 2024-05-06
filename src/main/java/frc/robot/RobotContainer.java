@@ -42,6 +42,7 @@ public class RobotContainer {
     private final Candle candle = new Candle();
     private final XboxController chassisCtrl = new XboxController(0);
     private final XboxController assistCtrl = new XboxController(1);
+    private final XboxController testCtrl = new XboxController(2);
     //  private final PhotonVision photonVision = new PhotonVision();
 
     // Auto Commands
@@ -75,6 +76,7 @@ public class RobotContainer {
 
     public RobotContainer() {
         // Configure controller buttons
+        configureTestBindings();
         configureBangRenBindings();
         configureYuJieBindings();
         createButtonsOnDS();
@@ -88,6 +90,8 @@ public class RobotContainer {
 
         driveBase.setDefaultCommand(NFD);
     }
+
+
 
     private void configureBangRenBindings() {
         new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
@@ -103,7 +107,6 @@ public class RobotContainer {
 
         new JoystickButton(chassisCtrl, 7).onTrue(new InstantCommand(driveBase::setIntakeAsHead));
     }
-
     private void configureYuJieBindings() {
         new JoystickButton(assistCtrl, 1).onTrue(ampCmd);
         new JoystickButton(assistCtrl, 2).onTrue(backToOrigin);
@@ -118,7 +121,24 @@ public class RobotContainer {
 
         new POVButton(assistCtrl, 0).whileTrue(new InstantCommand(climber::up, climber)).onFalse(new InstantCommand(climber::stop));
         new POVButton(assistCtrl, 180).whileTrue(new InstantCommand(climber::down, climber)).onFalse(new InstantCommand(climber::stop));
-        // new POVButton(assistCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
+         new POVButton(assistCtrl, 270).whileTrue(new InstantCommand(climber::setFloorLevel, climber));
+    }
+
+    private void configureTestBindings(){
+        new JoystickButton(testCtrl, 1).onTrue(reverse).onFalse(stopEverything); //reversing note from shooter to intake
+        new JoystickButton(testCtrl, 2).onTrue(backToOrigin); //back to origin
+        new JoystickButton(testCtrl, 3).onTrue(smartIntake); //intaking
+        new JoystickButton(testCtrl, 4).onTrue(smartShoot); //shootering
+
+        new JoystickButton(testCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll)); //reverse convey
+        new JoystickButton(testCtrl, 6).whileTrue(new InstantCommand(intake::shoot)).onFalse(new InstantCommand(intake::stopAll)); //intake shoot
+
+        new JoystickButton(testCtrl, 7).onTrue(new InstantCommand(driveBase::setIntakeAsHead)); //set intake as head
+
+        new POVButton(testCtrl, 0).onTrue(ampCmd); //amp
+        new POVButton(testCtrl, 90).onTrue(ampShoot); //amp shoot
+        new POVButton(testCtrl, 180).onTrue(nearShoot); //near shoot
+        new POVButton(testCtrl, 270).whileTrue(jnew InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake)); //intake suck
     }
 
     public void createButtonsOnDS() {
