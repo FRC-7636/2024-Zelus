@@ -57,9 +57,16 @@ public class RobotContainer {
             chassisCtrl::getLeftY,
             chassisCtrl::getLeftX,
             chassisCtrl::getRightX);
+
+    private final NewFieldDrive testFD = new NewFieldDrive(driveBase,
+            testCtrl::getLeftY,
+            testCtrl::getLeftX,
+            testCtrl::getRightX);
+
     private final StopEverything stopEverything = new StopEverything(intake, shooter);
     private final SmartShoot smartShoot = new SmartShoot(shooter, intake);
     private final NearShoot nearShoot = new NearShoot(shooter, intake);
+    private final ContinuousShoot continuousShoot = new ContinuousShoot(shooter, intake);
     private final FarShoot farShoot = new FarShoot(shooter, intake);
     private final JustShoot justShoot = new JustShoot(shooter, intake);
     private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
@@ -88,7 +95,7 @@ public class RobotContainer {
 
         SmartDashboard.putData("Auto", getAutoChooser);
 
-        driveBase.setDefaultCommand(NFD);
+        driveBase.setDefaultCommand(testFD);
     }
 
 
@@ -137,7 +144,7 @@ public class RobotContainer {
 
         new POVButton(testCtrl, 0).onTrue(ampCmd); //amp
         new POVButton(testCtrl, 90).onTrue(ampShoot); //amp shoot
-        new POVButton(testCtrl, 180).onTrue(nearShoot); //near shoot
+        new POVButton(testCtrl, 180).onTrue(continuousShoot); //near shoot
         new POVButton(testCtrl, 270).whileTrue(new InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake)); //intake suck
     }
 
