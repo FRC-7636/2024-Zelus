@@ -103,7 +103,7 @@ public class RobotContainer {
     private void configureBangRenBindings() {
         new JoystickButton(chassisCtrl, 1).onTrue(new InstantCommand(() -> shooter.setPosition(50), shooter));
         new JoystickButton(chassisCtrl, 2).onTrue(ampShoot);
-        new JoystickButton(chassisCtrl, 3).onTrue(reverse).onFalse(stopEverything);
+        new JoystickButton(chassisCtrl, 3).onTrue(reverse);
         new JoystickButton(chassisCtrl, 4).onTrue(nearShoot);
 
         new POVButton(chassisCtrl, 0).whileTrue(justShoot);
@@ -132,7 +132,7 @@ public class RobotContainer {
     }
 
     private void configureTestBindings(){
-        new JoystickButton(testCtrl, 1).onTrue(reverse).onFalse(stopEverything); //reversing note from shooter to intake
+        new JoystickButton(testCtrl, 1).onTrue(reverse); //reversing note from shooter to intake
         new JoystickButton(testCtrl, 2).onTrue(backToOrigin); //back to origin
         new JoystickButton(testCtrl, 3).onTrue(smartIntake); //intaking
         new JoystickButton(testCtrl, 4).onTrue(smartShoot); //shootering

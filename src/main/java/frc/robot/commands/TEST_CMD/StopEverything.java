@@ -20,6 +20,6 @@ public class StopEverything extends Command {
     public void execute() {
         shooter.stopAll();
         intake.stopAll();
-        intake.setSourceAngle();
+        intake.backToZero();
     }
 }
