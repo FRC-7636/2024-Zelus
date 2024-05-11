@@ -38,7 +38,7 @@ public class Constants {
     }
 
     public static class AutoAimPID {
-        public static final double P = 0.07;
+        public static final double P = 0.06;
         public static final double I = 0;
         public static final double D = 0;
     }
@@ -75,8 +75,8 @@ public class Constants {
         }
 
         public static class AnglePIDF {
-            public static final double P = 0.0103;
-            public static final double I = 0.000002;
+            public static final double P = 0.02;
+            public static final double I = 0.0;
             public static final double D = 0.0;
         }
 
@@ -106,8 +106,8 @@ public class Constants {
         }
 
         public static class AnglePIDF {
-            public static final double P = 0.0045;
-            public static final double I = 0;
+            public static final double P = 0.0055;
+            public static final double I = 0.000001;
             public static final double D = 0;
         }
 

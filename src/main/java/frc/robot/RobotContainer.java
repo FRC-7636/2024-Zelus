@@ -66,7 +66,7 @@ public class RobotContainer {
     private final StopEverything stopEverything = new StopEverything(intake, shooter);
     private final SmartShoot smartShoot = new SmartShoot(shooter, intake);
     private final NearShoot nearShoot = new NearShoot(shooter, intake);
-    private final ContinuousShoot continuousShoot = new ContinuousShoot(shooter, intake);
+    private final ContinuousShoot continuousShoot = new ContinuousShoot(shooter, intake, climber);
     private final FarShoot farShoot = new FarShoot(shooter, intake);
     private final JustShoot justShoot = new JustShoot(shooter, intake);
     private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
