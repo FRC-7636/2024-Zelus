@@ -16,7 +16,7 @@ public class MiddleStart extends SequentialCommandGroup {
     public MiddleStart(Swerve m_swerve, Shooter shooter, Intake intake) {
 //        addCommands(new InstantCommand(intake::setFloorAngle));
         addCommands(new InstantCommand(() -> shooter.setPosition(50)));
-        addCommands(new SmartShoot(shooter, intake));
+        addCommands(new SmartShoot(shooter, intake, m_swerve));
         addCommands(m_swerve.getAutonomousCommand("simple go out", true));
 //        Pose2d LLPose = LimelightHelpers.getBotPose2d_wpiBlue("");
 //        if (LLPose.getX() != 0) {

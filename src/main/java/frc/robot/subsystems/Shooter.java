@@ -15,6 +15,7 @@ import com.revrobotics.SparkAbsoluteEncoder;
 
 import frc.robot.Constants.IntakeConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.LimelightHelpers;
 
 public class Shooter extends SubsystemBase {
     private final CANSparkMax leftMotor = new CANSparkMax(ShooterConstants.Config.L_ID, CANSparkLowLevel.MotorType.kBrushless);
@@ -201,10 +202,11 @@ public class Shooter extends SubsystemBase {
      * @return true when spinning speed and angle are ready
      */
     public boolean readyToShoot() {
+        boolean deltaDeg = Math.abs(LimelightHelpers.getTX("")) < 1;
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         //        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
-        return (leftReady && angleReady);
+        return (deltaDeg && leftReady && angleReady);
     }
 
     public boolean angleReady() {
