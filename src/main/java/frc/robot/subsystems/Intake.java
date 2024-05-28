@@ -92,6 +92,10 @@ public class Intake extends SubsystemBase{
         conveyor.set(IntakeConstants.Control.CONVEYOR_SPEED);
     }
 
+    public void safeIntake(){
+        conveyor.set(0.2);
+    }
+
     public void reverseConvey() {
         conveyor.set(-0.8);
     }
@@ -158,6 +162,10 @@ public class Intake extends SubsystemBase{
 
     public void conveyorShoot() {
         conveyor.set(IntakeConstants.Control.CONVEYOR_SPEED);
+    }
+
+    public double intakeVel(){
+        return pipeIntake.getEncoder().getVelocity();
     }
 
     @Override

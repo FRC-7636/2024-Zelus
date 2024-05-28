@@ -26,6 +26,7 @@ public class SmartIntake extends Command {
         intake.suck();
         intake.startConvey();
         shooter.transport();
+        shooter.suck();
     }
 
     @Override

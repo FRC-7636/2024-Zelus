@@ -24,6 +24,7 @@ public class Shooter extends SubsystemBase {
     private final CANSparkMax transMotor = new CANSparkMax(ShooterConstants.Config.TRANS_ID, CANSparkLowLevel.MotorType.kBrushless);
     private final CANSparkMax angleMotor = new CANSparkMax(ShooterConstants.Config.ANGLE_ID, CANSparkLowLevel.MotorType.kBrushless);
     private final SparkPIDController anglePIDController, leftPIDController, rightPIDController;
+    private final Limelight limelight = new Limelight();
 
     private final RelativeEncoder leftMotorEncoder, rightMotorEncoder;
     private final AbsoluteEncoder angleEncoder;
@@ -202,11 +203,12 @@ public class Shooter extends SubsystemBase {
      * @return true when spinning speed and angle are ready
      */
     public boolean readyToShoot() {
-        boolean deltaDeg = Math.abs(LimelightHelpers.getTX("")) < 1;
+        boolean minusdeltaDeg = (limelight.deltaRobotHeadingDeg() - limelight.deltaTargetDeg()) > -5;
+        boolean plusdeltaDeg = (limelight.deltaRobotHeadingDeg() - limelight.deltaTargetDeg()) < 5;
         boolean leftReady = Math.abs(leftMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         //        boolean rightReady = Math.abs(rightMotorEncoder.getVelocity() - desiredSpeed) <= 50;
         boolean angleReady = Math.abs(angleEncoder.getPosition() - desiredAngle) <= 2;
-        return (deltaDeg && leftReady && angleReady);
+        return (plusdeltaDeg && minusdeltaDeg && leftReady && angleReady);
     }
 
     public boolean angleReady() {
@@ -242,6 +244,13 @@ public class Shooter extends SubsystemBase {
         angleMotor.stopMotor();
     }
 
+    public void intakeAngle(){
+        anglePIDController.setReference(ShooterConstants.Control.INTAKE_POSITION, ControlType.kPosition);
+    }
+
+    public double currentVel(){
+        return leftMotorEncoder.getVelocity();
+    }
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Shooter Position", angleEncoder.getPosition());
