@@ -30,7 +30,7 @@ public class Candle extends SubsystemBase {
     public void backToNormalState() {
         candle.animate(normalState);
         normalState.setSpeed(0.25);
-        normalState.setNumLed(43);
+        normalState.setNumLed(68);
         normalState.setSize(5);
     }
 
@@ -61,25 +61,26 @@ public class Candle extends SubsystemBase {
         boolean noteDetect = SmartDashboard.getBoolean("NOTE Detected?", false);
         double climberPos = SmartDashboard.getNumber("Climber Position R", 0);
         double intakePos = SmartDashboard.getNumber("Intake Position", 0);
-        if ((shooterVelocity > 1500) & noteDetect & (climberPos < 10)){
-              Shooting();
-              limelight.LEDoff();
+        boolean ready = SmartDashboard.getBoolean("Ready?", false);
+        if (ready & noteDetect & (climberPos < 10)){
+            Shooting();
+            limelight.LEDoff();
         }
         else if ((intakeVelocity > 1) & !noteDetect & (climberPos < 10) & (intakePos > 100)){
-             Intaking();
-             limelight.blink();;
+            Intaking();
+            limelight.blink();;
         }
         else if ((climberPos > 20) & !noteDetect){
-             AMPing();
-             limelight.LEDoff();
+            AMPing();
+            limelight.LEDoff();
         }
         else if (noteDetect & (climberPos < 10)) {
-             noteDetectedState();
-             limelight.LEDoff();
+            noteDetectedState();
+            limelight.LEDoff();
         }
         else if(!noteDetect & (climberPos < 10)){
-             backToNormalState();
-             limelight.LEDoff();
+            backToNormalState();
+            limelight.LEDoff();
         }
     }
 }

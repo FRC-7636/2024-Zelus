@@ -75,8 +75,8 @@ public class Constants {
         }
 
         public static class AnglePIDF {
-            public static final double P = 0.02;
-            public static final double I = 0.0;
+            public static final double P = 0.01;
+            public static final double I = 0.000001;
             public static final double D = 0.0;
         }
 
@@ -113,7 +113,7 @@ public class Constants {
 
         public static class Control {
             public static final double FLOOR_POSITION = 129.5;
-            public static final double REVERSE_POSITION = 80;
+            public static final double REVERSE_POSITION = 75;
             public static final double AMP_POSITION = 25;
             public static final double SOURCE_POSITION = 10;
             public static final double ORIGIN_POSITION = 0;

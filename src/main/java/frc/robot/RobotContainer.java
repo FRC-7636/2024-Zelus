@@ -12,6 +12,7 @@ import java.util.Objects;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.XboxController;
@@ -19,11 +20,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.AUTO_CMD.*;
 import frc.robot.commands.GROUP_CMD.Reverse;
+import frc.robot.commands.GROUP_CMD.SafeIntake;
 import frc.robot.subsystems.*;
 import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.commands.GROUP_CMD.Amp;
@@ -40,6 +43,7 @@ public class RobotContainer {
     private final Intake intake = new Intake();
     private final Climber climber = new Climber();
     private final Candle candle = new Candle();
+    private final Limelight limelight = new Limelight();
     private final XboxController chassisCtrl = new XboxController(0);
     private final XboxController assistCtrl = new XboxController(1);
     private final XboxController testCtrl = new XboxController(2);
@@ -64,7 +68,7 @@ public class RobotContainer {
             testCtrl::getRightX);
 
     private final StopEverything stopEverything = new StopEverything(intake, shooter);
-    private final SmartShoot smartShoot = new SmartShoot(shooter, intake, driveBase);
+    private final SmartShoot smartShoot = new SmartShoot(shooter, intake, driveBase, limelight);
     private final NearShoot nearShoot = new NearShoot(shooter, intake);
     private final ContinuousShoot continuousShoot = new ContinuousShoot(shooter, intake, climber);
     private final FarShoot farShoot = new FarShoot(shooter, intake);
@@ -72,14 +76,16 @@ public class RobotContainer {
     private final SmartIntake smartIntake = new SmartIntake(shooter, intake);
     private final BackToOrigin backToOrigin = new BackToOrigin(climber, intake, shooter);
     private final Amp ampCmd = new Amp(climber, shooter, intake);
-    private final SafeClimbTop safeClimbTop = new SafeClimbTop(climber, shooter);
-    private final ShooterSuck shooterSuck = new ShooterSuck(shooter);
     private final Reverse reverse = new Reverse(shooter, intake);
     private final AmpShoot ampShoot = new AmpShoot(shooter, intake);
+    private final TransportSuck transportSuck = new TransportSuck(shooter, intake);
+    private final TransportShoot transportShoot = new TransportShoot(shooter, intake);
+    private final SafeIntake safeIntake = new SafeIntake(intake, shooter);
 
     private SendableChooser<Command> getAutoChooser = new SendableChooser<>();
 
     private final static File[] pathFileList = new File(Filesystem.getDeployDirectory(), "pathplanner/paths").listFiles();
+
 
     public RobotContainer() {
         // Configure controller buttons
@@ -117,7 +123,7 @@ public class RobotContainer {
     private void configureYuJieBindings() {
         new JoystickButton(assistCtrl, 1).onTrue(ampCmd);
         new JoystickButton(assistCtrl, 2).onTrue(backToOrigin);
-        new JoystickButton(assistCtrl, 3).onTrue(smartIntake);
+        new JoystickButton(assistCtrl, 3).onTrue(smartIntake.andThen(transportSuck).andThen(transportShoot));
         new JoystickButton(assistCtrl, 4).whileTrue(new InstantCommand(intake::suck, intake)).onFalse(new InstantCommand(intake::stopIntake));
 
         new JoystickButton(assistCtrl, 5).whileTrue(new InstantCommand(intake::setFloorAngle)
@@ -132,9 +138,9 @@ public class RobotContainer {
     }
 
     private void configureTestBindings(){
-        new JoystickButton(testCtrl, 1).onTrue(reverse); //reversing note from shooter to intake
+       new JoystickButton(testCtrl, 1).onTrue(new InstantCommand(intake::shoot).andThen(intake::setReverseAngle).andThen(shooter::intakeAngle).andThen(new WaitCommand(1)).andThen(reverse)); //reversing note from shooter to intake
         new JoystickButton(testCtrl, 2).onTrue(backToOrigin); //back to origin
-        new JoystickButton(testCtrl, 3).onTrue(smartIntake); //intaking
+       new JoystickButton(testCtrl, 3).onTrue(safeIntake);
         new JoystickButton(testCtrl, 4).onTrue(smartShoot); //shootering
 
         new JoystickButton(testCtrl, 5).whileTrue(new InstantCommand(intake::reverseConvey)).onFalse(new InstantCommand(intake::stopAll)); //reverse convey
@@ -149,24 +155,27 @@ public class RobotContainer {
     }
 
     public void createButtonsOnDS() {
-        // // Climber
-         SmartDashboard.putData("Climber Up", new InstantCommand(climber::up, climber));
-         SmartDashboard.putData("Climber Down", new InstantCommand(climber::down, climber));
-         SmartDashboard.putData("Climber Stop", new InstantCommand(climber::stop, climber));
-
-        // // Intake
-         SmartDashboard.putData("Intake Up", new InstantCommand(intake::up, intake));
-         SmartDashboard.putData("Intake Down", new InstantCommand(intake::down, intake));
-         SmartDashboard.putData("Intake Stop", new InstantCommand(intake::stopAngle, intake));
-         SmartDashboard.putData("Intake Suck", new InstantCommand(intake::suck, intake));
-         SmartDashboard.putData("Intake Shoot", new InstantCommand(intake::shoot, intake));
+        SmartDashboard.putData("AMP Stage", new Amp(climber, shooter, intake));
+        SmartDashboard.putData("Smart Intake", safeIntake);
+        SmartDashboard.putData("Smart Shoot", new SmartShoot(shooter, intake, driveBase, limelight));
+        SmartDashboard.putData("Rervse Note", new InstantCommand(intake::shoot).andThen(intake::setReverseAngle).andThen(shooter::intakeAngle).andThen(new WaitCommand(1)).andThen(reverse));
+        SmartDashboard.putData("Back to Origin", new BackToOrigin(climber, intake, shooter));
+        //SmartDashboard.putData("Auto AMP Shoot", new AutoAmpShoot(driveBase, limelight, shooter, intake, climber));
     }
+
+    private Command wait(double d) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'wait'");
+    }
+
+
 
     public Command getAutonomousCommand() {
 //       return new BlueTest2(driveBase);
 //       return trajectoryChooser.getSelected();
 //        return getAutoChooser.getSelected();
-        return new AutoAmp(driveBase, intake, climber, shooter);
+        // return new AutoAmp(driveBase, intake, climber, shooter);
+        return getAutonomousCommand();
     }
 
     public void initiateTrajectoryChooser() {
