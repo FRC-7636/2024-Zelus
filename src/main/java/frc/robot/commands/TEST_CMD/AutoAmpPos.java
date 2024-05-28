@@ -1,4 +1,4 @@
-package frc.robot.commands.AUTO_CMD;
+package frc.robot.commands.TEST_CMD;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;

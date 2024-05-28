@@ -1,5 +1,5 @@
 
-package frc.robot.commands.AUTO_CMD;
+package frc.robot.commands.GROUP_CMD;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -13,12 +13,10 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.*;
 import frc.robot.LimelightHelpers;
-import frc.robot.commands.GROUP_CMD.Amp;
-import frc.robot.commands.GROUP_CMD.BackToOrigin;
 import frc.robot.Constants;
 
-public class AutoAmpShoot extends SequentialCommandGroup{
-    public AutoAmpShoot(Swerve swerve, Limelight limelight, Shooter shooter, Intake intake, Climber climber) {
+public class AutoDriveToAmp extends SequentialCommandGroup{
+    public AutoDriveToAmp(Swerve swerve, Limelight limelight, Shooter shooter, Intake intake, Climber climber) {
         Pose2d LLPose = LimelightHelpers.getBotPose2d_wpiBlue("");
         if (LLPose.getX() != 0) {
             addCommands(Commands.runOnce(() -> swerve.resetOdometry(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
