@@ -21,4 +21,4 @@
   - Angle Encoder: REV Through Bore Encoder × 1
 - Climber: CTRE Falcon 500 × 2
 - LED: CTRE CANdle × 1
-- Vision Processing: Limelight 3
+- Vision Processing: Limelight 3 × 1
